@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Editor de configuração (uso local apenas)</title>
+<style>
+  body { font-family: 'Work Sans', Arial, sans-serif; max-width: 720px; margin: 3rem auto; padding: 0 1.5rem; color: #1C2321; }
+  h1 { font-size: 1.5rem; }
+  .warning { background: #FCE9C6; border: 1px solid #D9A441; padding: 1rem 1.25rem; margin-bottom: 2rem; font-size: 0.9rem; }
+  fieldset { border: 1px solid #ddd; margin-bottom: 1.5rem; padding: 1rem 1.25rem; }
+  legend { font-weight: 600; padding: 0 0.4rem; }
+  label { display: block; font-size: 0.85rem; margin: 0.75rem 0 0.25rem; }
+  input[type=text], input[type=color], input[type=datetime-local], input[type=date], select {
+    width: 100%; padding: 0.5rem; font-size: 0.95rem; box-sizing: border-box;
+  }
+  input[type=color] { height: 2.4rem; padding: 0.2rem; }
+  .row { display: flex; gap: 1rem; }
+  .row > div { flex: 1; }
+  button { margin-top: 1.5rem; padding: 0.7rem 1.4rem; font-size: 0.95rem; cursor: pointer; }
+  textarea { width: 100%; height: 320px; margin-top: 1rem; font-family: monospace; font-size: 0.8rem; }
+  .swatch-preview { display: inline-block; width: 1.2rem; height: 1.2rem; vertical-align: middle; border: 1px solid #999; margin-right: 0.4rem; }
+</style>
+</head>
+<body>
+
+<h1>Editor de configuração — só para uso local</h1>
+<div class="warning">
+  Esta página é uma ferramenta de desenvolvimento. <strong>Nunca a publiquem</strong> — se
+  estiverem a seguir o plano tal como combinado, a pasta <code>/admin</code> nem sequer deve
+  ser copiada para o repositório publicado no GitHub Pages (ou, no mínimo, não deve ser
+  ligada a partir do site). Ela edita apenas o texto de <code>js/config.js</code> — para
+  publicar as alterações, copiem o resultado abaixo, colem no ficheiro real, e façam commit/push
+  como de costume.
+</div>
+
+<form id="configForm">
+  <fieldset>
+    <legend>Datas</legend>
+    <label for="weddingDateTime">Data e hora da cerimónia</label>
+    <input type="datetime-local" id="weddingDateTime" value="2027-01-23T12:30">
+
+    <label for="rsvpDeadline">Prazo de RSVP</label>
+    <input type="datetime-local" id="rsvpDeadline" value="2026-11-30T23:59">
+  </fieldset>
+
+  <fieldset>
+    <legend>Backend do RSVP</legend>
+    <label for="rsvpEndpoint">URL do Google Apps Script (termina em /exec)</label>
+    <input type="text" id="rsvpEndpoint" placeholder="https://script.google.com/macros/s/XXXXX/exec">
+  </fieldset>
+
+  <fieldset>
+    <legend>Cores</legend>
+    <div class="row">
+      <div>
+        <label for="colorInk">Texto principal (ink)</label>
+        <input type="color" id="colorInk" value="#1C2321">
+      </div>
+      <div>
+        <label for="colorPaper">Fundo (paper)</label>
+        <input type="color" id="colorPaper" value="#EEECE3">
+      </div>
+    </div>
+    <div class="row">
+      <div>
+        <label for="colorPaperAlt">Fundo secundário (paperAlt)</label>
+        <input type="color" id="colorPaperAlt" value="#E4E1D5">
+      </div>
+      <div>
+        <label for="colorAccent">Cor principal (accent)</label>
+        <input type="color" id="colorAccent" value="#38493B">
+      </div>
+    </div>
+    <label for="colorAccent2">Cor secundária (accent2)</label>
+    <input type="color" id="colorAccent2" value="#A68A5B">
+  </fieldset>
+
+  <fieldset>
+    <legend>Tipografia</legend>
+    <label for="fontPairing">Combinação de fontes</label>
+    <select id="fontPairing">
+      <option value="Instrument Serif|Work Sans">Instrument Serif + Work Sans (padrão, sleek/formal)</option>
+      <option value="Fraunces|Inter">Fraunces + Inter (mais clássico, ainda moderno)</option>
+      <option value="Newsreader|Manrope">Newsreader + Manrope (editorial, sóbrio)</option>
+      <option value="Cormorant|Sora">Cormorant + Sora (elegante, contraste alto)</option>
+    </select>
+    <p style="font-size:0.8rem; color:#666;">
+      Nota: ao mudar de fonte aqui, é preciso também atualizar o link do Google Fonts
+      no &lt;head&gt; de index.html para incluir a nova família tipográfica.
+    </p>
+  </fieldset>
+
+  <fieldset>
+    <legend>Secções visíveis</legend>
+    <label><input type="checkbox" id="sec-hero" checked> Hero</label>
+    <label><input type="checkbox" id="sec-details" checked> Detalhes do Evento</label>
+    <label><input type="checkbox" id="sec-rsvp" checked> RSVP</label>
+    <label><input type="checkbox" id="sec-gifts" checked> Presentes</label>
+    <label><input type="checkbox" id="sec-story" checked> A Nossa História</label>
+    <label><input type="checkbox" id="sec-faq" checked> FAQ</label>
+    <label><input type="checkbox" id="sec-contact" checked> Contacto</label>
+  </fieldset>
+
+  <button type="button" id="generateBtn">Gerar config.js</button>
+</form>
+
+<textarea id="output" readonly placeholder="O novo conteúdo de js/config.js aparece aqui depois de clicar em 'Gerar config.js'."></textarea>
+
+<script>
+document.getElementById('generateBtn').addEventListener('click', function () {
+  var toIso = function (inputId) {
+    var v = document.getElementById(inputId).value;
+    return v ? v + ':00' : '';
+  };
+
+  var fontPair = document.getElementById('fontPairing').value.split('|');
+
+  var config = {
+    couple: { name1: "Kika", name2: "Miguel" },
+    weddingDateTime: toIso('weddingDateTime'),
+    rsvpDeadline: toIso('rsvpDeadline'),
+    rsvpEndpoint: document.getElementById('rsvpEndpoint').value || "PASTE_YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL_HERE",
+    theme: {
+      colors: {
+        ink: document.getElementById('colorInk').value,
+        paper: document.getElementById('colorPaper').value,
+        paperAlt: document.getElementById('colorPaperAlt').value,
+        accent: document.getElementById('colorAccent').value,
+        accent2: document.getElementById('colorAccent2').value
+      },
+      fonts: {
+        display: "'" + fontPair[0] + "', serif",
+        body: "'" + fontPair[1] + "', sans-serif"
+      }
+    },
+    sections: {
+      hero: document.getElementById('sec-hero').checked,
+      details: document.getElementById('sec-details').checked,
+      rsvp: document.getElementById('sec-rsvp').checked,
+      gifts: document.getElementById('sec-gifts').checked,
+      story: document.getElementById('sec-story').checked,
+      faq: document.getElementById('sec-faq').checked,
+      contact: document.getElementById('sec-contact').checked
+    }
+  };
+
+  var js = "window.SITE_CONFIG = " + JSON.stringify(config, null, 2) + ";\n";
+  document.getElementById('output').value = js;
+});
+</script>
+
+</body>
+</html>

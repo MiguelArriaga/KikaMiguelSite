@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RSVP — Kika &amp; Miguel</title>
+<meta name="description" content="Confirme a sua presença no casamento de Kika e Miguel, 23 de janeiro de 2027.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Give+You+Glory&family=Instrument+Serif:ital@0;1&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-mark" href="index.html">K &amp; M</a>
+    <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="navLinks">Menu</button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html#detalhes">Detalhes</a></li>
+      <li><a href="rsvp.html" aria-current="page">RSVP</a></li>
+      <li><a href="index.html#presentes">Presentes</a></li>
+      <li><a href="index.html#historia">A Nossa História</a></li>
+      <li><a href="index.html#faq">FAQ</a></li>
+      <li><a href="index.html#contacto">Contacto</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ============================ RSVP ============================ -->
+<header class="section rsvp-page" data-section="rsvp" style="border-top: none;">
+  <div class="container">
+    <span class="section-label">Confirme a sua presença</span>
+    <h1>RSVP</h1>
+    <p id="rsvp-intro">Por favor confirme a sua presença até <strong id="rsvp-deadline-text">30 de novembro de 2026</strong>. Se tiver alguma restrição alimentar, diga-nos também — queremos que esteja tudo perfeito para si.</p>
+
+    <form class="rsvp-form" id="rsvpForm">
+      <div class="field">
+        <label for="nome">Nome completo</label>
+        <input type="text" id="nome" name="nome" required autocomplete="name">
+      </div>
+      <div class="field">
+        <label for="presenca">Vai estar presente?</label>
+        <select id="presenca" name="presenca" required>
+          <option value="">Selecione uma opção</option>
+          <option value="sim">Sim, estarei presente</option>
+          <option value="nao">Infelizmente não poderei ir</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="restricoes">Restrições alimentares (opcional)</label>
+        <textarea id="restricoes" name="restricoes" placeholder="Ex.: vegetariano, alergia a marisco, sem glúten..."></textarea>
+      </div>
+      <button type="submit" class="btn" id="rsvpSubmit">Confirmar presença</button>
+      <p class="form-note" id="rsvpNote" role="status"></p>
+    </form>
+
+    <div class="rsvp-closed" id="rsvpClosed" hidden>
+      <h3>Respostas fechadas</h3>
+      <p>O prazo para confirmar presença já terminou. Se precisar de alterar algo, contacte-nos diretamente — ver <a href="index.html#contacto">Contacto</a>.</p>
+    </div>
+
+    <p class="rsvp-back"><a href="index.html">← Voltar ao início</a></p>
+  </div>
+</header>
+
+<footer>
+  <span class="footer-mark">K &amp; M</span>
+  <span>23 de janeiro de 2027 · Lisboa</span>
+</footer>
+
+<script src="js/config.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
