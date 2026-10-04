@@ -2,23 +2,28 @@
 
 Status: Detailed proposal for review, updated with your answers. Nothing built yet.
 
+## 0.1 To‑do list
+- Confirm the honeymoon destination is Patagonia.
+- Add gift‑idea cards: Bimby.
+- Verify and update parking details for both venues.
+- Add Estufa Fria path map image (`MapaEF/EstufaFria_mapa_caminho.png`).
+- Add images from the `pictures/` folder to the Our Story section.
+- **TODO:** remove `rsvp.html` file and any references to RSVP.
+
 ---
 
 ## 0. Still open — one real decision + a few small confirmations
 
-1. **Database/backend approach — needs your OK.** Your edit-mode answer (#9 below) simplifies this a lot: since edit mode is now dev-only/local, we don't need any login system live on the public site. The only thing the public site needs a backend for is **collecting RSVPs**. Given that, I'm now leaning toward the simpler option:
-   - **Recommended: Google Sheets + a small Apps Script "Web App" endpoint.** The RSVP form on your static site POSTs to this endpoint, which appends a row to a Google Sheet (in your Google account) — dietary restrictions, attending y/n, name, etc. You get a live guest list you can just open and read/filter/export, with zero admin UI needed on my end. Free, no server, matches "using my Google account."
-   - **Alternative: Firebase/Firestore**, if you'd rather have a proper database (e.g. for future features, stricter validation, or nicer duplicate-handling). More setup, but more robust at scale — though 320 guests is comfortably within what either option handles fine.
-   - Let me know which you'd prefer, or I'll default to the Google Sheets approach since it's simpler and gives you a readable guest list "for free."
+1. **Database/backend approach — needs your OK.** Your edit-mode answer (#9 below) simplifies this a lot: since edit mode is now dev-only/local, we don't need any login system live on the public site. There is **no backend needed** for the website.
 
    > Lets go for google sheets approach, if and only if the static website will be able to cleanly push to it without leaking credentials, etc
-2. **RSVP deadline exact date** — you confirmed the behavior (form closes, shows "Respostas fechadas"). What date should that switch happen? 
-   > November 30th 2026, but editable.
+2. (Removed RSVP deadline and related notes.)
 3. **Bank/IBAN details + the 4-5 gift ideas** — still pending whenever you have them; built as clearly-marked placeholders until then.
 
    > Use placeholders
 4. **Parking research (below, Section 6)** — I found solid candidates for both venues, but please double check current prices/hours before we publish anything as fact, since these can change.
-5. **Estufa Fria path map** — I found a general map of the venue/park (Section 6); once you have it, send me the marked-up path and I'll turn it into the FAQ graphic.
+   **Parking details** will be included in the FAQ section for easy reference.
+5. **Estufa Fria path map** — I found a general map of the venue/park (Section 6); once you have it, send me the marked‑up path and I'll turn it into the FAQ graphic.
 6. **"Our Story" text** — I drafted a short version in Section 5 from what you told me; edit/replace as you like.
 
 Nothing here blocks starting the build — I can begin on structure and design (Phases 1–2) while these settle.
@@ -29,7 +34,7 @@ Nothing here blocks starting the build — I can begin on structure and design (
 
 1. **Home** — Kika & Miguel, date, short formal invitation line, hero image (placeholder)
 2. **Detalhes do Evento** — Missa (12:30, Igreja das Mercês) + Copo-d'água (Estufa Fria), Lisboa, map pins
-3. **RSVP** — name, attending y/n, dietary restrictions; closes automatically after your deadline and shows "Respostas fechadas"
+3. (RSVP removed from the navigation.)
 4. **Presentes** — "your presence is the gift" message + bank/IBAN placeholder + 4–5 gift idea cards
 5. **A Nossa História** — brief text + photo gallery
 6. **FAQ** — dress code, parking (both venues), Estufa Fria path map
@@ -58,7 +63,7 @@ Since you only have photos of yourselves and don't want mismatched placeholder p
 
 **Hosting:** GitHub Pages, as before.
 
-**Backend:** only needed for RSVP submissions now (see Section 0.1 for the two options and my recommendation).
+**Backend:** none required for the static website.
 
 **RSVP deadline logic:** fully client-side — a single date is set in the site's config file; once today's date passes it, the form is replaced with "Respostas fechadas." No backend logic needed for this part.
 
@@ -98,11 +103,12 @@ I'll firm up exact addresses, current hourly/day rates and opening hours closer 
 
 ---
 
-## 7. Build Phases (unchanged)
+7. Build Phases
 
 1. Scaffold — repo, GitHub Pages deploy, base layout/nav in Portuguese, placeholders everywhere
 2. Design system — palette/typography as CSS variables, responsive layout, animations, countdown
 3. RSVP backend — Google Sheets + Apps Script endpoint (pending your OK) or Firebase, connected to the form
+   - The form will POST to the Google Apps Script Web‑App URL: `https://script.google.com/macros/s/<SCRIPT_ID>/exec`.
 4. RSVP form UI — name, attending, dietary restrictions, deadline logic, confirmation message
 5. Local dev edit/config tooling (Section 4)
 6. FAQ + maps — parking, dress code, Estufa Fria path graphic
