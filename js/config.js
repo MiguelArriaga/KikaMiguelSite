@@ -27,14 +27,13 @@ window.SITE_CONFIG = {
 
   theme: {
     colors: {
-      ink: "#1C2321",       // near-black, used for body text and headings
-      paper: "#EEECE3",     // warm off-white background
-      paperAlt: "#E4E1D5",  // slightly deeper panel background
-      accent: "#38493B",    // deep bottle green — buttons, links, dividers
-      accent2: "#A68A5B"    // muted brass — small details, borders on hover
+      ink: "#1C2321",
+      paper: "#EEECE3",
+      paperAlt: "#E4E1D5",
+      accent: "#38493B",
+      accent2: "#A68A5B"
     },
     fonts: {
-      // Any of these pairs can be swapped in from /admin.
       display: "'Instrument Serif', serif",
       body: "'Work Sans', sans-serif"
     }
