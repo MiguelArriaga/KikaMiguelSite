@@ -9,7 +9,7 @@ window.SITE_CONFIG = {
       "accent": "#78563B",
       "accent2": "#91683E"
     },
-    "fontPair": "Bodoni MT Bold|Work Sans"
+    "fontPair": "Playfair Display|Work Sans"
   },
   "sections": {
     "hero": true,

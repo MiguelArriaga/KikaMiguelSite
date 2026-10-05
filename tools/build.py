@@ -12,7 +12,7 @@ from zoneinfo import ZoneInfo
 
 ROOT = Path(__file__).resolve().parents[1]
 CONFIG = ROOT / "content/site.json"
-FONTS = {"Bodoni MT Bold|Work Sans", "Bodoni MT Black|Work Sans", "Instrument Serif|Work Sans", "Fraunces|Inter", "Newsreader|Manrope", "Cormorant|Sora"}
+FONTS = {"Playfair Display|Work Sans", "Bodoni MT Bold|Work Sans", "Bodoni MT Black|Work Sans", "Instrument Serif|Work Sans", "Fraunces|Inter", "Newsreader|Manrope", "Cormorant|Sora"}
 
 
 def retry_io(operation):

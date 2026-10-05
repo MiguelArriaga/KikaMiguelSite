@@ -10,14 +10,15 @@
   function applyTheme() {
     var root = document.documentElement.style;
     var colors = (cfg.theme && cfg.theme.colors) || {};
-    var pair = ((cfg.theme && cfg.theme.fontPair) || "Bodoni MT Bold|Work Sans").split("|");
+    var pair = ((cfg.theme && cfg.theme.fontPair) || "Playfair Display|Work Sans").split("|");
     var bodoniWeights = {"Bodoni MT Bold": "700", "Bodoni MT Black": "900"};
     var invitationFont = Object.prototype.hasOwnProperty.call(bodoniWeights, pair[0]);
     var displayFamily = invitationFont ? "Bodoni Moda" : pair[0];
+    var headingWeight = invitationFont ? bodoniWeights[pair[0]] : pair[0] === "Playfair Display" ? "700" : "400";
     var fonts = { display: "'" + displayFamily + "', serif", body: "'" + pair[1] + "', sans-serif" };
     var fontLink = document.getElementById("themeFonts");
     if (!fontLink) { fontLink = document.createElement("link"); fontLink.id = "themeFonts"; fontLink.rel = "stylesheet"; document.head.appendChild(fontLink); }
-    fontLink.href = "https://fonts.googleapis.com/css2?family=" + encodeURIComponent(displayFamily) + (invitationFont ? ":opsz,wght@6..96,400..900" : ":wght@400") + "&family=" + encodeURIComponent(pair[1]) + ":wght@400;500;600&display=swap";
+    fontLink.href = "https://fonts.googleapis.com/css2?family=" + encodeURIComponent(displayFamily) + (invitationFont ? ":opsz,wght@6..96,400..900" : headingWeight === "700" ? ":wght@400;700" : ":wght@400") + "&family=" + encodeURIComponent(pair[1]) + ":wght@400;500;600&display=swap";
 
     if (colors.ink) root.setProperty("--color-ink", colors.ink);
     if (colors.paper) root.setProperty("--color-paper", colors.paper);
@@ -27,7 +28,7 @@
 
     if (fonts.display) root.setProperty("--font-display", fonts.display);
     root.setProperty("--font-heading", invitationFont ? "'" + pair[0] + "', 'Bodoni Moda', serif" : fonts.display);
-    root.setProperty("--font-heading-weight", invitationFont ? bodoniWeights[pair[0]] : "400");
+    root.setProperty("--font-heading-weight", headingWeight);
     if (fonts.body) root.setProperty("--font-body", fonts.body);
   }
 

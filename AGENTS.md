@@ -155,13 +155,14 @@ keys are `weddingDateTime`, `theme`, `sections`, and `content`. Content values a
 strings (up to 5,000 characters); section values are booleans. Theme colors use
 six-digit hex values for `ink`, `paper`, `paperAlt`, `accent`, `accent2`.
 
-Current theme: Bodoni MT Bold / Work Sans, a lighter version of the font in
-`pictures/SaveTheDate_Kika&Miguel_5_.png`; ink `#3D3026`, paper `#F4EBDD`,
+Current theme: Playfair Display Bold (700) / Work Sans; ink `#3D3026`, paper `#F4EBDD`,
 alternate paper `#E9DBC7`, accent `#78563B`, second accent `#91683E`.
-The invitation uses Bodoni MT Black; website headings now use Bodoni MT Bold
-when installed locally. Bodoni Moda at weight 700 is the Google Fonts fallback;
-the proprietary Bodoni MT font files are not bundled with the site.
-Supported font pairs are `Bodoni MT Bold|Work Sans`, `Bodoni MT Black|Work Sans`,
+The warm palette is inspired by `pictures/SaveTheDate_Kika&Miguel_5_.png`.
+The invitation uses Bodoni MT Black; the website now loads Playfair Display
+Bold as a web font for consistent headings on phones and desktops, after the
+couple found the local Bodoni font and its web fallback looked different.
+Supported font pairs are `Playfair Display|Work Sans`,
+`Bodoni MT Bold|Work Sans`, `Bodoni MT Black|Work Sans`,
 `Instrument Serif|Work Sans`, `Fraunces|Inter`, `Newsreader|Manrope`,
 `Cormorant|Sora`. Web fonts load from Google Fonts. Colors, borders and hero
 overlays follow the configurable warm ivory, sand and brown palette.

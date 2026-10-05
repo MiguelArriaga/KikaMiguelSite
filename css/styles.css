@@ -7,8 +7,8 @@ Tokens (defaults — overridden at runtime from js/config.js via main.js)
   --color-paper-alt: #E9DBC7;
   --color-accent: #78563B;
   --color-accent-2: #91683E;
-  --font-display: 'Bodoni Moda', serif;
-  --font-heading: 'Bodoni MT Bold', 'Bodoni Moda', serif;
+  --font-display: 'Playfair Display', serif;
+  --font-heading: 'Playfair Display', serif;
   --font-heading-weight: 700;
   --font-body: 'Work Sans', sans-serif;
   --line: color-mix(in srgb, var(--color-ink) 14%, transparent);
