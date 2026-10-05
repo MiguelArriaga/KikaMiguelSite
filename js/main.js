@@ -10,11 +10,14 @@
   function applyTheme() {
     var root = document.documentElement.style;
     var colors = (cfg.theme && cfg.theme.colors) || {};
-    var pair = ((cfg.theme && cfg.theme.fontPair) || "Instrument Serif|Work Sans").split("|");
-    var fonts = { display: "'" + pair[0] + "', serif", body: "'" + pair[1] + "', sans-serif" };
+    var pair = ((cfg.theme && cfg.theme.fontPair) || "Bodoni MT Bold|Work Sans").split("|");
+    var bodoniWeights = {"Bodoni MT Bold": "700", "Bodoni MT Black": "900"};
+    var invitationFont = Object.prototype.hasOwnProperty.call(bodoniWeights, pair[0]);
+    var displayFamily = invitationFont ? "Bodoni Moda" : pair[0];
+    var fonts = { display: "'" + displayFamily + "', serif", body: "'" + pair[1] + "', sans-serif" };
     var fontLink = document.getElementById("themeFonts");
     if (!fontLink) { fontLink = document.createElement("link"); fontLink.id = "themeFonts"; fontLink.rel = "stylesheet"; document.head.appendChild(fontLink); }
-    fontLink.href = "https://fonts.googleapis.com/css2?family=" + encodeURIComponent(pair[0]) + ":wght@400&family=" + encodeURIComponent(pair[1]) + ":wght@400;500;600&display=swap";
+    fontLink.href = "https://fonts.googleapis.com/css2?family=" + encodeURIComponent(displayFamily) + (invitationFont ? ":opsz,wght@6..96,400..900" : ":wght@400") + "&family=" + encodeURIComponent(pair[1]) + ":wght@400;500;600&display=swap";
 
     if (colors.ink) root.setProperty("--color-ink", colors.ink);
     if (colors.paper) root.setProperty("--color-paper", colors.paper);
@@ -23,6 +26,8 @@
     if (colors.accent2) root.setProperty("--color-accent-2", colors.accent2);
 
     if (fonts.display) root.setProperty("--font-display", fonts.display);
+    root.setProperty("--font-heading", invitationFont ? "'" + pair[0] + "', 'Bodoni Moda', serif" : fonts.display);
+    root.setProperty("--font-heading-weight", invitationFont ? bodoniWeights[pair[0]] : "400");
     if (fonts.body) root.setProperty("--font-body", fonts.body);
   }
 
@@ -144,6 +149,51 @@
     tick();
   }
 
+  function initCopyIban() {
+    var button = document.getElementById('copyIban');
+    var iban = document.getElementById('bankIban');
+    var status = document.getElementById('copyIbanStatus');
+    if (!button || !iban || !status) return;
+    var label = button.querySelector('[data-content="bank.copy"]');
+    var copied = button.querySelector('[data-content="bank.copied"]');
+    var success = status.querySelector('[data-content="bank.copySuccess"]');
+    var failure = status.querySelector('[data-content="bank.copyError"]');
+    var resetTimer;
+    var copying = false;
+    function feedback(state) {
+      button.toggleAttribute('data-copied', state === 'success');
+      label.hidden = state === 'success';
+      copied.hidden = state !== 'success';
+      success.hidden = state !== 'success';
+      failure.hidden = state !== 'error';
+    }
+    button.hidden = false;
+    button.addEventListener('click', async function () {
+      if (copying) return;
+      copying = true;
+      clearTimeout(resetTimer);
+      button.setAttribute('aria-busy', 'true');
+      feedback('');
+      try {
+        await navigator.clipboard.writeText(iban.textContent.replace(/\s+/g, ''));
+        feedback('success');
+        resetTimer = setTimeout(function () {
+          feedback('');
+        }, 4000);
+      } catch (error) {
+        var selection = window.getSelection();
+        var range = document.createRange();
+        range.selectNodeContents(iban);
+        selection.removeAllRanges();
+        selection.addRange(range);
+        feedback('error');
+      } finally {
+        copying = false;
+        button.removeAttribute('aria-busy');
+      }
+    });
+  }
+
   /* ------------------------------------------------------------------
    * FAQ accordion
    * ------------------------------------------------------------------ */
@@ -195,7 +245,7 @@
     if (!isNaN(date.getTime())) {
       var label = date.toLocaleDateString('pt-PT', {timeZone:'Europe/Lisbon', day:'numeric', month:'long', year:'numeric'});
       var time = date.toLocaleTimeString('pt-PT', {timeZone:'Europe/Lisbon', hour:'2-digit', minute:'2-digit'});
-      var dates = {time:label + ' · ' + time, place:label + ' · Lisboa', reception:label + ' · a seguir à missa'};
+      var dates = {date:label, clock:time, time:label + ' · ' + time, place:label + ' · Lisboa', reception:label + ' · a seguir à missa'};
       document.querySelectorAll('[data-date]').forEach(function (el) { el.textContent = dates[el.dataset.date]; });
       document.title = cfg.content['couple.name'] + ' — ' + label;
     }
@@ -282,6 +332,7 @@
 
   document.addEventListener("DOMContentLoaded", function () {
     applyContent();
+    initCopyIban();
     initLightbox();
     applyTheme();
     applySectionToggles();

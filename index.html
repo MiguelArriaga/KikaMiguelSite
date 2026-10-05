@@ -7,7 +7,7 @@
 <meta name="description" content="Casamento de Kika e Miguel, 23 de janeiro de 2027, Lisboa.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Give+You+Glory&family=Instrument+Serif:ital@0;1&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link id="themeFonts" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400..900&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
@@ -15,7 +15,7 @@
 <nav class="nav">
   <div class="nav-inner">
     <div class="nav-brand" aria-label="Kika e Miguel e data do casamento">
-      <span class="nav-mark" data-content="nav.monogram">K &amp; M</span>
+      <span class="nav-mark" data-content="nav.monogram">Kika e Miguel</span>
       <span class="nav-date" data-date="time">23 de janeiro de 2027 · 12:30</span>
     </div>
 
@@ -31,8 +31,8 @@
     <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="navLinks">Menu</button>
     <ul class="nav-links" id="navLinks">
       <li><a href="#detalhes" data-content="nav.details">Onde</a></li>
-      <li><a href="#presentes">Presentes</a></li>
       <li><a href="#historia">A Nossa História</a></li>
+      <li><a href="#presentes">Presentes</a></li>
       <li><a href="#faq">FAQ</a></li>
       <li><a href="#contacto">Contacto</a></li>
     </ul>
@@ -41,12 +41,14 @@
 
 <!-- ========================= HERO ========================= -->
 <header class="hero" data-section="hero" id="topo">
+  <img class="hero-photo" src="pictures/our_story/Main-picture.jpeg" alt="Kika e Miguel" fetchpriority="high" width="1752" height="1168">
   <div class="hero-inner">
     <div class="hero-intro">
       <h1 class="signature" data-content="couple.name">Kika e Miguel</h1>
-      <p class="hero-date" data-date="place">23 de janeiro de 2027 · Lisboa</p>
+      <p class="hero-date" data-date="date">23 de janeiro de 2027</p>
+      <p class="hero-venue" data-content="hero.venue">Igreja de Nossa Senhora das Mercês, Lisboa</p>
+      <p class="hero-time" data-date="clock">12:30</p>
     </div>
-    <img class="hero-photo" src="pictures/our_story/Main-picture.jpeg" alt="Kika e Miguel" fetchpriority="high">
     <nav class="hero-links" aria-label="Explore o nosso casamento">
       <a class="hero-link" href="#detalhes"><span data-content="nav.details">Onde</span><span class="hero-link-arrow" aria-hidden="true">↗</span></a>
       <a class="hero-link" href="#historia"><span data-content="nav.story">A nossa história</span><span class="hero-link-arrow" aria-hidden="true">↗</span></a>
@@ -60,7 +62,7 @@
 <section class="section" data-section="details" id="detalhes">
   <div class="container">
     <h2 data-content="details.title">Onde</h2>
-    <p data-content="details.intro">A cerimónia religiosa e a receção acontecem no mesmo dia, em dois locais a poucos minutos de distância um do outro, em Lisboa.</p>
+    <p data-content="details.intro">Conhecemo-nos em Lisboa, e queremos continuar aqui a nossa vida. Por isso, escolhemos casar também em Lisboa, na Igreja das Mercês, seguido de um almoço na Estufa Fria.</p>
 
     <div class="event-grid">
       <div class="event-card reveal">
@@ -76,7 +78,7 @@
       </div>
       <div class="event-card reveal">
         <img class="event-photo" src="pictures/locations/estufafria_visitar.jpg" alt="Estufa Fria de Lisboa" loading="lazy" decoding="async">
-        <h3><span data-content="event.reception">Copo-d&#x27;água</span></h3>
+        <h3><span data-content="event.reception">Almoço e Festa</span></h3>
         <p class="event-time" data-date="reception">23 de janeiro de 2027 · a seguir à missa</p>
         <address>
           Estufa Fria de Lisboa<br>
@@ -86,47 +88,7 @@
            href="https://www.google.com/maps/search/?api=1&query=Estufa+Fria+de+Lisboa+Parque+Eduardo+VII">Ver no mapa →</a>
       </div>
     </div>
-  </div>
-</section>
-
-<!-- ========================== PRESENTES ======================= -->
-<section class="section" data-section="gifts" id="presentes">
-  <div class="container">
-    <h2 data-content="gifts.title">Presentes</h2>
-    <p class="gift-note" data-content="gifts.intro">A vossa presença é o que mais nos importa. Se nos quiserem mimar, o nosso principal desejo é uma contribuição para a lua de mel na Patagónia.</p>
-
-    <div class="honeymoon" aria-labelledby="honeymoon-title">
-      <span class="honeymoon-label" data-content="honeymoon.fundLabel">Fundo de lua de mel</span>
-      <h3 id="honeymoon-title" data-content="honeymoon.title">Lua de mel na Patagónia</h3>
-      <p data-content="honeymoon.intro">Entre as montanhas de El Chaltén e as paisagens de Torres del Paine, vamos celebrar o início desta nova aventura juntos.</p>
-      <div class="honeymoon-gallery">
-        <figure>
-          <a class="gallery-photo" href="pictures/patagonia/ElChalten.jpg" data-lightbox><img src="pictures/patagonia/ElChalten.jpg" alt="Fitz Roy e lago em El Chaltén" loading="lazy" decoding="async" width="2400" height="1793"></a>
-          <figcaption><span data-content="honeymoon.chalten">El Chaltén · Fitz Roy</span></figcaption>
-        </figure>
-        <figure>
-          <a class="gallery-photo" href="pictures/patagonia/torres_del_paine.jpg" data-lightbox><img src="pictures/patagonia/torres_del_paine.jpg" alt="Torres del Paine e lago na Patagónia chilena" loading="lazy" decoding="async" width="864" height="1080"></a>
-          <figcaption><span data-content="honeymoon.paine">Torres del Paine</span></figcaption>
-        </figure>
-      </div>
-
-      <div class="bank-block">
-      <p>
-        <strong>IBAN</strong>: <span data-content="bank.iban">PT50 0018 000370175294020 34</span><br>
-        <strong>BIC/SWIFT</strong>: <span data-content="bank.bic">TOTAPTPL</span><br>
-      </p>
-      </div>
-    </div>
-
-    <div class="other-gifts" aria-labelledby="other-gifts-title">
-    <h3 id="other-gifts-title" data-content="gifts.otherTitle">Outros presentes</h3>
-    <div class="gift-grid">
-      <div class="gift-card"><img class="gift-photo" src="pictures/presentes/bimby.jpg" alt="Bimby" loading="lazy"><h4 data-content="gifts.bimbyTitle">Bimby</h4><p data-content="gifts.bimbyDescription">Um utensílio versátil para a cozinha.</p></div>
-      <div class="gift-card"><div class="gift-symbol" aria-hidden="true">◇</div><h4 data-content="gifts.secondTitle">Presente a escolher</h4><p data-content="gifts.secondDescription">Mais uma ideia, em breve.</p></div>
-      <div class="gift-card"><div class="gift-symbol" aria-hidden="true">◇</div><h4 data-content="gifts.thirdTitle">Presente a escolher</h4><p data-content="gifts.thirdDescription">Mais uma ideia, em breve.</p></div>
-    </div>
-    <p class="gift-purchase-note"><span data-content="gifts.purchaseNote">Se comprarem um destes presentes, avisem-nos para o marcarmos como oferecido.</span> <a href="mailto:kikaemiguel2027@gmail.com">Enviar email</a></p>
-    </div>
+    <p class="details-dress-code" data-content="details.dressCode">Dress Code: Fraque</p>
   </div>
 </section>
 
@@ -150,14 +112,14 @@
         <div class="moment-gallery count-4">
           <a class="gallery-photo" href="pictures/our_story/having_fun6.jpg" data-lightbox><img src="pictures/our_story/having_fun6.jpg" alt="Kika e Miguel no Douro" loading="lazy" decoding="async" width="3264" height="2448" data-content-alt="story.photo.douro"></a>
           <a class="gallery-photo" href="pictures/our_story/having_fun1.jpg" data-lightbox><img src="pictures/our_story/having_fun1.jpg" alt="Apesar de não guiar no dia-a-dia, a Kika é TOP RACER nos Karts" loading="lazy" decoding="async" width="3472" height="4640" data-content-alt="story.photo.karts"></a>
-          <a class="gallery-photo" href="pictures/our_story/having_fun5.jpg" data-lightbox><img src="pictures/our_story/having_fun5.jpg" alt="A representar a classe dos Bancários!" loading="lazy" decoding="async" width="3264" height="2448" data-content-alt="story.photo.bankers"></a>
+          <a class="gallery-photo" href="pictures/our_story/having_fun5b.jpg" data-lightbox><img src="pictures/our_story/having_fun5b.jpg" alt="A representar a classe dos Bancários!" loading="lazy" decoding="async" width="1959" height="2340" data-content-alt="story.photo.bankers"></a>
           <a class="gallery-photo" href="pictures/our_story/having_fun7.jpg" data-lightbox><img src="pictures/our_story/having_fun7.jpg" alt="Caminhada na Serra da Estrela" loading="lazy" decoding="async" width="4000" height="3000" data-content-alt="story.photo.hike"></a>
         </div>
       </article>
 
       <article class="story-moment reveal">
         <h3><span class="moment-num" data-content="story.proposalNumber">03</span><span data-content="story.proposal">O Pedido</span></h3>
-        <p data-content="story.proposalDescription">O pedido de casamento aconteceu em Paris, durante uma visita à Disneyland.</p>
+        <p data-content="story.proposalDescription">O pedido de casamento aconteceu em Paris!</p>
         <div class="moment-gallery count-4">
           <a class="gallery-photo" href="pictures/our_story/engagement0.jpeg" data-lightbox><img src="pictures/our_story/engagement0.jpeg" alt="O pedido foi feito no nosso primeiro jantar em Paris!" loading="lazy" decoding="async" width="1500" height="2000" data-content-alt="story.photo.proposal"></a>
           <a class="gallery-photo" href="pictures/our_story/engagement2.jpg" data-lightbox><img src="pictures/our_story/engagement2.jpg" alt="O Jantar foi na &#x27;closerie de lilas&#x27; - a &#x27;casa&#x27; do Hemingway e Cole Porter, entre outros!" loading="lazy" decoding="async" width="3264" height="2448" data-content-alt="story.photo.proposalMemories"></a>
@@ -166,6 +128,40 @@
         </div>
       </article>
     </div>
+  </div>
+</section>
+
+<!-- ========================== PRESENTES ======================= -->
+<section class="section" data-section="gifts" id="presentes">
+  <div class="container">
+    <h2 data-content="gifts.title">Presentes</h2>
+    <p class="gift-note" data-content="gifts.intro">A vossa presença é o mais importante, mas se nos quiserem ajudar nesta nossa nova fase, gostávamos muito de uma contribuição para a nova casa ou para a lua de mel na Patagónia.</p>
+
+    <div class="honeymoon" aria-labelledby="honeymoon-title">
+      <span class="honeymoon-label" data-content="honeymoon.fundLabel">Fundo de lua de mel</span>
+      <h3 id="honeymoon-title" data-content="honeymoon.title">Lua de mel na Patagónia</h3>
+      <p data-content="honeymoon.intro">Entre as montanhas de El Chaltén e as paisagens de Torres del Paine, vamos celebrar o início desta nova aventura juntos.</p>
+      <div class="honeymoon-gallery">
+        <figure>
+          <a class="gallery-photo" href="pictures/patagonia/ElChalten.jpg" data-lightbox><img src="pictures/patagonia/ElChalten.jpg" alt="Fitz Roy e lago em El Chaltén" loading="lazy" decoding="async" width="2400" height="1793"></a>
+          <figcaption><span data-content="honeymoon.chalten">El Chaltén · Fitz Roy</span></figcaption>
+        </figure>
+        <figure>
+          <a class="gallery-photo" href="pictures/patagonia/torres_del_paine.jpg" data-lightbox><img src="pictures/patagonia/torres_del_paine.jpg" alt="Torres del Paine e lago na Patagónia chilena" loading="lazy" decoding="async" width="864" height="1080"></a>
+          <figcaption><span data-content="honeymoon.paine">Torres del Paine</span></figcaption>
+        </figure>
+      </div>
+
+      <div class="bank-block">
+        <p class="bank-iban-row"><strong>IBAN</strong>: <span id="bankIban" data-content="bank.iban">PT50 0018 000370175294020 34</span>&nbsp;<button class="copy-iban" id="copyIban" type="button" title="Copiar IBAN" hidden><svg class="copy-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="13" height="13" rx="2"></rect><path d="M16 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h3"></path></svg><svg class="copy-check" viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12 4 4L19 6"></path></svg><span class="copy-label" data-content="bank.copy">Copiar IBAN</span><span class="copy-label" data-content="bank.copied" hidden>IBAN copiado</span></button></p>
+        <p><strong>BIC/SWIFT</strong>: <span data-content="bank.bic">TOTAPTPL</span></p>
+        <hr class="payment-divider">
+        <p><strong>MB Way (Miguel)</strong>: <span data-content="bank.mbWayMiguel">916202487</span></p>
+        <p><strong>MB Way (Kika)</strong>: <span data-content="bank.mbWayKika">931847410</span></p>
+        <p class="copy-status" id="copyIbanStatus" role="status" aria-live="polite" aria-atomic="true"><span data-content="bank.copySuccess" hidden>IBAN copiado.</span><span data-content="bank.copyError" hidden>Não foi possível copiar automaticamente. O IBAN está selecionado para copiar manualmente.</span></p>
+      </div>
+    </div>
+
   </div>
 </section>
 
@@ -220,7 +216,7 @@
 
       <div class="faq-item">
         <button class="faq-question" aria-expanded="false">
-          <span data-content="faq.question.4">Como chego ao sítio do Jantar dentro da estufa fria?</span>
+          <span data-content="faq.question.4">Como chego ao sítio do Almoço dentro da estufa fria?</span>
           <span class="faq-icon">+</span>
         </button>
         <div class="faq-answer">
@@ -239,17 +235,14 @@
 <section class="section" data-section="contact" id="contacto">
   <div class="container">
     <h2 data-content="contact.title">Contacto</h2>
-    <p data-content="contact.intro">Se tiver alguma dúvida, fale connosco através dos contactos indicados no convite.</p>
     <div class="contact-block">
-      <p><strong>Kika &amp; Miguel</strong><br>
-      <span data-content="contact.email">kikaemiguel2027@gmail.com</span><br>
-      <span data-content="contact.phone">[Telefone — por confirmar]</span></p>
+      <p><span data-content="contact.email">kikaemiguel2027@gmail.com</span></p>
     </div>
   </div>
 </section>
 
 <footer>
-  <span class="footer-mark" data-content="footer.monogram">K &amp; M</span>
+  <span class="footer-mark" data-content="footer.monogram">Kika e Miguel</span>
   <span data-date="place">23 de janeiro de 2027 · Lisboa</span>
 </footer>
 

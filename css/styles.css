@@ -2,16 +2,33 @@
 Tokens (defaults — overridden at runtime from js/config.js via main.js)
 ========================================================================== */
 :root {
-  --color-ink: #1C2321;
-  --color-paper: #EEECE3;
-  --color-paper-alt: #E4E1D5;
-  --color-accent: #38493B;
-  --color-accent-2: #A68A5B;
-  --font-display: 'Instrument Serif', serif;
+  --color-ink: #3D3026;
+  --color-paper: #F4EBDD;
+  --color-paper-alt: #E9DBC7;
+  --color-accent: #78563B;
+  --color-accent-2: #91683E;
+  --font-display: 'Bodoni Moda', serif;
+  --font-heading: 'Bodoni MT Bold', 'Bodoni Moda', serif;
+  --font-heading-weight: 700;
   --font-body: 'Work Sans', sans-serif;
-  --line: rgba(28, 35, 33, 0.14);
+  --line: color-mix(in srgb, var(--color-ink) 14%, transparent);
   --max-width: 720px;
   --gutter: 1.5rem;
+}
+/* Prefer local Bodoni MT faces; Bodoni Moda supplies the matching web weights. */
+@font-face {
+  font-family: 'Bodoni MT Bold';
+  src: local('Bodoni MT Bold'), local('BodoniMT-Bold');
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Bodoni MT Black';
+  src: local('Bodoni MT Black'), local('BodoniMTBlack');
+  font-style: normal;
+  font-weight: 900;
+  font-display: swap;
 }
 /* ==========================================================================
 Reset & base
@@ -52,8 +69,9 @@ a {
   color: inherit;
 }
 h1, h2, h3 {
-  font-family: var(--font-display);
-  font-weight: 400;
+  font-family: var(--font-heading);
+  font-weight: var(--font-heading-weight);
+  font-optical-sizing: auto;
   line-height: 1.15;
   margin: 0 0 0.5em;
 }
@@ -93,7 +111,7 @@ Nav
   position: sticky;
   top: 0;
   z-index: 20;
-  background: rgba(238, 236, 227, 0.88);
+  background: color-mix(in srgb, var(--color-paper) 88%, transparent);
   backdrop-filter: blur(6px);
   border-bottom: 1px solid var(--line);
 }
@@ -227,64 +245,78 @@ Hero
   content: "";
   position: absolute;
   inset: 0;
-  background:
-  radial-gradient(circle at 18% 20%, rgba(56, 73, 59, 0.10), transparent 45%),
-  radial-gradient(circle at 82% 78%, rgba(166, 138, 91, 0.14), transparent 50%);
+  z-index: 1;
+  background: linear-gradient(180deg, color-mix(in srgb, var(--color-ink) 4%, transparent) 25%, color-mix(in srgb, var(--color-ink) 25%, transparent) 50%, color-mix(in srgb, var(--color-ink) 88%, transparent) 100%);
   pointer-events: none;
 }
-/* Compact welcome and tactile section navigation. */
+/* Full-screen photograph with an editorial welcome and grouped navigation. */
 .hero {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
+  align-items: flex-end;
   position: relative;
   overflow: hidden;
   min-height: calc(100svh - var(--nav-offset, 8rem) + 24px);
-  padding: clamp(1rem, 4svh, 2.5rem) var(--gutter);
+  padding: clamp(1.25rem, 5svh, 3.5rem) clamp(1rem, 5vw, 5rem);
+  background: var(--color-ink);
+  color: #fff9ef;
+  isolation: isolate;
 }
 .hero-inner {
   position: relative;
+  z-index: 2;
   width: 100%;
-  max-width: 720px;
+  max-width: 1200px;
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: clamp(.85rem, 2.5svh, 1.75rem);
+  gap: clamp(1.25rem, 3svh, 2rem);
+  animation: hero-welcome 1s ease-out both;
 }
 .hero-intro {
-  text-align: center;
+  text-align: left;
 }
 .hero h1.signature {
-  font-family: var(--font-display);
-  font-size: clamp(2.6rem, 7vw, 4.8rem);
+  font-family: var(--font-heading);
+  font-size: clamp(3.1rem, 8vw, 7.5rem);
+  line-height: 1;
   letter-spacing: -.035em;
-  margin: 0 0 .35rem;
+  margin: 0 0 .75rem;
+  text-shadow: 0 2px 24px rgba(0, 0, 0, .15);
 }
 .hero-date {
   letter-spacing: .04em;
-  font-size: .9rem;
+  font-size: .8rem;
   margin: 0;
 }
+.hero-venue {
+  margin: .45rem 0 .15rem;
+  font-size: .85rem;
+  line-height: 1.4;
+}
+.hero-time {
+  margin: 0;
+  font-size: .85rem;
+}
 .hero-photo {
-  width: clamp(140px, 29svh, 260px);
-  height: auto;
-  aspect-ratio: 1;
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
   object-fit: cover;
-  border-radius: 50%;
-  border: 5px solid var(--color-paper);
-  box-shadow: 0 0 0 1px var(--line), 0 12px 40px rgba(28,35,33,.08);
+  object-position: 50% 35%;
+  animation: hero-photo-arrive 1.8s ease-out both;
 }
 .hero-links {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: .35rem;
+  gap: .25rem;
   width: 100%;
   padding: .4rem;
-  border: 1px solid var(--line);
-  border-radius: 999px;
-  background: rgba(255,255,255,.3);
+  max-width: 780px;
+  border: 1px solid rgba(255, 249, 239, .3);
+  border-radius: 6px;
+  background: color-mix(in srgb, var(--color-ink) 45%, transparent);
+  backdrop-filter: blur(10px);
 }
 .hero-link {
   display: flex;
@@ -293,7 +325,7 @@ Hero
   gap: .6rem;
   min-height: 48px;
   padding: .8rem 1rem;
-  border-radius: 999px;
+  border-radius: 3px;
   text-align: left;
   text-decoration: none;
   font-size: .85rem;
@@ -304,10 +336,13 @@ Hero
   transition: transform .2s ease, opacity .2s ease;
 }
 .hero-link:hover, .hero-link:focus-visible {
-  color: var(--color-paper);
-  background: var(--color-accent);
-  box-shadow: 0 4px 12px rgba(28,35,33,.1);
+  color: var(--color-ink);
+  background: #fff9ef;
+  box-shadow: 0 4px 12px color-mix(in srgb, var(--color-ink) 10%, transparent);
   transform: translateY(-2px);
+}
+.hero-link:focus-visible {
+  outline-color: #fff9ef;
 }
 .hero-link:hover .hero-link-arrow, .hero-link:focus-visible .hero-link-arrow {
   transform: translate(2px,-2px);
@@ -320,40 +355,42 @@ Hero
   border-color: var(--color-accent);
 }
 @media (max-width: 600px) {
+  .hero h1.signature {
+    font-size: clamp(2.35rem, 10vw, 3.5rem);
+    letter-spacing: -.045em;
+  }
   .hero-links {
     grid-template-columns: repeat(2,minmax(0,1fr));
-    border-radius: 24px;
   }
   .hero-link {
-    border-radius: 18px;
     padding: .7rem .85rem;
     font-size: .82rem;
   }
   .hero-photo {
-    width: clamp(130px, 26svh, 210px);
+    object-position: 51% 30%;
   }
   .hero-date {
-    font-size: .8rem;
+    font-size: .75rem;
+  }
+  .hero-venue, .hero-time {
+    font-size: .75rem;
   }
 }
 @media (max-height: 500px) and (min-width: 601px) {
   .hero-inner {
-    display: grid;
-    grid-template-columns: 1fr 100px;
-    gap: .8rem 1.5rem;
-  }
-  .hero-intro {
-    text-align: left;
+    gap: .85rem;
   }
   .hero h1.signature {
     font-size: 2.8rem;
   }
-  .hero-photo {
-    width: 100px;
-  }
-  .hero-links {
-    grid-column: 1 / -1;
-  }
+}
+@keyframes hero-photo-arrive {
+  from { transform: scale(1.035); }
+  to { transform: scale(1); }
+}
+@keyframes hero-welcome {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 @media (max-width: 600px) {
   body {
@@ -398,8 +435,7 @@ Hero
   .countdown {
     display: none;
   }
-  .event-card,
-  .gift-card {
+  .event-card {
     padding: 1.25rem 1rem;
   }
   .story-moment {
@@ -459,6 +495,11 @@ Event details
   font-size: 1.5rem;
   margin-bottom: 0.3rem;
 }
+.details-dress-code {
+  margin: 1.5rem 0 0;
+  color: var(--color-accent);
+  font-weight: 500;
+}
 .event-photo {
   width: 100%;
   aspect-ratio: 4 / 3;
@@ -487,8 +528,8 @@ Gifts
 .honeymoon {
   margin: 2rem 0 2.5rem;
   padding: clamp(1.25rem, 4vw, 2.5rem);
-  background: var(--color-paper-alt, #E4E1D5);
-  border: 1px solid rgba(56, 73, 59, .12);
+  background: var(--color-paper-alt);
+  border: 1px solid color-mix(in srgb, var(--color-accent) 12%, transparent);
   border-radius: 24px;
 }
 .honeymoon h3 {
@@ -522,7 +563,7 @@ Gifts
   padding: .4rem;
   background: #faf9f4;
   border-radius: 3px;
-  box-shadow: 0 8px 22px rgba(28, 35, 33, .13);
+  box-shadow: 0 8px 22px color-mix(in srgb, var(--color-ink) 13%, transparent);
 }
 .honeymoon-gallery .gallery-photo img {
   aspect-ratio: 4 / 3;
@@ -550,12 +591,6 @@ Gifts
     padding: .25rem;
   }
 }
-.gift-photo {
-  height: 96px;
-  aspect-ratio: auto;
-  object-fit: contain;
-  margin-bottom: .75rem;
-}
 .gift-note {
   margin-bottom: 1.5rem;
 }
@@ -563,7 +598,7 @@ Gifts
 .bank-block {
   margin-top: 1.75rem;
   padding-top: 1.25rem;
-  border-top: 1px solid rgba(56, 73, 59, .2);
+  border-top: 1px solid color-mix(in srgb, var(--color-accent) 20%, transparent);
   font-size: .9rem;
   line-height: 1.9;
   overflow-wrap: anywhere;
@@ -571,8 +606,71 @@ Gifts
 .bank-block p {
   margin: 0;
 }
+.payment-divider {
+  margin: .75rem 0;
+  border: 0;
+  border-top: 1px solid var(--line);
+}
 .bank-block strong {
   font-weight: 500;
+  color: var(--color-accent);
+}
+.bank-block .bank-iban-row {
+  margin-bottom: .35rem;
+}
+.copy-iban {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  vertical-align: middle;
+  width: 28px;
+  height: 28px;
+  padding: 5px;
+  border: 1px solid var(--color-accent);
+  border-radius: 4px;
+  background: transparent;
+  color: var(--color-accent);
+  font: inherit;
+  font-size: .8rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background .2s ease, color .2s ease;
+}
+.copy-iban svg {
+  width: 16px;
+  height: 16px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.copy-check, .copy-iban[data-copied] .copy-icon {
+  display: none;
+}
+.copy-iban[data-copied] .copy-check {
+  display: block;
+}
+.copy-iban .copy-label {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+.copy-iban:hover, .copy-iban:focus-visible {
+  background: var(--color-accent);
+  color: var(--color-paper);
+}
+.bank-block .copy-status {
+  min-height: 1.5em;
+  margin-top: .25rem;
+  font-size: .8rem;
+  line-height: 1.5;
   color: var(--color-accent);
 }
 .honeymoon-label {
@@ -582,77 +680,6 @@ Gifts
   letter-spacing: .16em;
   text-transform: uppercase;
   color: var(--color-accent);
-}
-.gift-grid {
-  display: grid;
-  gap: 1.25rem;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-}
-.gift-card {
-  border: 1px solid var(--line);
-  padding: 1.25rem;
-}
-.gift-card h4 {
-  font-family: var(--font-body);
-  font-weight: 600;
-  font-size: 0.95rem;
-  margin: 0 0 0.3rem;
-}
-.gift-card p {
-  font-size: 0.85rem;
-  margin: 0;
-}
-.other-gifts {
-  border-top: 1px solid var(--line);
-  padding-top: 1.5rem;
-}
-.other-gifts h3 {
-  font-size: 1.25rem;
-}
-.other-gifts .gift-grid {
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: .8rem;
-  margin-top: 1rem;
-}
-.other-gifts .gift-card {
-  padding: 1rem;
-  border: 0;
-  background: rgba(255, 255, 255, .16);
-}
-.other-gifts .gift-symbol {
-  height: 96px;
-  display: grid;
-  place-items: center;
-  margin-bottom: .75rem;
-  font-size: 2rem;
-  color: var(--color-accent-2);
-}
-.gift-purchase-note {
-  margin-top: 1.25rem;
-  font-size: .85rem;
-}
-@media (max-width: 480px) {
-  .other-gifts .gift-grid {
-    grid-template-columns: 1fr;
-  }
-  .other-gifts .gift-card {
-    display: grid;
-    grid-template-columns: 72px 1fr;
-    column-gap: 1rem;
-    align-items: center;
-  }
-  .other-gifts .gift-photo, .gift-symbol {
-    width: 72px;
-    height: 72px;
-    grid-row: 1 / 3;
-    margin: 0;
-  }
-  .other-gifts .gift-card h4 {
-    align-self: end;
-  }
-  .other-gifts .gift-card p {
-    align-self: start;
-  }
 }
 /* ==========================================================================
 Our story — a flow of moments
@@ -698,7 +725,7 @@ Our story — a flow of moments
   padding: clamp(.3rem, 1vw, .5rem);
   background: rgba(255, 255, 255, .38);
   border: 1px solid var(--line);
-  box-shadow: 0 4px 16px rgba(28, 35, 33, .04);
+  box-shadow: 0 4px 16px color-mix(in srgb, var(--color-ink) 4%, transparent);
 }
 .moment-gallery .gallery-photo img {
   height: auto;
@@ -793,13 +820,7 @@ section, header {
   transform: scale(1.03);
 }
 .gallery-photo:hover {
-  box-shadow: 0 8px 24px rgba(28, 35, 33, .1);
-}
-.gift-photo {
-  width: 100%;
-  aspect-ratio: 4 / 3;
-  object-fit: contain;
-  margin-bottom: .9rem;
+  box-shadow: 0 8px 24px color-mix(in srgb, var(--color-ink) 10%, transparent);
 }
 .venue-map {
   display: block;
@@ -816,7 +837,7 @@ section, header {
   max-height: none;
   padding: 0;
   overflow: hidden;
-  border: 1px solid rgba(238, 236, 227, .16);
+  border: 1px solid color-mix(in srgb, var(--color-paper) 16%, transparent);
   border-radius: 16px;
   background: var(--color-ink);
   color: var(--color-paper);
@@ -827,7 +848,7 @@ section, header {
   grid-template-rows: auto minmax(0, 1fr) auto;
 }
 .lightbox::backdrop {
-  background: rgba(12, 17, 14, .85);
+  background: color-mix(in srgb, var(--color-ink) 85%, transparent);
   backdrop-filter: blur(8px);
 }
 .lightbox-header {
@@ -864,14 +885,14 @@ section, header {
   padding: 0;
   cursor: pointer;
   color: inherit;
-  background: rgba(238, 236, 227, .06);
-  border: 1px solid rgba(238, 236, 227, .2);
+  background: color-mix(in srgb, var(--color-paper) 6%, transparent);
+  border: 1px solid color-mix(in srgb, var(--color-paper) 20%, transparent);
   border-radius: 50%;
   font: inherit;
   transition: background .2s ease, transform .2s ease;
 }
 .lightbox button:hover {
-  background: rgba(238, 236, 227, .16);
+  background: color-mix(in srgb, var(--color-paper) 16%, transparent);
 }
 .lightbox button:active {
   transform: scale(.94);

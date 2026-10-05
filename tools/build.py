@@ -12,7 +12,7 @@ from zoneinfo import ZoneInfo
 
 ROOT = Path(__file__).resolve().parents[1]
 CONFIG = ROOT / "content/site.json"
-FONTS = {"Instrument Serif|Work Sans", "Fraunces|Inter", "Newsreader|Manrope", "Cormorant|Sora"}
+FONTS = {"Bodoni MT Bold|Work Sans", "Bodoni MT Black|Work Sans", "Instrument Serif|Work Sans", "Fraunces|Inter", "Newsreader|Manrope", "Cormorant|Sora"}
 
 
 def retry_io(operation):
@@ -77,7 +77,7 @@ def render(config):
     date = datetime.fromisoformat(config["weddingDateTime"]).astimezone(ZoneInfo("Europe/Lisbon"))
     months = "janeiro fevereiro março abril maio junho julho agosto setembro outubro novembro dezembro".split()
     label = f"{date.day} de {months[date.month-1]} de {date.year}"
-    dates = {"time": label + " · " + date.strftime("%H:%M"), "place": label + " · Lisboa", "reception": label + " · a seguir à missa"}
+    dates = {"date": label, "clock": date.strftime("%H:%M"), "time": label + " · " + date.strftime("%H:%M"), "place": label + " · Lisboa", "reception": label + " · a seguir à missa"}
     source = re.sub(r'(<[^>]+data-date="([^"]+)"[^>]*>)[^<]*(</[^>]+>)', lambda m: m[1] + dates[m[2]] + m[3], source)
     source = re.sub(r'<title>.*?</title>', '<title>' + html.escape(config['content']['couple.name']) + ' — ' + label + '</title>', source)
     return source

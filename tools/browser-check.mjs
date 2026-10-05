@@ -29,10 +29,38 @@ try {
   await send('Page.navigate',{url:'http://127.0.0.1:8000/'});
   for(let n=0;n<100;n++){if(await evaluate('!!document.getElementById("lightbox") && document.readyState === "complete"'))break;await pause(100)}
   assert.equal(await evaluate('document.querySelectorAll("[data-lightbox]").length'),12);
+  assert.deepEqual(await evaluate('Array.from(document.querySelectorAll("section[data-section]")).map(el=>el.id)'),['detalhes','historia','presentes','faq','contacto'],'page section order');
+  assert.deepEqual(await evaluate('Array.from(document.querySelectorAll("#navLinks a")).map(el=>el.hash)'),['#detalhes','#historia','#presentes','#faq','#contacto'],'menu follows section order');
   assert.equal(await evaluate('document.body.innerText.includes("RSVP")'),false);
   assert.equal(await evaluate('document.body.innerText.includes("Patagónia")'),true);
   assert.match(await evaluate('document.getElementById("cd-days").textContent'),/^\d+$/);
-  await evaluate('document.querySelector("[data-lightbox]").click()');
+  // Exercise copying without changing the computer's clipboard.
+  await evaluate(`(() => {
+    window.testClipboardDescriptor = Object.getOwnPropertyDescriptor(navigator, 'clipboard');
+    Object.defineProperty(navigator, 'clipboard', {configurable:true, value:{writeText:async value => {window.testCopiedIban = value;}}});
+    document.getElementById('copyIban').focus();
+  })()`);
+  await send('Input.dispatchKeyEvent',{type:'keyDown',key:'Enter',code:'Enter',text:'\r',unmodifiedText:'\r',windowsVirtualKeyCode:13,nativeVirtualKeyCode:13});
+  await send('Input.dispatchKeyEvent',{type:'keyUp',key:'Enter',code:'Enter',windowsVirtualKeyCode:13,nativeVirtualKeyCode:13});
+  await pause(50);
+  assert.equal(await evaluate('window.testCopiedIban'),await evaluate('window.SITE_CONFIG.content["bank.iban"].replace(/\\s+/g, "")'),'copy the configured IBAN without spaces');
+  assert.equal(await evaluate(`document.querySelector('[data-content="bank.copySuccess"]').hidden`),false);
+  assert.equal(await evaluate('document.getElementById("copyIban").hasAttribute("data-copied")'),true,'check icon confirms copying');
+  assert.equal(await evaluate('document.activeElement.id'),'copyIban','keyboard focus stays on copy button');
+  await pause(4100);
+  assert.equal(await evaluate(`document.querySelector('[data-content="bank.copy"]').hidden`),false,'copy label resets');
+  assert.equal(await evaluate('document.getElementById("copyIban").hasAttribute("data-copied")'),false,'copy icon resets');
+  await evaluate(`Object.defineProperty(navigator, 'clipboard', {configurable:true, value:{writeText:async () => {throw new Error('Clipboard blocked');}}}); document.getElementById('copyIban').click()`);
+  await pause(50);
+  assert.equal(await evaluate(`document.querySelector('[data-content="bank.copyError"]').hidden`),false);
+  assert.equal(await evaluate(`document.querySelector('[data-content="bank.copySuccess"]').hidden`),true,'no false success after clipboard rejection');
+  assert.equal(await evaluate('window.getSelection().toString()'),await evaluate('document.getElementById("bankIban").textContent'),'select IBAN for manual copying');
+  await evaluate(`Object.defineProperty(navigator, 'clipboard', {configurable:true, value:undefined}); document.getElementById('copyIban').click()`);
+  await pause(50);
+  assert.equal(await evaluate(`document.querySelector('[data-content="bank.copyError"]').hidden`),false,'fallback without Clipboard API');
+  assert.equal(await evaluate('document.getElementById("copyIban").hasAttribute("aria-busy")'),false);
+  await evaluate(`if(window.testClipboardDescriptor) Object.defineProperty(navigator, 'clipboard', window.testClipboardDescriptor); else delete navigator.clipboard; window.getSelection().removeAllRanges()`);
+  await evaluate('document.querySelector(".honeymoon-gallery [data-lightbox]").click()');
   assert.equal(await evaluate('document.getElementById("lightbox").open'),true);
   assert.equal(await evaluate('document.getElementById("lightboxCounter").textContent'),'1 / 2');
   assert.equal(await evaluate('getComputedStyle(document.documentElement).overflow'),'hidden');
@@ -45,7 +73,7 @@ try {
   await send('Input.dispatchKeyEvent',{type:'keyUp',key:'Escape',code:'Escape',windowsVirtualKeyCode:27,nativeVirtualKeyCode:27});
   await pause(150);
   assert.equal(await evaluate('document.getElementById("lightbox").open'),false);
-  assert.equal(await evaluate('document.activeElement === document.querySelector("[data-lightbox]")'),true,'focus returns to opener');
+  assert.equal(await evaluate('document.activeElement === document.querySelector(".honeymoon-gallery [data-lightbox]")'),true,'focus returns to opener');
   assert.notEqual(await evaluate('getComputedStyle(document.documentElement).overflow'),'hidden');
   await evaluate('document.querySelectorAll(".faq-question")[3].click()');
   assert.equal(await evaluate('document.querySelectorAll(".faq-question")[3].getAttribute("aria-expanded")'),'true');
@@ -54,6 +82,7 @@ try {
     await send('Emulation.setDeviceMetricsOverride',{width,height,deviceScaleFactor:1,mobile:width<640});
     await pause(150);
     assert.equal(await evaluate('document.documentElement.scrollWidth <= innerWidth'),true,'horizontal overflow at '+width);
+    assert.equal(await evaluate('(()=>{const r=document.getElementById("copyIban").getBoundingClientRect();return r.left>=0&&r.right<=innerWidth&&r.width>=24&&r.width<=32&&r.height>=24&&r.height<=32})()'),true,'compact copy icon fits at '+width);
     assert.equal(await evaluate('Array.from(document.querySelectorAll(".hero-link")).every(el=>{const r=el.getBoundingClientRect();return r.left>=0 && r.right<=innerWidth})'),true,'hero links clipped at '+width);
     if(width===375){await evaluate('document.getElementById("navToggle").click()');assert.equal(await evaluate('document.getElementById("navToggle").getAttribute("aria-expanded")'),'true');}
     if(width>=640) assert.equal(await evaluate('getComputedStyle(document.getElementById("navLinks")).position'),'static');
@@ -87,7 +116,7 @@ try {
   await evaluate('document.getElementById("lightboxClose").click()');
   await send('Emulation.clearDeviceMetricsOverride');
   assert.deepEqual(exceptions,[]);
-  console.log('PASS: browser layout at 5 widths; countdown, photos, lightbox keyboard/Escape, FAQ, mobile menu; no runtime exceptions.');
+  console.log('PASS: browser layout at 5 widths; IBAN copy/keyboard/reset/failure fallback, countdown, photos, lightbox keyboard/Escape, FAQ, mobile menu; no runtime exceptions.');
 } finally {
   if(closeBrowser) await closeBrowser().catch(()=>{});
   if(ws)ws.close();

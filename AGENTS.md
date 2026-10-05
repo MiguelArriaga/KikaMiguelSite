@@ -28,19 +28,31 @@ The couple's latest instructions take precedence over this guide.
 
 ### Home and navigation
 
-- Show the names, wedding date, supplied circular couple photograph and compact
+- Show the names, wedding date, supplied full-screen couple photograph and compact
   grouped section links on the first screen, including a 320 × 568 phone viewport.
 - Hero image: `pictures/our_story/Main-picture.jpeg`.
+- The hero photograph fills the width and remaining first-screen height below
+  the sticky header. Names, date and grouped links sit over a dark gradient;
+  responsive framing keeps both faces visible. Gentle entrance animations
+  respect reduced-motion preferences.
 - The two former invitation lines on the hero were removed.
 - Preserve hover/tap feedback, smooth scrolling and the measured sticky-header
   offset. Navigation must stay synchronized with section visibility.
 - Section configuration keys: `hero`, `details`, `gifts`, `story`, `faq`, `contact`.
-- Existing HTML targets: `topo`, `detalhes`, `presentes`, `historia`, `faq`, `contacto`.
+- Page and navigation order: hero, Onde, A Nossa História, Presentes, FAQ, Contacto.
+- Existing HTML targets: `topo`, `detalhes`, `historia`, `presentes`, `faq`, `contacto`.
 - Use “Onde” for both navigation labels and the event section heading.
+- The sticky banner displays “Kika e Miguel” above the wedding date.
+- The footer also displays “Kika e Miguel” above the date and city.
+- The hero shows the date, “Igreja de Nossa Senhora das Mercês, Lisboa” and
+  the ceremony time on separate lines, without uppercase styling. Date and
+  time come from the wedding configuration and use Europe/Lisbon.
 
 ### Event details and FAQ
 
 - Retain both venue photographs, ceremony/reception details and Google Maps links.
+- The reception at Estufa Fria is labelled “Almoço e Festa”.
+- Show “Dress Code: Fraque” beneath the two venue cards in “Onde”.
 - Dress code: “Fraque.” Follow with “Sugestões para aluguer:”, Alta Roda linked
   to <https://maps.app.goo.gl/TuYQHfsMTjD2f3cx8>, and Diadema linked to Google
   Maps for Rua Ricardo Jorge, 8A, Lisboa, with regular link styling.
@@ -71,11 +83,17 @@ The couple's latest instructions take precedence over this guide.
 - Honeymoon photos and bank details share one integrated panel.
 - Preserve the supplied IBAN and BIC in `content/site.json`; they are confirmed
   by the couple. The account-holder line was removed at their request.
-- Smaller alternatives are titled **“Outros presentes”**: Bimby, with
-  `pictures/presentes/bimby.jpg`, and two neutral gift placeholders.
-- Keep the note asking guests to notify the couple by email when buying a gift,
-  so it can be marked as offered. This is a static site; there is no purchase backend.
-- The two additional gift names/descriptions are deferred until supplied.
+- Below BIC/SWIFT, show MB Way (Miguel): 916202487 and MB Way (Kika): 931847410
+  on separate lines, with a thin horizontal divider before the MB Way details.
+  These supplied numbers are payment details.
+- A compact 28px copy-icon button sits inline with the IBAN. It has an accessible
+  “Copiar IBAN” label, copies without spaces and briefly changes to a check icon
+  with an accessible success message. If clipboard access fails, select the
+  displayed IBAN and show manual-copy instructions. Hide the button without
+  JavaScript.
+- “Outros presentes” was removed at the couple's request, including Bimby,
+  both gift placeholders and the purchase-notification note. Keep the honeymoon
+  panel and IBAN copy button. Retain `pictures/presentes/bimby.jpg` as media.
 
 ### Story, contact and styling
 
@@ -83,15 +101,16 @@ The couple's latest instructions take precedence over this guide.
   in Paris during a Disneyland visit. Approved text:
   > Conhecemo-nos a trabalhar juntos na McKinsey. Aos poucos fomos ficando mais próximos e começámos a partilhar cada vez mais momentos um do outro. O pedido de casamento aconteceu em Paris, durante uma visita à Disneyland.
 - Nine story photos have lightbox access: `working1.jpg`; `having_fun6.jpg`,
-  `having_fun1.jpg`, `having_fun5.jpg`, `having_fun7.jpg`; `engagement0.jpeg`,
+  `having_fun1.jpg`, `having_fun5b.jpg`, `having_fun7.jpg`; `engagement0.jpeg`,
   `engagement2.jpg`, `engagement4.jpg`, `engagement5.jpg`, all under
   `pictures/our_story/`. `having_fun6.jpg` replaced the former fun photo;
   `having_fun7.jpg` was added.
 - First-date story is deferred by the couple; do not introduce that section yet.
-- Contact email is confirmed: **kikaemiguel2027@gmail.com**. Retain the contact
-  text referring guests to the invitation and the gift notification email link.
-- A telephone number is optional. **Keep `[Telefone — por confirmar]` visible**
-  until a number is supplied; do not hide the placeholder.
+- Contact email is confirmed: **kikaemiguel2027@gmail.com**. The contact section
+  shows the heading and email address. Its invitation-reference sentence and
+  bold couple-name line were removed at the couple's request.
+- The telephone placeholder was removed at the couple's request. The contact
+  section shows the confirmed email.
 - Formal, restrained, mobile-first design. Keep configurable fonts, colors and
   section visibility, countdown, scroll reveal, FAQ accordion and accessible
   gallery dialog. Gallery supports previous/next, arrow keys, Escape and focus return.
@@ -121,7 +140,7 @@ The couple's latest instructions take precedence over this guide.
 | `js/config.js` | Generated `window.SITE_CONFIG`; never edit directly |
 | `pictures/our_story/` | Hero, story and retained personal media |
 | `pictures/patagonia/` | Supplied honeymoon photographs |
-| `pictures/presentes/` | Gift image |
+| `pictures/presentes/` | Retained gift image |
 | `pictures/locations/` | Venue images and maps in `MapaEF/` |
 | `tools/build.py` | Configuration validation, text baking and static artifact build |
 | `tools/dev.py` | Loopback-only server for `dist/`, with no write API |
@@ -136,11 +155,16 @@ keys are `weddingDateTime`, `theme`, `sections`, and `content`. Content values a
 strings (up to 5,000 characters); section values are booleans. Theme colors use
 six-digit hex values for `ink`, `paper`, `paperAlt`, `accent`, `accent2`.
 
-Current theme: Instrument Serif / Work Sans; ink `#1C2321`, paper `#EEECE3`,
-alternate paper `#E4E1D5`, accent `#38493B`, second accent `#A68A5B`.
-Supported font pairs are `Instrument Serif|Work Sans`, `Fraunces|Inter`,
-`Newsreader|Manrope`, `Cormorant|Sora`. Fonts load from Google Fonts; the HTML
-also uses Give You Glory for the signature styling.
+Current theme: Bodoni MT Bold / Work Sans, a lighter version of the font in
+`pictures/SaveTheDate_Kika&Miguel_5_.png`; ink `#3D3026`, paper `#F4EBDD`,
+alternate paper `#E9DBC7`, accent `#78563B`, second accent `#91683E`.
+The invitation uses Bodoni MT Black; website headings now use Bodoni MT Bold
+when installed locally. Bodoni Moda at weight 700 is the Google Fonts fallback;
+the proprietary Bodoni MT font files are not bundled with the site.
+Supported font pairs are `Bodoni MT Bold|Work Sans`, `Bodoni MT Black|Work Sans`,
+`Instrument Serif|Work Sans`, `Fraunces|Inter`, `Newsreader|Manrope`,
+`Cormorant|Sora`. Web fonts load from Google Fonts. Colors, borders and hero
+overlays follow the configurable warm ivory, sand and brown palette.
 
 To add configurable copy, add a descriptive key under `content` and the matching
 `data-content="your.key"` on an element containing only text. The build escapes
@@ -238,8 +262,6 @@ Outstanding external setup:
 
 Optional/deferred content:
 
-- [ ] Supply an optional telephone number; retain its visible placeholder meanwhile.
-- Two additional gift names/descriptions: retain placeholders until supplied.
 - First-date story: discuss later, at the couple's request.
 
 No parking/access recheck is pending.
@@ -251,8 +273,7 @@ Approved cleanup recorded on 5 October 2026 is complete:
 - Remove only the unused church facade photo; retain other unused personal media.
 - Remove the empty backend directory and unused CSS; consolidate component styles.
 - Replace numeric content keys with descriptive names.
-- Integrate honeymoon photographs and fund details, use “Outros presentes”, and
-  remove section pre-titles.
+- Integrate honeymoon photographs and fund details and remove section pre-titles.
 - Keep configurable fonts, colors and section visibility.
 
 Keep retained personal media (including unused photos/video); do not infer approval
