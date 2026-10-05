@@ -184,11 +184,10 @@ The couple's latest instructions take precedence over this guide.
   pôr-do-sol no guincho”. Edit these under `story.caption.firstDate` and
   `story.photo.firstDate`.
 - Contact email is confirmed: **kikaemiguel2027@gmail.com**. The contact section
-  shows the heading, email and click-to-call numbers: Miguel **REMOVED**
-  and Kika **REMOVED**, using the supplied MB Way numbers. Its
-  invitation-reference sentence and bold couple-name line were removed.
-- The telephone placeholder was removed at the couple's request. The contact
-  section now shows the confirmed email and supplied telephone numbers.
+  shows only the heading and email address. Its invitation-reference sentence,
+  bold couple-name line and telephone numbers were removed at the couple's request.
+- The telephone placeholder remains removed. The supplied MB Way numbers remain
+  in Presentes as payment details.
 - Formal, restrained, mobile-first design. Keep configurable fonts, colors and
   section visibility, countdown, scroll reveal, FAQ accordion and accessible
   gallery dialog. Gallery supports previous/next, arrow keys, Escape and focus return.

@@ -104,8 +104,6 @@ window.SITE_CONFIG = {
     "faq.hotel.smyLisboa": "Smy Lisboa",
     "contact.title": "Contacto",
     "contact.email": "kikaemiguel2027@gmail.com",
-    "contact.phoneMiguel": "REMOVED",
-    "contact.phoneKika": "REMOVED",
     "footer.monogram": "Kika e Miguel",
     "closing.videoCaption": "We can't wait to see you there!!!",
     "closing.videoFallback": "Ver vídeo",
