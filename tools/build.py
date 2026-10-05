@@ -69,6 +69,11 @@ def render(config):
         key = match.group(2)
         return match.group(1) + html.escape(config["content"][key]) + match.group(3)
     source = re.sub(r'(<[^>]+data-content="([^"]+)"[^>]*>)[^<]*(</[^>]+>)', replace, source)
+    def replace_alt(match):
+        tag = match.group(0)
+        value = html.escape(config["content"][match.group(1)], quote=True)
+        return re.sub(r'\salt="[^"]*"', lambda _: ' alt="' + value + '"', tag)
+    source = re.sub(r'<img\b[^>]*\bdata-content-alt="([^"]+)"[^>]*>', replace_alt, source)
     date = datetime.fromisoformat(config["weddingDateTime"]).astimezone(ZoneInfo("Europe/Lisbon"))
     months = "janeiro fevereiro março abril maio junho julho agosto setembro outubro novembro dezembro".split()
     label = f"{date.day} de {months[date.month-1]} de {date.year}"

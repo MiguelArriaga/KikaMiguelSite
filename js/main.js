@@ -187,6 +187,10 @@
       var value = (cfg.content || {})[el.dataset.content];
       if (typeof value === "string") el.textContent = value;
     });
+    document.querySelectorAll("img[data-content-alt]").forEach(function (img) {
+      var value = (cfg.content || {})[img.dataset.contentAlt];
+      if (typeof value === "string") img.alt = value;
+    });
     var date = new Date(cfg.weddingDateTime);
     if (!isNaN(date.getTime())) {
       var label = date.toLocaleDateString('pt-PT', {timeZone:'Europe/Lisbon', day:'numeric', month:'long', year:'numeric'});
@@ -201,24 +205,55 @@
     var dialog = document.getElementById("lightbox");
     var img = document.getElementById("lightboxImage");
     var caption = document.getElementById("lightboxCaption");
+    var title = document.getElementById("lightboxTitle");
+    var counter = document.getElementById("lightboxCounter");
+    var prev = document.getElementById("lightboxPrev");
+    var next = document.getElementById("lightboxNext");
+    var stage = dialog.querySelector(".lightbox-stage");
     var links = Array.from(document.querySelectorAll("[data-lightbox]"));
+    var group = [];
     var active = 0;
+    var opener;
+    var touchStart;
     function show(index) {
-      active = (index + links.length) % links.length;
-      img.src = links[active].href;
-      img.classList.toggle('map-image', links[active].classList.contains('venue-map'));
-      img.alt = links[active].querySelector("img").alt;
-      caption.textContent = img.alt;
+      active = (index + group.length) % group.length;
+      var link = group[active];
+      var section = link.closest("[data-section]");
+      var moment = link.closest(".story-moment");
+      var momentTitle = moment && moment.querySelector("h3 span:last-child");
+      var honeymoon = link.closest(".honeymoon");
+      var heading = honeymoon ? honeymoon.querySelector("h3") : section.querySelector("h2");
+      title.textContent = heading.textContent + (momentTitle ? " - " + momentTitle.textContent : "");
+      img.src = link.href;
+      img.alt = link.querySelector("img").alt;
+      var figure = link.closest("figure");
+      var label = figure && figure.querySelector("figcaption");
+      caption.textContent = label ? label.textContent : img.alt;
+      counter.textContent = (active + 1) + " / " + group.length;
+      // Cache the adjacent originals so the next photo opens promptly.
+      if (group.length > 1) {
+        [active - 1, active + 1].forEach(function (neighbor) {
+          var preload = new Image();
+          preload.src = group[(neighbor + group.length) % group.length].href;
+        });
+      }
     }
-    links.forEach(function (link, index) {
+    links.forEach(function (link) {
       link.addEventListener("click", function (event) {
         if (!dialog.showModal) return;
-        event.preventDefault(); show(index); dialog.showModal();
+        event.preventDefault();
+        opener = link;
+        var section = link.closest("[data-section]");
+        group = links.filter(function (item) { return item.closest("[data-section]") === section; });
+        prev.hidden = next.hidden = group.length < 2;
+        show(group.indexOf(link));
+        document.documentElement.classList.add("gallery-open");
+        dialog.showModal();
       });
     });
     document.getElementById("lightboxClose").addEventListener("click", function () { dialog.close(); });
-    document.getElementById("lightboxPrev").addEventListener("click", function () { show(active - 1); });
-    document.getElementById("lightboxNext").addEventListener("click", function () { show(active + 1); });
+    prev.addEventListener("click", function () { show(active - 1); });
+    next.addEventListener("click", function () { show(active + 1); });
     dialog.addEventListener("keydown", function (event) {
       if (event.key === "ArrowLeft") { event.preventDefault(); show(active - 1); }
       if (event.key === "ArrowRight") { event.preventDefault(); show(active + 1); }
@@ -227,7 +262,22 @@
       var rect = dialog.getBoundingClientRect();
       if (event.target === dialog && (event.clientX < rect.left || event.clientX > rect.right || event.clientY < rect.top || event.clientY > rect.bottom)) dialog.close();
     });
-    dialog.addEventListener("close", function () { links[active].focus(); });
+    stage.addEventListener("pointerdown", function (event) {
+      if (event.pointerType === "touch") touchStart = {x: event.clientX, y: event.clientY};
+    });
+    stage.addEventListener("pointerup", function (event) {
+      if (!touchStart || event.pointerType !== "touch") return;
+      var dx = event.clientX - touchStart.x;
+      var dy = event.clientY - touchStart.y;
+      touchStart = null;
+      if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy) * 1.5) show(active + (dx < 0 ? 1 : -1));
+    });
+    stage.addEventListener("pointercancel", function () { touchStart = null; });
+    dialog.addEventListener("close", function () {
+      touchStart = null;
+      document.documentElement.classList.remove("gallery-open");
+      opener.focus({preventScroll: true});
+    });
   }
 
   document.addEventListener("DOMContentLoaded", function () {

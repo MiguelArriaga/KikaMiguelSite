@@ -34,13 +34,19 @@ try {
   assert.match(await evaluate('document.getElementById("cd-days").textContent'),/^\d+$/);
   await evaluate('document.querySelector("[data-lightbox]").click()');
   assert.equal(await evaluate('document.getElementById("lightbox").open'),true);
+  assert.equal(await evaluate('document.getElementById("lightboxCounter").textContent'),'1 / 2');
+  assert.equal(await evaluate('getComputedStyle(document.documentElement).overflow'),'hidden');
   const first=await evaluate('document.getElementById("lightboxImage").src');
   await send('Input.dispatchKeyEvent',{type:'keyDown',key:'ArrowRight',code:'ArrowRight'});
   assert.notEqual(await evaluate('document.getElementById("lightboxImage").src'),first);
+  await send('Input.dispatchKeyEvent',{type:'keyDown',key:'ArrowRight',code:'ArrowRight'});
+  assert.equal(await evaluate('document.getElementById("lightboxImage").src'),first,'wrap within honeymoon photos');
   await send('Input.dispatchKeyEvent',{type:'keyDown',key:'Escape',code:'Escape',windowsVirtualKeyCode:27,nativeVirtualKeyCode:27});
   await send('Input.dispatchKeyEvent',{type:'keyUp',key:'Escape',code:'Escape',windowsVirtualKeyCode:27,nativeVirtualKeyCode:27});
   await pause(150);
   assert.equal(await evaluate('document.getElementById("lightbox").open'),false);
+  assert.equal(await evaluate('document.activeElement === document.querySelector("[data-lightbox]")'),true,'focus returns to opener');
+  assert.notEqual(await evaluate('getComputedStyle(document.documentElement).overflow'),'hidden');
   await evaluate('document.querySelectorAll(".faq-question")[3].click()');
   assert.equal(await evaluate('document.querySelectorAll(".faq-question")[3].getAttribute("aria-expanded")'),'true');
   for (const width of [320,375,640,768,1280]) {
@@ -55,6 +61,12 @@ try {
     await pause(250);
     await evaluate('document.fonts.ready.then(()=>window.scrollTo({top:0,behavior:"instant"}))');
     assert.equal(await evaluate('document.querySelector(".hero-links").getBoundingClientRect().bottom <= innerHeight'),true,'navigation below first screen at '+width);
+    await evaluate('document.querySelector(".moment-gallery [data-lightbox]").click()');
+    assert.equal(await evaluate('document.getElementById("lightboxCounter").textContent'),'1 / 9');
+    assert.equal(await evaluate('(()=>{const d=document.getElementById("lightbox"),r=d.getBoundingClientRect();return r.left>=0&&r.right<=innerWidth&&r.top>=0&&r.bottom<=innerHeight&&d.scrollHeight<=d.clientHeight})()'),true,'viewer fits viewport at '+width);
+    await evaluate('document.getElementById("lightboxNext").click()');
+    assert.equal(await evaluate('document.getElementById("lightboxCounter").textContent'),'2 / 9');
+    await evaluate('document.getElementById("lightboxClose").click()');
     const screenshot=await send('Page.captureScreenshot',{format:'png',captureBeyondViewport:false});
     fs.writeFileSync(path.resolve('.preview/site-'+width+'.png'),Buffer.from(screenshot.data,'base64'));
     for (const id of ['detalhes','historia','presentes','faq']) {
@@ -69,6 +81,10 @@ try {
       assert.equal(await evaluate('location.hash'),'#'+id);
     }
   }
+  await evaluate('document.querySelector(".venue-map").click()');
+  assert.equal(await evaluate('document.getElementById("lightboxCounter").textContent'),'1 / 1');
+  assert.equal(await evaluate('document.getElementById("lightboxPrev").hidden && document.getElementById("lightboxNext").hidden'),true,'map has no unrelated photo navigation');
+  await evaluate('document.getElementById("lightboxClose").click()');
   await send('Emulation.clearDeviceMetricsOverride');
   assert.deepEqual(exceptions,[]);
   console.log('PASS: browser layout at 5 widths; countdown, photos, lightbox keyboard/Escape, FAQ, mobile menu; no runtime exceptions.');

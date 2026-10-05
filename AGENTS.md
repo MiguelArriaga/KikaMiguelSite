@@ -36,11 +36,14 @@ The couple's latest instructions take precedence over this guide.
   offset. Navigation must stay synchronized with section visibility.
 - Section configuration keys: `hero`, `details`, `gifts`, `story`, `faq`, `contact`.
 - Existing HTML targets: `topo`, `detalhes`, `presentes`, `historia`, `faq`, `contacto`.
+- Use “Onde” for both navigation labels and the event section heading.
 
 ### Event details and FAQ
 
 - Retain both venue photographs, ceremony/reception details and Google Maps links.
-- Dress code: “Fraque para os homens. Para as senhoras, vestido com chapéu.”
+- Dress code: “Fraque.” Follow with “Sugestões para aluguer:”, Alta Roda linked
+  to <https://maps.app.goo.gl/TuYQHfsMTjD2f3cx8>, and Diadema linked to Google
+  Maps for Rua Ricardo Jorge, 8A, Lisboa, with regular link styling.
 - Church parking approved copy: “Parque Largo de Jesus Telpark — mesmo ao lado
   da Igreja das Mercês. Aberto 24 horas/dia. Primeira hora 2 €”.
 - Church operator link:
@@ -93,6 +96,15 @@ The couple's latest instructions take precedence over this guide.
   section visibility, countdown, scroll reveal, FAQ accordion and accessible
   gallery dialog. Gallery supports previous/next, arrow keys, Escape and focus return.
 - There are 12 lightbox links: nine story photos, two honeymoon photos and one map.
+- Story galleries use framed, staggered columns with the photos' original
+  proportions. Photo thumbnails have no expand icon; clicking opens the lightbox.
+  The dark lightbox groups images by section, shows captions and
+  a counter, supports touch swipes, locks background scrolling and returns focus
+  to the photo that opened it. The map opens on its own without navigation arrows.
+  Story lightbox titles combine the section and current moment (for example,
+  “A Nossa História - McKinsey”) and update as guests browse across moments.
+  Honeymoon lightbox titles use the honeymoon panel heading,
+  “Lua de mel na Patagónia”.
 - Use supplied couple photos; do not substitute unrelated stock couple photos.
   Neutral placeholders are appropriate for content not yet supplied.
 - Italic pre-titles before section headings were removed. Content keys now use
@@ -135,6 +147,13 @@ To add configurable copy, add a descriptive key under `content` and the matching
 text and bakes it into HTML. Avoid putting nested markup in those elements.
 `data-date` handles generated date labels; `data-section` handles visibility;
 `data-lightbox` identifies gallery links. Keep content keys and HTML bindings in sync.
+
+Edit story photo alt text/lightbox captions in `content/site.json`, under
+`story.photo.*` (`work`, `douro`, `karts`, `bankers`, `hike`, `proposal`,
+`proposalMemories`, `disneyland`, `paris`). Each image uses
+`data-content-alt="story.photo.yourKey"` with an `alt` attribute. The build safely
+bakes the text into `alt`; JavaScript applies the same value before opening the
+gallery. Run the build and reload after editing; do not edit generated `js/config.js`.
 
 The build rewrites baked content in the source `index.html`, generates
 `js/config.js`, clears/rebuilds `dist/`, and copies `index.html`, all of `css/`,

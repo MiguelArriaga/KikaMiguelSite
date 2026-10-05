@@ -17,6 +17,7 @@ class Page(HTMLParser):
         self.ids = []
         self.references = []
         self.content_keys = []
+        self.images = []
         self.feed(source)
 
     def handle_starttag(self, tag, attrs):
@@ -25,6 +26,10 @@ class Page(HTMLParser):
             self.ids.append(attrs["id"])
         if "data-content" in attrs:
             self.content_keys.append(attrs["data-content"])
+        if "data-content-alt" in attrs:
+            self.content_keys.append(attrs["data-content-alt"])
+        if tag == "img":
+            self.images.append(attrs)
         for key in ("src", "href"):
             if key in attrs:
                 self.references.append(attrs[key])
@@ -70,11 +75,17 @@ class SiteTests(unittest.TestCase):
     def test_text_escaping_and_date_baking(self):
         config = copy.deepcopy(self.config)
         config["content"]["couple.name"] = '<script>alert("x")</script>'
+        photo_text = 'Douro & Kika — " onerror="alert(1) <exemplo>'
+        config["content"]["story.photo.douro"] = photo_text
         config["weddingDateTime"] = "2027-01-24T13:45:00+00:00"
         rendered = render(config)
         self.assertNotIn('<script>alert("x")</script>', rendered)
         self.assertIn("&lt;script&gt;", rendered)
         self.assertIn("24 de janeiro de 2027 · 13:45", rendered)
+        photos = Page(rendered).images
+        douro = next(img for img in photos if img.get("data-content-alt") == "story.photo.douro")
+        self.assertEqual(douro["alt"], photo_text)
+        self.assertNotIn("onerror", douro)
 
     def test_artifact_and_asset_references(self):
         build()
