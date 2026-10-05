@@ -18,7 +18,7 @@
     var fonts = { display: "'" + displayFamily + "', serif", body: "'" + pair[1] + "', sans-serif" };
     var fontLink = document.getElementById("themeFonts");
     if (!fontLink) { fontLink = document.createElement("link"); fontLink.id = "themeFonts"; fontLink.rel = "stylesheet"; document.head.appendChild(fontLink); }
-    fontLink.href = "https://fonts.googleapis.com/css2?family=" + encodeURIComponent(displayFamily) + (invitationFont ? ":opsz,wght@6..96,400..900" : headingWeight === "700" ? ":wght@400;700" : ":wght@400") + "&family=" + encodeURIComponent(pair[1]) + ":wght@400;500;600&display=swap";
+    fontLink.href = "https://fonts.googleapis.com/css2?family=" + encodeURIComponent(displayFamily) + (invitationFont ? ":opsz,wght@6..96,400..900" : headingWeight === "700" ? ":wght@400;600;700" : ":wght@400") + "&family=" + encodeURIComponent(pair[1]) + ":wght@400;500;600&display=swap";
 
     if (colors.ink) root.setProperty("--color-ink", colors.ink);
     if (colors.paper) root.setProperty("--color-paper", colors.paper);
@@ -216,7 +216,7 @@
     var items = document.querySelectorAll(".reveal");
     if (!items.length) return;
 
-    if (!("IntersectionObserver" in window)) {
+    if (!("IntersectionObserver" in window) || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
       items.forEach(function (el) { el.classList.add("in-view"); });
       return;
     }
@@ -272,14 +272,14 @@
       var section = link.closest("[data-section]");
       var moment = link.closest(".story-moment");
       var momentTitle = moment && moment.querySelector("h3 span:last-child");
-      var honeymoon = link.closest(".honeymoon");
-      var heading = honeymoon ? honeymoon.querySelector("h3") : section.querySelector("h2");
+      var giftPanel = link.closest(".gift-panel");
+      var heading = giftPanel ? giftPanel.querySelector("h3 [data-content]") : section.querySelector("h2");
       title.textContent = heading.textContent + (momentTitle ? " - " + momentTitle.textContent : "");
       img.src = link.href;
       img.alt = link.querySelector("img").alt;
       var figure = link.closest("figure");
       var label = figure && figure.querySelector("figcaption");
-      caption.textContent = label ? label.textContent : img.alt;
+      caption.textContent = section.dataset.section === 'story' ? img.alt : label ? label.textContent : img.alt;
       counter.textContent = (active + 1) + " / " + group.length;
       // Cache the adjacent originals so the next photo opens promptly.
       if (group.length > 1) {
@@ -295,7 +295,11 @@
         event.preventDefault();
         opener = link;
         var section = link.closest("[data-section]");
-        group = links.filter(function (item) { return item.closest("[data-section]") === section; });
+        var giftPanel = link.closest(".gift-panel");
+        dialog.classList.toggle("house-lightbox", !!giftPanel && giftPanel.classList.contains("house"));
+        group = links.filter(function (item) {
+          return giftPanel ? item.closest(".gift-panel") === giftPanel : item.closest("[data-section]") === section;
+        });
         prev.hidden = next.hidden = group.length < 2;
         show(group.indexOf(link));
         document.documentElement.classList.add("gallery-open");
@@ -331,6 +335,60 @@
     });
   }
 
+  function initClosingVideo() {
+    var video = document.getElementById("closingVideo");
+    if (!video) return;
+    var motion = window.matchMedia("(prefers-reduced-motion: reduce)");
+    var allowMotion = !motion.matches;
+    var inView = false;
+    var userPaused = false;
+    video.muted = true;
+
+    function updateLabel() {
+      var key = video.paused ? "closing.videoPlay" : "closing.videoPause";
+      video.setAttribute("aria-label", (cfg.content && cfg.content[key]) || (video.paused ? "Reproduzir vídeo" : "Pausar vídeo"));
+    }
+    function syncPlayback() {
+      if (inView && !document.hidden && allowMotion && !userPaused) {
+        var playback = video.play();
+        if (playback) playback.catch(updateLabel);
+      } else {
+        video.pause();
+      }
+      updateLabel();
+    }
+    function togglePlayback() {
+      userPaused = !video.paused;
+      if (!userPaused) allowMotion = true;
+      syncPlayback();
+    }
+
+    video.addEventListener("play", updateLabel);
+    video.addEventListener("pause", updateLabel);
+    video.addEventListener("click", togglePlayback);
+    video.addEventListener("keydown", function (event) {
+      if (event.key === " " || event.key === "Enter") {
+        event.preventDefault();
+        togglePlayback();
+      }
+    });
+    document.addEventListener("visibilitychange", syncPlayback);
+    motion.addEventListener("change", function () {
+      allowMotion = !motion.matches;
+      syncPlayback();
+    });
+    if ("IntersectionObserver" in window) {
+      new IntersectionObserver(function (entries) {
+        inView = entries[entries.length - 1].isIntersecting;
+        syncPlayback();
+      }, {threshold: 0.15}).observe(video);
+    } else {
+      inView = true;
+      syncPlayback();
+    }
+    updateLabel();
+  }
+
   document.addEventListener("DOMContentLoaded", function () {
     applyContent();
     initCopyIban();
@@ -342,5 +400,6 @@
     initCountdown();
     initFAQ();
     initReveal();
+    initClosingVideo();
   });
 })();

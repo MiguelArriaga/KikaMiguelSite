@@ -7,7 +7,7 @@
 <meta name="description" content="Casamento de Kika e Miguel, 23 de janeiro de 2027, Lisboa.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link id="themeFonts" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link id="themeFonts" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
@@ -15,7 +15,7 @@
 <nav class="nav">
   <div class="nav-inner">
     <div class="nav-brand" aria-label="Kika e Miguel e data do casamento">
-      <span class="nav-mark" data-content="nav.monogram">Kika e Miguel</span>
+      <a class="nav-mark" href="#topo" title="Voltar ao início" data-content="nav.monogram">Kika e Miguel</a>
       <span class="nav-date" data-date="time">23 de janeiro de 2027 · 12:30</span>
     </div>
 
@@ -33,8 +33,8 @@
       <li><a href="#detalhes" data-content="nav.details">Onde</a></li>
       <li><a href="#historia">A Nossa História</a></li>
       <li><a href="#presentes">Presentes</a></li>
-      <li><a href="#faq">FAQ</a></li>
       <li><a href="#contacto">Contacto</a></li>
+      <li><a href="#faq">FAQ</a></li>
     </ul>
   </div>
 </nav>
@@ -50,10 +50,10 @@
       <p class="hero-time" data-date="clock">12:30</p>
     </div>
     <nav class="hero-links" aria-label="Explore o nosso casamento">
-      <a class="hero-link" href="#detalhes"><span data-content="nav.details">Onde</span><span class="hero-link-arrow" aria-hidden="true">↗</span></a>
-      <a class="hero-link" href="#historia"><span data-content="nav.story">A nossa história</span><span class="hero-link-arrow" aria-hidden="true">↗</span></a>
-      <a class="hero-link" href="#presentes"><span data-content="nav.gifts">Presentes</span><span class="hero-link-arrow" aria-hidden="true">↗</span></a>
-      <a class="hero-link" href="#faq"><span data-content="nav.faq">FAQ</span><span class="hero-link-arrow" aria-hidden="true">↗</span></a>
+      <a class="hero-link" href="#detalhes"><span class="hero-link-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M7 18h11V7"/></svg></span><span class="hero-link-label" data-content="nav.details">Onde</span></a>
+      <a class="hero-link" href="#historia"><span class="hero-link-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M7 18h11V7"/></svg></span><span class="hero-link-label" data-content="nav.story">A nossa história</span></a>
+      <a class="hero-link" href="#presentes"><span class="hero-link-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M7 18h11V7"/></svg></span><span class="hero-link-label" data-content="nav.gifts">Presentes</span></a>
+      <a class="hero-link" href="#faq"><span class="hero-link-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M7 18h11V7"/></svg></span><span class="hero-link-label" data-content="nav.faq">FAQ</span></a>
     </nav>
   </div>
 </header>
@@ -62,7 +62,7 @@
 <section class="section" data-section="details" id="detalhes">
   <div class="container">
     <h2 data-content="details.title">Onde</h2>
-    <p data-content="details.intro">Conhecemo-nos em Lisboa, e queremos continuar aqui a nossa vida. Por isso, escolhemos casar também em Lisboa, na Igreja das Mercês, seguido de um almoço na Estufa Fria.</p>
+    <p data-content="details.intro">Conhecemo-nos em Lisboa, vamos viver em Lisboa e casamos também em Lisboa!</p>
 
     <div class="event-grid">
       <div class="event-card reveal">
@@ -94,37 +94,76 @@
 
 <!-- ======================= A NOSSA HISTÓRIA ==================== -->
 <section class="section" data-section="story" id="historia">
-  <div class="container">
+  <div class="container story-container">
     <h2 data-content="story.title">A Nossa História</h2>
 
     <div class="story-flow">
-      <article class="story-moment reveal">
-        <h3><span class="moment-num" data-content="story.workNumber">01</span><span data-content="story.work">McKinsey</span></h3>
-        <p data-content="story.workDescription">Conhecemo-nos a trabalhar juntos na McKinsey.</p>
-        <div class="moment-gallery count-1">
-          <a class="gallery-photo" href="pictures/our_story/working1.jpg" data-lightbox><img src="pictures/our_story/working1.jpg" alt="Kika e Miguel na McKinsey (fotografia tirada às 01:24!)" loading="lazy" decoding="async" width="2304" height="1728" data-content-alt="story.photo.work"></a>
+      <article class="story-moment story-work">
+        <div class="story-copy reveal">
+          <h3><span class="moment-num" data-content="story.workNumber">01</span><span data-content="story.work">O Início</span></h3>
+          <p data-content="story.workDescription">Conhecemo-nos a trabalhar juntos na McKinsey.</p>
+        </div>
+        <div class="moment-gallery story-work-gallery">
+          <figure class="story-photo reveal">
+            <a class="gallery-photo" href="pictures/our_story/working1.jpg" data-lightbox><img src="pictures/our_story/working1.jpg" alt="Kika e Miguel na McKinsey (fotografia tirada às 01:24!)" loading="lazy" decoding="async" width="2304" height="1728" data-content-alt="story.photo.work"></a>
+            <figcaption data-content="story.caption.work">McKinsey, às 01:24</figcaption>
+          </figure>
+          <figure class="story-photo reveal">
+            <a class="gallery-photo" href="pictures/our_story/first_date3.jpg" data-lightbox><img src="pictures/our_story/first_date3.jpg" alt="O nosso primeiro &quot;date&quot; a ver o pôr-do-sol no guincho" loading="lazy" decoding="async" width="2304" height="1728" data-content-alt="story.photo.firstDate"></a>
+            <figcaption data-content="story.caption.firstDate">O nosso primeiro &quot;date&quot; a ver o pôr-do-sol no guincho</figcaption>
+          </figure>
         </div>
       </article>
 
-      <article class="story-moment reveal">
-        <h3><span class="moment-num" data-content="story.funNumber">02</span><span data-content="story.fun">A Divertirmo-nos</span></h3>
-        <p data-content="story.funDescription">Aos poucos fomos ficando mais próximos e começámos a partilhar cada vez mais momentos um do outro.</p>
-        <div class="moment-gallery count-4">
-          <a class="gallery-photo" href="pictures/our_story/having_fun6.jpg" data-lightbox><img src="pictures/our_story/having_fun6.jpg" alt="Kika e Miguel no Douro" loading="lazy" decoding="async" width="3264" height="2448" data-content-alt="story.photo.douro"></a>
-          <a class="gallery-photo" href="pictures/our_story/having_fun1.jpg" data-lightbox><img src="pictures/our_story/having_fun1.jpg" alt="Apesar de não guiar no dia-a-dia, a Kika é TOP RACER nos Karts" loading="lazy" decoding="async" width="3472" height="4640" data-content-alt="story.photo.karts"></a>
-          <a class="gallery-photo" href="pictures/our_story/having_fun5b.jpg" data-lightbox><img src="pictures/our_story/having_fun5b.jpg" alt="A representar a classe dos Bancários!" loading="lazy" decoding="async" width="1959" height="2340" data-content-alt="story.photo.bankers"></a>
-          <a class="gallery-photo" href="pictures/our_story/having_fun7.jpg" data-lightbox><img src="pictures/our_story/having_fun7.jpg" alt="Caminhada na Serra da Estrela" loading="lazy" decoding="async" width="4000" height="3000" data-content-alt="story.photo.hike"></a>
+      <article class="story-moment story-fun">
+        <div class="story-copy reveal">
+          <h3><span class="moment-num" data-content="story.funNumber">02</span><span data-content="story.fun">A Divertirmo-nos</span></h3>
+          <p data-content="story.funDescription">Quando demos por isso, já andávamos a inventar cada vez mais coisas para fazer juntos.</p>
+        </div>
+        <div class="moment-gallery story-collage">
+          <figure class="story-photo reveal">
+            <a class="gallery-photo" href="pictures/our_story/having_fun6.jpg" data-lightbox><img src="pictures/our_story/having_fun6.jpg" alt="Kika e Miguel no Douro" loading="lazy" decoding="async" width="3264" height="2448" data-content-alt="story.photo.douro"></a>
+            <figcaption data-content="story.caption.douro">Pelo Douro</figcaption>
+          </figure>
+          <figure class="story-photo reveal">
+            <a class="gallery-photo" href="pictures/our_story/having_fun1.jpg" data-lightbox><img src="pictures/our_story/having_fun1.jpg" alt="Apesar de não guiar no dia-a-dia, a Kika é TOP RACER nos Karts" loading="lazy" decoding="async" width="3472" height="4640" data-content-alt="story.photo.karts"></a>
+            <figcaption data-content="story.caption.karts">Kika nos karts</figcaption>
+          </figure>
+          <figure class="story-photo reveal">
+            <a class="gallery-photo" href="pictures/our_story/having_fun5b.jpg" data-lightbox><img src="pictures/our_story/having_fun5b.jpg" alt="A representar a classe dos Bancários!" loading="lazy" decoding="async" width="1959" height="2340" data-content-alt="story.photo.bankers"></a>
+            <figcaption data-content="story.caption.bankers">A representar os bancários</figcaption>
+          </figure>
+          <figure class="story-photo reveal">
+            <a class="gallery-photo" href="pictures/our_story/having_fun7.jpg" data-lightbox><img src="pictures/our_story/having_fun7.jpg" alt="Caminhada na Serra da Estrela" loading="lazy" decoding="async" width="4000" height="3000" data-content-alt="story.photo.hike"></a>
+            <figcaption data-content="story.caption.hike">Pela Serra da Estrela</figcaption>
+          </figure>
         </div>
       </article>
 
-      <article class="story-moment reveal">
-        <h3><span class="moment-num" data-content="story.proposalNumber">03</span><span data-content="story.proposal">O Pedido</span></h3>
-        <p data-content="story.proposalDescription">O pedido de casamento aconteceu em Paris!</p>
-        <div class="moment-gallery count-4">
-          <a class="gallery-photo" href="pictures/our_story/engagement0.jpeg" data-lightbox><img src="pictures/our_story/engagement0.jpeg" alt="O pedido foi feito no nosso primeiro jantar em Paris!" loading="lazy" decoding="async" width="1500" height="2000" data-content-alt="story.photo.proposal"></a>
-          <a class="gallery-photo" href="pictures/our_story/engagement2.jpg" data-lightbox><img src="pictures/our_story/engagement2.jpg" alt="O Jantar foi na &#x27;closerie de lilas&#x27; - a &#x27;casa&#x27; do Hemingway e Cole Porter, entre outros!" loading="lazy" decoding="async" width="3264" height="2448" data-content-alt="story.photo.proposalMemories"></a>
-          <a class="gallery-photo" href="pictures/our_story/engagement4.jpg" data-lightbox><img src="pictures/our_story/engagement4.jpg" alt="O dia seguinte foi passado na Disneyland!" loading="lazy" decoding="async" width="1500" height="2000" data-content-alt="story.photo.disneyland"></a>
-          <a class="gallery-photo" href="pictures/our_story/engagement5.jpg" data-lightbox><img src="pictures/our_story/engagement5.jpg" alt="E o último dia foi passado a passear por Paris." loading="lazy" decoding="async" width="2000" height="1500" data-content-alt="story.photo.paris"></a>
+      <article class="story-moment story-proposal">
+        <div class="story-copy reveal">
+          <h3><span class="moment-num" data-content="story.proposalNumber">03</span><span data-content="story.proposal">O Pedido</span></h3>
+          <p data-content="story.proposalDescription">Fomos a Paris para ir à Disney, mas o Miguel tinha outros planos...</p>
+        </div>
+        <div class="moment-gallery proposal-lead">
+          <figure class="story-photo reveal">
+            <a class="gallery-photo" href="pictures/our_story/engagement0.jpeg" data-lightbox><img src="pictures/our_story/engagement0.jpeg" alt="O pedido foi feito no nosso primeiro jantar em Paris!" loading="lazy" decoding="async" width="1500" height="2000" data-content-alt="story.photo.proposal"></a>
+            <figcaption data-content="story.caption.proposal">O nosso primeiro jantar em Paris</figcaption>
+          </figure>
+        </div>
+        <div class="moment-gallery proposal-gallery">
+          <figure class="story-photo reveal">
+            <a class="gallery-photo" href="pictures/our_story/engagement2.jpg" data-lightbox><img src="pictures/our_story/engagement2.jpg" alt="O Jantar foi na &#x27;closerie de lilas&#x27; - a &#x27;casa&#x27; do Hemingway e Cole Porter, entre outros!" loading="lazy" decoding="async" width="3264" height="2448" data-content-alt="story.photo.proposalMemories"></a>
+            <figcaption data-content="story.caption.proposalMemories">Closerie des Lilas</figcaption>
+          </figure>
+          <figure class="story-photo reveal">
+            <a class="gallery-photo" href="pictures/our_story/engagement4.jpg" data-lightbox><img src="pictures/our_story/engagement4.jpg" alt="O dia seguinte foi passado na Disneyland!" loading="lazy" decoding="async" width="1500" height="2000" data-content-alt="story.photo.disneyland"></a>
+            <figcaption data-content="story.caption.disneyland">O dia seguinte, na Disneyland</figcaption>
+          </figure>
+          <figure class="story-photo reveal">
+            <a class="gallery-photo" href="pictures/our_story/engagement5.jpg" data-lightbox><img src="pictures/our_story/engagement5.jpg" alt="E o último dia foi passado a passear por Paris." loading="lazy" decoding="async" width="2000" height="1500" data-content-alt="story.photo.paris"></a>
+            <figcaption data-content="story.caption.paris">A passear por Paris</figcaption>
+          </figure>
         </div>
       </article>
     </div>
@@ -135,33 +174,65 @@
 <section class="section" data-section="gifts" id="presentes">
   <div class="container">
     <h2 data-content="gifts.title">Presentes</h2>
-    <p class="gift-note" data-content="gifts.intro">A vossa presença é o mais importante, mas se nos quiserem ajudar nesta nossa nova fase, gostávamos muito de uma contribuição para a nova casa ou para a lua de mel na Patagónia.</p>
+    <p class="gift-note" data-content="gifts.intro">A vossa presença é o mais importante, mas se nos quiserem ajudar a começar esta nossa nova fase, deixamos algumas ideias de presentes.</p>
 
-    <div class="honeymoon" aria-labelledby="honeymoon-title">
-      <span class="honeymoon-label" data-content="honeymoon.fundLabel">Fundo de lua de mel</span>
-      <h3 id="honeymoon-title" data-content="honeymoon.title">Lua de mel na Patagónia</h3>
-      <p data-content="honeymoon.intro">Entre as montanhas de El Chaltén e as paisagens de Torres del Paine, vamos celebrar o início desta nova aventura juntos.</p>
-      <div class="honeymoon-gallery">
-        <figure>
-          <a class="gallery-photo" href="pictures/patagonia/ElChalten.jpg" data-lightbox><img src="pictures/patagonia/ElChalten.jpg" alt="Fitz Roy e lago em El Chaltén" loading="lazy" decoding="async" width="2400" height="1793"></a>
-          <figcaption><span data-content="honeymoon.chalten">El Chaltén · Fitz Roy</span></figcaption>
-        </figure>
-        <figure>
-          <a class="gallery-photo" href="pictures/patagonia/torres_del_paine.jpg" data-lightbox><img src="pictures/patagonia/torres_del_paine.jpg" alt="Torres del Paine e lago na Patagónia chilena" loading="lazy" decoding="async" width="864" height="1080"></a>
-          <figcaption><span data-content="honeymoon.paine">Torres del Paine</span></figcaption>
-        </figure>
+    <div class="gifts-split">
+      <div class="gift-panel house" aria-labelledby="house-title">
+        <h3 id="house-title"><span data-content="house.title">A Nossa Nova Casa</span></h3>
+        <p data-content="house.intro">Quem casa quer casa! Queremos montar uma casa acolhedora para a nossa família e sempre pronta para vos receber a todos!</p>
+        <div class="gift-gallery house-gallery">
+          <figure>
+            <a class="gallery-photo" href="pictures/presentes/bimby.png" data-lightbox><img src="pictures/presentes/bimby.png" data-content-alt="house.photo.bimby" alt="Bimby TM7 para a nossa nova casa" loading="lazy" decoding="async" width="1228" height="1281"></a>
+            <figcaption data-content="house.caption.bimby">Bimby TM7</figcaption>
+          </figure>
+          <figure>
+            <a class="gallery-photo" href="pictures/presentes/MarriottBed.png" data-lightbox><img src="pictures/presentes/MarriottBed.png" data-content-alt="house.photo.bed" alt="Cama Marriott para a nossa nova casa" loading="lazy" decoding="async" width="1536" height="1024"></a>
+            <figcaption data-content="house.caption.bed">Cama Marriott</figcaption>
+          </figure>
+          <figure>
+            <a class="gallery-photo" href="pictures/presentes/Sofa.png" data-lightbox><img src="pictures/presentes/Sofa.png" data-content-alt="house.photo.sofa" alt="Sofá bege de três lugares para a nossa nova casa" loading="lazy" decoding="async" width="1536" height="1024"></a>
+            <figcaption data-content="house.caption.sofa">Sofá</figcaption>
+          </figure>
+        </div>
       </div>
 
-      <div class="bank-block">
-        <p class="bank-iban-row"><strong>IBAN</strong>: <span id="bankIban" data-content="bank.iban">PT50 0018 000370175294020 34</span>&nbsp;<button class="copy-iban" id="copyIban" type="button" title="Copiar IBAN" hidden><svg class="copy-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="13" height="13" rx="2"></rect><path d="M16 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h3"></path></svg><svg class="copy-check" viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12 4 4L19 6"></path></svg><span class="copy-label" data-content="bank.copy">Copiar IBAN</span><span class="copy-label" data-content="bank.copied" hidden>IBAN copiado</span></button></p>
-        <p><strong>BIC/SWIFT</strong>: <span data-content="bank.bic">TOTAPTPL</span></p>
-        <hr class="payment-divider">
-        <p><strong>MB Way (Miguel)</strong>: <span data-content="bank.mbWayMiguel">916202487</span></p>
-        <p><strong>MB Way (Kika)</strong>: <span data-content="bank.mbWayKika">931847410</span></p>
-        <p class="copy-status" id="copyIbanStatus" role="status" aria-live="polite" aria-atomic="true"><span data-content="bank.copySuccess" hidden>IBAN copiado.</span><span data-content="bank.copyError" hidden>Não foi possível copiar automaticamente. O IBAN está selecionado para copiar manualmente.</span></p>
+      <div class="gift-panel honeymoon" aria-labelledby="honeymoon-title">
+        <h3 id="honeymoon-title"><span data-content="honeymoon.title">Lua de Mel na Patagónia</span></h3>
+        <p data-content="honeymoon.intro">Queremos começar esta grande aventura juntos num dos lugares mais bonitos do planeta - na Patagónia Argentina e Chilena.</p>
+        <div class="gift-gallery honeymoon-gallery">
+          <figure>
+            <a class="gallery-photo" href="pictures/patagonia/ElChalten.jpg" data-lightbox><img src="pictures/patagonia/ElChalten.jpg" alt="Fitz Roy e lago em El Chaltén" loading="lazy" decoding="async" width="2400" height="1793"></a>
+            <figcaption><span data-content="honeymoon.chalten">El Chaltén · Fitz Roy</span></figcaption>
+          </figure>
+          <figure>
+            <a class="gallery-photo" href="pictures/patagonia/torres_del_paine.jpg" data-lightbox><img src="pictures/patagonia/torres_del_paine.jpg" alt="Torres del Paine e lago na Patagónia chilena" loading="lazy" decoding="async" width="864" height="1080"></a>
+            <figcaption><span data-content="honeymoon.paine">Torres del Paine</span></figcaption>
+          </figure>
+        </div>
       </div>
     </div>
 
+    <div class="bank-block">
+      <p class="bank-iban-row"><strong>IBAN:</strong> <span id="bankIban" data-content="bank.iban">PT50 0018 000370175294020 34</span>&nbsp;<button class="copy-iban" id="copyIban" type="button" title="Copiar IBAN" hidden><svg class="copy-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="13" height="13" rx="2"></rect><path d="M16 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h3"></path></svg><svg class="copy-check" viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12 4 4L19 6"></path></svg><span class="copy-label" data-content="bank.copy">Copiar IBAN</span><span class="copy-label" data-content="bank.copied" hidden>IBAN copiado</span></button></p>
+      <p><strong>BIC/SWIFT:</strong> <span data-content="bank.bic">TOTAPTPL</span></p>
+      <hr class="payment-divider">
+      <p><strong>MB Way (Miguel):</strong> <span data-content="bank.mbWayMiguel">916202487</span></p>
+      <p><strong>MB Way (Kika):</strong> <span data-content="bank.mbWayKika">931847410</span></p>
+      <p class="copy-status" id="copyIbanStatus" role="status" aria-live="polite" aria-atomic="true"><span data-content="bank.copySuccess" hidden>IBAN copiado.</span><span data-content="bank.copyError" hidden>Não foi possível copiar automaticamente. O IBAN está selecionado para copiar manualmente.</span></p>
+    </div>
+
+  </div>
+</section>
+
+<!-- ========================== CONTACTO ========================== -->
+<section class="section" data-section="contact" id="contacto">
+  <div class="container">
+    <h2 data-content="contact.title">Contacto</h2>
+    <div class="contact-block">
+      <p><span data-content="contact.email">kikaemiguel2027@gmail.com</span></p>
+      <p><strong>Miguel</strong>: <a href="tel:REMOVED" data-content="contact.phoneMiguel">REMOVED</a></p>
+      <p><strong>Kika</strong>: <a href="tel:REMOVED" data-content="contact.phoneKika">REMOVED</a></p>
+    </div>
   </div>
 </section>
 
@@ -221,22 +292,39 @@
         </button>
         <div class="faq-answer">
           <div class="faq-answer-inner">
-            <p data-content="faq.venueDirections">Siga o percurso assinalado a verde na planta, desde a entrada da Estufa Fria até à Nave, onde será a receção.</p>
+            <p data-content="faq.venueDirections">Siga o percurso assinalado a verde na planta, desde a entrada da Estufa Fria até à Nave, onde será o Almoço</p>
             <a class="venue-map" href="pictures/locations/MapaEF/EstufaFria_mapa_route.png" data-lightbox><img src="pictures/locations/MapaEF/EstufaFria_mapa_route.png" alt="Percurso assinalado a verde da entrada da Estufa Fria até à Nave" loading="lazy"></a>
             <p class="map-note" data-content="faq.mapHint">Selecione a planta para ampliar.</p>
           </div>
         </div>
       </div>
-    </div>
-  </div>
-</section>
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false">
+          <span data-content="faq.question.children">É para levar crianças?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">
+            <p data-content="faq.answer.children">Não estamos a contar com crianças para o Almoço, mas temos todo o gosto se quiserem trazer os vossos filhos para a missa para nos verem casar!</p>
+          </div>
+        </div>
+      </div>
 
-<!-- ========================== CONTACTO ========================== -->
-<section class="section" data-section="contact" id="contacto">
-  <div class="container">
-    <h2 data-content="contact.title">Contacto</h2>
-    <div class="contact-block">
-      <p><span data-content="contact.email">kikaemiguel2027@gmail.com</span></p>
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false">
+          <span data-content="faq.question.hotels">Têm alguma recomendação de hotéis?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">
+            <p data-content="faq.answer.hotels">Em Lisboa é tudo perto, mas duas opções ao pé do sítio da festa são</p>
+            <ul>
+              <li><a data-content="faq.hotel.sanaRex" href="https://www.booking.com/hotel/pt/rex.pt-pt.html?aid=318615&amp;ucfs=1&amp;checkin=2027-01-22&amp;checkout=2027-01-24&amp;dest_id=14055&amp;dest_type=landmark&amp;group_adults=2&amp;no_rooms=1" target="_blank" rel="noopener">SANA Rex Hotel</a></li>
+              <li><a data-content="faq.hotel.smyLisboa" href="https://www.booking.com/hotel/pt/occidental-lisboa.pt-pt.html?aid=318615&amp;ucfs=1&amp;checkin=2027-01-22&amp;checkout=2027-01-24&amp;dest_id=14055&amp;dest_type=landmark&amp;group_adults=2&amp;no_rooms=1" target="_blank" rel="noopener">Smy Lisboa</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -245,6 +333,16 @@
   <span class="footer-mark" data-content="footer.monogram">Kika e Miguel</span>
   <span data-date="place">23 de janeiro de 2027 · Lisboa</span>
 </footer>
+
+<figure class="closing-video">
+  <video id="closingVideo" muted loop playsinline preload="none" poster="pictures/our_story/HavingFun-poster.webp" width="1920" height="1080" tabindex="0" role="button" aria-label="Reproduzir vídeo" aria-describedby="closingVideoCaption">
+    <source src="pictures/our_story/HavingFun-boomerang.mp4" type="video/mp4">
+    <a href="pictures/our_story/HavingFun-boomerang.mp4" data-content="closing.videoFallback">Ver vídeo</a>
+  </video>
+  <figcaption id="closingVideoCaption" lang="en" data-content="closing.videoCaption">We can&#x27;t wait to see you there!!!</figcaption>
+  <span hidden data-content="closing.videoPlay">Reproduzir vídeo</span>
+  <span hidden data-content="closing.videoPause">Pausar vídeo</span>
+</figure>
 
 <dialog id="lightbox" class="lightbox" aria-label="Imagem ampliada" aria-describedby="lightboxCaption">
   <div class="lightbox-header">

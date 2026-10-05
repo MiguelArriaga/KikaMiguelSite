@@ -36,20 +36,51 @@ The couple's latest instructions take precedence over this guide.
   responsive framing keeps both faces visible. Gentle entrance animations
   respect reduced-motion preferences.
 - The two former invitation lines on the hero were removed.
+- Hero section links use an open editorial layout with fine horizontal rules,
+  serif labels and small circular arrow icons to the left of the text, without
+  chapter numbers. Arrow circles are 20px on phones and 24px on larger screens.
+  They form two columns on phones/tablets and four on wide screens; hover and
+  keyboard focus animate the rule and fill the arrow in warm ivory, respecting
+  reduced motion. Keep all four links visible on the first screen.
 - Preserve hover/tap feedback, smooth scrolling and the measured sticky-header
   offset. Navigation must stay synchronized with section visibility.
 - Section configuration keys: `hero`, `details`, `gifts`, `story`, `faq`, `contact`.
-- Page and navigation order: hero, Onde, A Nossa História, Presentes, FAQ, Contacto.
-- Existing HTML targets: `topo`, `detalhes`, `historia`, `presentes`, `faq`, `contacto`.
+- Page and navigation order: hero, Onde, A Nossa História, Presentes, Contacto, FAQ.
+  FAQ is the last section before the footer.
+- Existing HTML targets: `topo`, `detalhes`, `historia`, `presentes`, `contacto`, `faq`.
 - Use “Onde” for both navigation labels and the event section heading.
-- The sticky banner displays “Kika e Miguel” above the wedding date.
+- The sticky banner displays “Kika e Miguel” in Playfair Display at weight 600
+  above the wedding date. The names link to `#topo`, returning guests to the
+  beginning with the existing smooth scrolling and reduced-motion support.
 - The footer also displays “Kika e Miguel” above the date and city.
+- The final item below the footer uses `pictures/our_story/HavingFun-boomerang.mp4`,
+  a silent full-HD forward/reverse loop derived from the retained `HavingFun.mp4`.
+  It has no visible playback controls and plays inline automatically while visible,
+  pausing off-screen or when the tab is hidden. Tap/click the clip or press Enter/Space
+  while focused to pause/resume. Reduced-motion guests initially see the still
+  `HavingFun-poster.webp` and can choose to play. The English caption remains
+  “We can't wait to see you there!!!” (`closing.videoCaption`); accessible playback
+  labels use `closing.videoPlay` and `closing.videoPause`. Keep the full 16:9 frame,
+  rounded corners, subtle border/shadow and responsive caption spacing. The media
+  loads on demand; without JavaScript the poster remains visible.
 - The hero shows the date, “Igreja de Nossa Senhora das Mercês, Lisboa” and
   the ceremony time on separate lines, without uppercase styling. Date and
   time come from the wedding configuration and use Europe/Lisbon.
 
 ### Event details and FAQ
 
+- FAQ includes “É para levar crianças?” with the approved answer: “Não estamos
+  a contar com crianças para o Almoço, mas temos todo o gosto se quiserem trazer
+  os vossos filhos para a missa para nos verem casar!” Edit these under
+  `faq.question.children` and `faq.answer.children`.
+- FAQ includes “Têm alguma recomendação de hotéis?” and the answer “Em Lisboa
+  é tudo perto, mas duas opções ao pé do sítio da festa são”, followed by SANA
+  Rex Hotel and Smy Lisboa links to Booking.com. Both links preselect check-in
+  on 22 January 2027 and check-out on 24 January 2027, for two adults and one
+  room. Copy uses `faq.question.hotels`, `faq.answer.hotels` and `faq.hotel.*`;
+  booking links are edited in `index.html`.
+- Intro below “Onde”: “Conhecemo-nos em Lisboa, vamos viver em Lisboa e casamos
+  também em Lisboa!”
 - Retain both venue photographs, ceremony/reception details and Google Maps links.
 - The reception at Estufa Fria is labelled “Almoço e Festa”.
 - Show “Dress Code: Fraque” beneath the two venue cards in “Onde”.
@@ -65,8 +96,9 @@ The couple's latest instructions take precedence over this guide.
   <https://www.saba.pt/pt/estacionamento-lisboa/parque-de-estacionamento-saba-alto-do-parque>.
 - The couple's approved directions say Uber can drop guests at the Estufa Fria door.
 - Display `pictures/locations/MapaEF/EstufaFria_mapa_route.png`, with lightbox
-  enlargement. Explain the green route from the entrance to the Nave, the
-  reception location. Keep the original map as retained media.
+  enlargement. Approved copy under `faq.venueDirections`: “Siga o percurso
+  assinalado a verde na planta, desde a entrada da Estufa Fria até à Nave, onde
+  será o Almoço”. Keep the original map as retained media.
 - Historical operator research dated 4 October 2026 recorded Largo de Jesus,
   s/n, 1200-231 Lisboa; 24-hour opening; first hour €2; daily maximum €24.90.
   This is historical context, not a fresh verification or additional public copy.
@@ -76,11 +108,52 @@ The couple's latest instructions take precedence over this guide.
 
 ### Gifts and honeymoon
 
-- Presence comes first. A contribution to the honeymoon is the main gift.
+- Presence comes first. Presentes has two panels: “A Nossa Nova Casa” on the
+  left and “Lua de Mel na Patagónia” on the right, with equal widths. Keep them side
+  by side on mobile; the honeymoon photographs use a vertical flow on phones
+  and a compact overlapping pair on wide screens. Use gentle opposing tilts,
+  asymmetric photo widths, ivory frames and soft shadows for a scrapbook feel;
+  keep photos and captions within the honeymoon panel at all screen widths.
+- Both gift cards use the same darker alternate-paper background.
+  House PNG images have transparent backing, without ivory frames, shadows or
+  image filters; their alpha channels show the card background through. Do not
+  apply drop-shadow filters, which can emphasise faint pixels at the PNG edges.
+  All three supplied house PNGs now have alpha transparency, including the
+  updated bed image. No colour blending is applied to the product images.
+  House gallery images share a light stage using the main page paper colour;
+  all three products use their alpha transparency without colour blending. Gallery
+  headers and captions retain the dark surround, and other gallery groups retain
+  their dark stage. House image links suppress the
+  browser's coloured tap overlay
+  while retaining visible keyboard focus.
+  House thumbnails keep transparent backing and no rectangular shadow during
+  hover, focus and active states, including after the gallery closes.
+- Both gift panel headings use the same responsive font size.
+- House copy: “Quem casa quer casa! Queremos montar uma casa acolhedora para a
+  nossa família e sempre pronta para vos receber a todos!”
+- House photographs: `pictures/presentes/bimby.png`,
+  `pictures/presentes/MarriottBed.png` and
+  `pictures/presentes/Sofa.png`. Use the same
+  tilted arrangement as the honeymoon photos, with transparent image backing and a vertical
+  stagger on phones and a three-image collage on larger screens. Preserve full
+  image proportions. Captions and alt text use `house.caption.*` and
+  `house.photo.*` in the content configuration.
+- The Bimby image is displayed at 70% of its gallery frame width, centred,
+  making it 30% smaller while keeping the caption and other images unchanged.
 - Honeymoon: Patagonia, confirmed by the couple on 4 October 2026.
 - Supplied replacement photos: `pictures/patagonia/ElChalten.jpg` and
   `pictures/patagonia/torres_del_paine.jpg`, both with lightbox access.
-- Honeymoon photos and bank details share one integrated panel.
+- Payment details span the full width below both gift panels, in their original
+  vertical arrangement: IBAN with copy button, BIC/SWIFT, a thin horizontal
+  divider, then the two MB Way lines. Both honeymoon photographs retain their
+  original proportions and lightbox access.
+- There is no horizontal separator between the gift panels and the bank details.
+- Gift intro: “A vossa presença é o mais importante, mas se nos quiserem ajudar
+  a começar esta nossa nova fase, deixamos algumas ideias de presentes.”
+- “A Nossa Nova Casa” and “Lua de Mel na Patagónia” have no numbered labels
+  in Presentes. The honeymoon intro is:
+  “Queremos começar esta grande aventura juntos num dos lugares mais bonitos do
+  planeta - na Patagónia Argentina e Chilena.”
 - Preserve the supplied IBAN and BIC in `content/site.json`; they are confirmed
   by the couple. The account-holder line was removed at their request.
 - Below BIC/SWIFT, show MB Way (Miguel): 916202487 and MB Way (Kika): 931847410
@@ -91,39 +164,56 @@ The couple's latest instructions take precedence over this guide.
   with an accessible success message. If clipboard access fails, select the
   displayed IBAN and show manual-copy instructions. Hide the button without
   JavaScript.
-- “Outros presentes” was removed at the couple's request, including Bimby,
-  both gift placeholders and the purchase-notification note. Keep the honeymoon
-  panel and IBAN copy button. Retain `pictures/presentes/bimby.jpg` as media.
+- “Outros presentes”, both gift placeholders and the purchase-notification note
+  remain removed. The couple subsequently requested Bimby, bed and sofa images
+  in “A Nossa Nova Casa” and replaced the old Bimby JPEG with `bimby.png`.
+  Keep the honeymoon panel and shared IBAN copy button.
 
 ### Story, contact and styling
 
-- Story has three moments: meeting at McKinsey, shared moments, and the proposal
-  in Paris during a Disneyland visit. Approved text:
-  > Conhecemo-nos a trabalhar juntos na McKinsey. Aos poucos fomos ficando mais próximos e começámos a partilhar cada vez mais momentos um do outro. O pedido de casamento aconteceu em Paris, durante uma visita à Disneyland.
-- Nine story photos have lightbox access: `working1.jpg`; `having_fun6.jpg`,
+- Story has three moments: “O Início” (McKinsey and the first date), shared
+  moments, and the proposal in Paris on a trip to Disneyland. Current text:
+  > Conhecemo-nos a trabalhar juntos na McKinsey. Quando demos por isso, já andávamos a inventar cada vez mais coisas para fazer juntos. Fomos a Paris para ir à Disney, mas o Miguel tinha outros planos...
+- Ten story photos have lightbox access: `working1.jpg`, `first_date3.jpg`; `having_fun6.jpg`,
   `having_fun1.jpg`, `having_fun5b.jpg`, `having_fun7.jpg`; `engagement0.jpeg`,
   `engagement2.jpg`, `engagement4.jpg`, `engagement5.jpg`, all under
   `pictures/our_story/`. `having_fun6.jpg` replaced the former fun photo;
   `having_fun7.jpg` was added.
-- First-date story is deferred by the couple; do not introduce that section yet.
+- The first date is now included in “O Início”, after the McKinsey photograph.
+  Its caption and lightbox description are: “O nosso primeiro "date" a ver o
+  pôr-do-sol no guincho”. Edit these under `story.caption.firstDate` and
+  `story.photo.firstDate`.
 - Contact email is confirmed: **kikaemiguel2027@gmail.com**. The contact section
-  shows the heading and email address. Its invitation-reference sentence and
-  bold couple-name line were removed at the couple's request.
+  shows the heading, email and click-to-call numbers: Miguel **REMOVED**
+  and Kika **REMOVED**, using the supplied MB Way numbers. Its
+  invitation-reference sentence and bold couple-name line were removed.
 - The telephone placeholder was removed at the couple's request. The contact
-  section shows the confirmed email.
+  section now shows the confirmed email and supplied telephone numbers.
 - Formal, restrained, mobile-first design. Keep configurable fonts, colors and
   section visibility, countdown, scroll reveal, FAQ accordion and accessible
   gallery dialog. Gallery supports previous/next, arrow keys, Escape and focus return.
-- There are 12 lightbox links: nine story photos, two honeymoon photos and one map.
-- Story galleries use framed, staggered columns with the photos' original
-  proportions. Photo thumbnails have no expand icon; clicking opens the lightbox.
+- There are 16 lightbox links: ten story photos, three house images, two
+  honeymoon photos and one map. The two gift panels have independent galleries;
+  the house viewer uses “A Nossa Nova Casa” as its title.
+- Story uses a wider magazine-style layout with three distinct chapters:
+  “O Início” text beside the McKinsey photo and a smaller first-date photo
+  beneath it on desktop. The “01 O Início” heading and text align with the top
+  of the McKinsey photo on wide screens. The other chapters use an asymmetric collage of
+  shared moments, and a lead proposal portrait followed by restaurant, Disneyland
+  and Paris photographs. Mobile uses a vertical flow and compact photo pairs.
+  Large muted chapter numbers, thin ivory frames, soft shadows and staggered
+  reveals complement the warm palette. Reveals respect reduced-motion settings.
+  All ten photos keep their original proportions and lightbox access.
+  Short visible captions are editable under `story.caption.*`; the fuller
+  `story.photo.*` descriptions remain the story lightbox captions and image alt text.
+  Photo thumbnails have no expand icon; clicking opens the lightbox.
   The dark lightbox groups images by section, shows captions and
   a counter, supports touch swipes, locks background scrolling and returns focus
   to the photo that opened it. The map opens on its own without navigation arrows.
   Story lightbox titles combine the section and current moment (for example,
-  “A Nossa História - McKinsey”) and update as guests browse across moments.
+  “A Nossa História - O Início”) and update as guests browse across moments.
   Honeymoon lightbox titles use the honeymoon panel heading,
-  “Lua de mel na Patagónia”.
+  “Lua de Mel na Patagónia”, without the subsection number.
 - Use supplied couple photos; do not substitute unrelated stock couple photos.
   Neutral placeholders are appropriate for content not yet supplied.
 - Italic pre-titles before section headings were removed. Content keys now use
@@ -140,7 +230,7 @@ The couple's latest instructions take precedence over this guide.
 | `js/config.js` | Generated `window.SITE_CONFIG`; never edit directly |
 | `pictures/our_story/` | Hero, story and retained personal media |
 | `pictures/patagonia/` | Supplied honeymoon photographs |
-| `pictures/presentes/` | Retained gift image |
+| `pictures/presentes/` | Supplied Bimby, bed and sofa images |
 | `pictures/locations/` | Venue images and maps in `MapaEF/` |
 | `tools/build.py` | Configuration validation, text baking and static artifact build |
 | `tools/dev.py` | Loopback-only server for `dist/`, with no write API |
@@ -174,7 +264,7 @@ text and bakes it into HTML. Avoid putting nested markup in those elements.
 `data-lightbox` identifies gallery links. Keep content keys and HTML bindings in sync.
 
 Edit story photo alt text/lightbox captions in `content/site.json`, under
-`story.photo.*` (`work`, `douro`, `karts`, `bankers`, `hike`, `proposal`,
+`story.photo.*` (`work`, `firstDate`, `douro`, `karts`, `bankers`, `hike`, `proposal`,
 `proposalMemories`, `disneyland`, `paris`). Each image uses
 `data-content-alt="story.photo.yourKey"` with an `alt` attribute. The build safely
 bakes the text into `alt`; JavaScript applies the same value before opening the
@@ -236,6 +326,8 @@ This optional script requires Chrome at
 375, 640, 768 and 1280, first-screen navigation, horizontal overflow, section
 scroll offsets, countdown, gallery arrows/Escape, FAQ and mobile menu, and catches
 runtime exceptions. It removes its temporary profiles and screenshots on completion.
+It also checks the closing video's full frame, silent playback, automatic off-screen
+pause, tap/keyboard controls and reduced-motion still-image behavior.
 
 Previously recorded validation: all four automated tests, JavaScript syntax and
 diff checks passed; Chrome checks at all five widths passed. This records prior
@@ -263,7 +355,7 @@ Outstanding external setup:
 
 Optional/deferred content:
 
-- First-date story: discuss later, at the couple's request.
+No deferred content is currently recorded; the first-date photo is now included.
 
 No parking/access recheck is pending.
 
@@ -274,7 +366,8 @@ Approved cleanup recorded on 5 October 2026 is complete:
 - Remove only the unused church facade photo; retain other unused personal media.
 - Remove the empty backend directory and unused CSS; consolidate component styles.
 - Replace numeric content keys with descriptive names.
-- Integrate honeymoon photographs and fund details and remove section pre-titles.
+- Integrate honeymoon photographs and fund details and remove section pre-titles
+  (later updated to the two-panel gifts layout described above).
 - Keep configurable fonts, colors and section visibility.
 
 Keep retained personal media (including unused photos/video); do not infer approval
