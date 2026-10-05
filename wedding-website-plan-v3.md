@@ -1,130 +1,99 @@
 # Wedding Website — Build Plan v3 (Kika & Miguel, 23 Jan 2027)
 
-Status: Detailed proposal for review, updated with your answers. Nothing built yet.
+Status: Implemented locally, with final content and external hosting setup pending.
+Updated: 5 October 2026. The detailed checklist is in [TODO.md](TODO.md).
 
-## 0.1 To‑do list
-- Confirm the honeymoon destination is Patagonia.
-- Add gift‑idea cards: Bimby.
-- Verify and update parking details for both venues.
-- Add Estufa Fria path map image (`MapaEF/EstufaFria_mapa_caminho.png`).
-- Add images from the `pictures/` folder to the Our Story section.
-- **TODO:** remove `rsvp.html` file and any references to RSVP.
+## 1. Confirmed scope
 
----
+- Portuguese (PT-PT), static HTML/CSS/vanilla JavaScript, GitHub Pages hosting.
+- Home: names, wedding date, circular couple photograph and compact section links visible on the first screen.
+- Event details: Mass at 12:30, Igreja de Nossa Senhora das Mercês; reception
+  afterwards at Estufa Fria, Lisboa. Map links for both venues.
+- Gifts: presence-first message, honeymoon as the main gift with supplied IBAN/BIC;
+  three discreet alternatives (Bimby and two placeholders), and a note asking
+  guests to notify the couple by email so a purchased gift can be marked as offered.
+- Honeymoon: Patagonia, confirmed by the couple on 4 October 2026.
+- Story: met at McKinsey, shared moments and engagement in Paris/Disneyland;
+  supplied photographs and lightbox.
+- FAQ: dress code, parking for both venues, supplied Estufa Fria plan.
+- Contact section: reference to the invitation, confirmed email
+  kikaemiguel2027@gmail.com and a visible placeholder for the optional telephone number.
+- Content and design changes are made directly in JSON, HTML and CSS files.
 
-## 0. Still open — one real decision + a few small confirmations
+The response form and its backend have been removed from scope. No public
+backend, form deadline, Google Sheets integration or login system is needed.
+This replaces the contradictory older architecture, phase and summary notes.
 
-1. **Database/backend approach — needs your OK.** Your edit-mode answer (#9 below) simplifies this a lot: since edit mode is now dev-only/local, we don't need any login system live on the public site. There is **no backend needed** for the website.
+The two additional gift details remain placeholders. The first-date story is
+deferred until the couple wants to discuss it.
 
-   > Lets go for google sheets approach, if and only if the static website will be able to cleanly push to it without leaking credentials, etc
-2. (Removed RSVP deadline and related notes.)
-3. **Bank/IBAN details + the 4-5 gift ideas** — still pending whenever you have them; built as clearly-marked placeholders until then.
+## 2. Design and interaction
 
-   > Use placeholders
-4. **Parking research (below, Section 6)** — I found solid candidates for both venues, but please double check current prices/hours before we publish anything as fact, since these can change.
-   **Parking details** will be included in the FAQ section for easy reference.
-5. **Estufa Fria path map** — I found a general map of the venue/park (Section 6); once you have it, send me the marked‑up path and I'll turn it into the FAQ graphic.
-6. **"Our Story" text** — I drafted a short version in Section 5 from what you told me; edit/replace as you like.
+Formal, restrained palette with configurable font pairings and section toggles.
+Mobile-first layout, vanilla JavaScript countdown and scroll reveal, FAQ accordion
+and accessible gallery dialog with previous/next controls and Escape to close.
+Use supplied couple photos. Neutral placeholders are appropriate only for
+content that has not been supplied; do not use unrelated stock couple photos.
 
-Nothing here blocks starting the build — I can begin on structure and design (Phases 1–2) while these settle.
+## 3. Architecture and publishing
 
----
+`content/site.json` is the source of truth for editable content and configuration.
+The build bakes text into `index.html` and generates `js/config.js`. The public
+site reads that generated configuration without needing a server.
 
-## 1. Site Map (unchanged, confirmed)
+`tools/dev.py` builds and serves only the generated static site on `127.0.0.1`.
+Edit source files directly and run the build before reloading the browser.
+There is no content-writing API.
 
-1. **Home** — Kika & Miguel, date, short formal invitation line, hero image (placeholder)
-2. **Detalhes do Evento** — Missa (12:30, Igreja das Mercês) + Copo-d'água (Estufa Fria), Lisboa, map pins
-3. (RSVP removed from the navigation.)
-4. **Presentes** — "your presence is the gift" message + bank/IBAN placeholder + 4–5 gift idea cards
-5. **A Nossa História** — brief text + photo gallery
-6. **FAQ** — dress code, parking (both venues), Estufa Fria path map
-7. **Contacto**
-8. *(Not in nav, dev-only, local-only)* **Edit mode / config panel**
+`tools/build.py` creates `dist/` from an allowlist of public files. The GitHub
+Pages workflow deploys only that artifact, excluding development tools,
+source JSON and documentation. Publishing from the root branch is not the
+supported deployment method.
 
-Portuguese (PT-PT) only.
+The ceremony timestamp includes a time-zone offset, and display uses Lisbon
+time so guests viewing from other countries see the same ceremony time.
 
----
+## 4. Content
 
-## 2. Design Direction (unchanged, confirmed)
-
-- Formal, sleek, modern, sober color palette; more restrained than the luisaandchristopher.com reference, which leans classic.
-- Fully configurable palette + curated modern font pairs, section toggles — but now this configuration lives in a **local dev tool**, not a live admin page (see Section 4).
-- Vanilla JS for scroll-reveal, countdown-to-the-day, and a gallery lightbox — no framework needed, keeps GitHub Pages hosting simple.
-- Mobile-first.
-
-### Photo placeholders — updated per your answer
-Since you only have photos of yourselves and don't want mismatched placeholder people-photos sitting next to your real ones, I'll use:
-- **Neutral shape/color-block placeholders** (or simple line-art icons) anywhere a *photo of the two of you* will eventually go (hero image, Our Story, Gallery) — clearly "waiting for content," never a random stock couple.
-- **Real stock/web photography** only for purely decorative/background elements that aren't meant to represent you (e.g. a subtle botanical/texture background nodding to Estufa Fria's greenhouse setting, or an abstract Lisbon-tile-inspired pattern).
-
----
-
-## 3. Technical Architecture — simplified
-
-**Hosting:** GitHub Pages, as before.
-
-**Backend:** none required for the static website.
-
-**RSVP deadline logic:** fully client-side — a single date is set in the site's config file; once today's date passes it, the form is replaced with "Respostas fechadas." No backend logic needed for this part.
-
----
-
-## 4. Edit Mode & Configuration — revised
-
-Per your answer, this is a **developer-only, local feature**:
-- When you run the site locally (e.g. `npm run dev` or similar), an extra local-only route/panel appears letting you edit section wording and tweak the palette/fonts/section toggles, with a live preview.
-- Saving writes directly to the site's local content/config files (plain JSON), which you then commit and push like any other code change to publish.
-- The **published** GitHub Pages site never includes this panel or any login system — it's pure static HTML/CSS/JS reading from the already-baked-in config, which is simpler and removes the need for any auth or live database for content at all.
-- This also means the "hide/disable later" concern from earlier is moot — there's nothing to hide, since it never ships.
-
----
-
-## 5. Content Drafts
-
-**Our Story (draft, PT-PT, edit freely):**
+Story draft retained across the three story moments:
 
 > Conhecemo-nos a trabalhar juntos na McKinsey. Aos poucos fomos ficando mais próximos e começámos a partilhar cada vez mais momentos um do outro. O pedido de casamento aconteceu em Paris, durante uma visita à Disneyland.
 
----
+Supplied bank details remain in place, as confirmed by the couple. The
+account-holder line has been removed at the couple’s request; a telephone number remains optional, with its placeholder kept visible. The confirmed
+contact email is kikaemiguel2027@gmail.com.
 
-## 6. Parking Research (preliminary — please verify before publishing)
+The updated file `pictures/locations/MapaEF/EstufaFria_mapa_route.png` is displayed and can be
+enlarged. It shows a green route from the entrance to the Nave; the FAQ explains
+how to follow that supplied route.
 
-**Near Igreja das Mercês (Largo de Jesus, Chiado/Bairro Alto):**
-- This is a historic, narrow-street area with mostly paid EMEL on-street parking (metered) — free street parking is scarce in central Chiado/Bairro Alto.
-- Best bet for guests: **Parque do Largo Camões**, an underground public car park at Praça Luís de Camões 36, about a 5-minute walk from the church (built starting in 1999, on the site of the former Palácio dos Marqueses de Marialva).
+## 5. Parking research
 
-**Near Estufa Fria (Parque Eduardo VII):**
-- The Estufa Fria sits inside Parque Eduardo VII, at Praça Marquês de Pombal, reachable via the Marquês de Pombal metro station.
-- Best bet: the underground public parking beneath Praça Marquês de Pombal / Avenida da Liberdade area, a short walk from the Estufa Fria entrance.
+Verified against the operator pages on 4 October 2026:
 
-I'll firm up exact addresses, current hourly/day rates and opening hours closer to when we finalize this FAQ section — parking prices and operators change, so treat the above as a starting point rather than final copy.
+- [Parque Largo de Jesus](https://www.telpark.com/pt/cidades/lisboa/parque-largo-de-jesus/): beside Igreja das Mercês, Largo de Jesus, s/n, 1200-231 Lisboa; 24h; first hour €2; daily maximum €24.90.
+- Estufa Fria: the couple specifies street parking on Alameda Edgar Cardoso,
+  Uber drop-off at the venue entrance, and [Saba Alto do Parque](https://www.saba.pt/pt/estacionamento-lisboa/parque-de-estacionamento-saba-alto-do-parque)
+  The public FAQ links the car park name to Google Maps without that street wording.
 
-**Estufa Fria map:** I found general park/venue maps online (Parque Eduardo VII layout, with the Estufa Fria in the northwest corner). Once you send me the specific path you want highlighted (e.g. from a particular entrance to the reception area inside), I'll turn it into a simple annotated graphic for the FAQ.
+The research above is historical context. The public church FAQ uses the approved concise wording: beside the church, open 24 hours/day, first hour €2. Both FAQs include operator links. Guests should check
+current prices; do not promise availability or an unverified walking duration.
+The couple has accepted the current parking and access information; no further recheck is planned.
 
----
+## 6. Remaining steps
 
-7. Build Phases
+1. Supply a contact telephone number, if desired; keep its placeholder visible until then.
+2. Enable GitHub Actions as the Pages source, push changes and verify deployment.
+3. Choose and configure a custom domain when ready.
 
-1. Scaffold — repo, GitHub Pages deploy, base layout/nav in Portuguese, placeholders everywhere
-2. Design system — palette/typography as CSS variables, responsive layout, animations, countdown
-3. RSVP backend — Google Sheets + Apps Script endpoint (pending your OK) or Firebase, connected to the form
-   - The form will POST to the Google Apps Script Web‑App URL: `https://script.google.com/macros/s/<SCRIPT_ID>/exec`.
-4. RSVP form UI — name, attending, dietary restrictions, deadline logic, confirmation message
-5. Local dev edit/config tooling (Section 4)
-6. FAQ + maps — parking, dress code, Estufa Fria path graphic
-7. Content pass — real photos, final story text, gift ideas, bank details
-8. Domain hookup, whenever ready
+Local validation is complete: four automated tests pass. Chrome checks at five
+viewport widths have verified section navigation and gallery controls.
 
-I'll start with Phases 1–2 so you can react to the look and feel before anything backend-related gets wired up.
+The repository includes the build and deployment workflow. Live hosting and
+DNS configuration have not been verified or changed as part of this local build.
 
----
+## Current presentation and maintenance
 
-## 8. Summary of All Answers Incorporated
+Honeymoon photographs and bank details share one integrated panel. The smaller gift section is titled “Outros presentes”. Italic text preceding section headings has been removed. Nine story photos, two honeymoon photos and one route map retain lightbox access. Content fields have descriptive names; theme and section configuration remain supported.
 
-- ~320 guests expected
-- RSVP form auto-closes after a deadline date (TBD) → "Respostas fechadas"
-- Parking: researched preliminary options for both venues (Section 6), needs your verification
-- Photo placeholders: neutral blocks/icons for "you two" slots, real stock imagery OK for backgrounds only
-- Our Story: met at McKinsey, engaged in Paris at Disneyland — draft text above
-- Edit mode: developer-only, local, never shipped to the public site
-- Estufa Fria map: general park map found; will build the annotated path graphic once you mark it up
+The cleanup review is complete and its document has been deleted. The current build/deployment structure is retained.
