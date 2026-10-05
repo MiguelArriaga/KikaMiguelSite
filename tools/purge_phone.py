@@ -58,7 +58,7 @@ def main():
     print("Enter the exact phone-number variant to remove.")
     print("Your input will be hidden.")
 
-    phone = getpass("Phone: ")
+    phone = input("Phone: ")
 
     if not phone:
         raise SystemExit("No phone number entered.")
