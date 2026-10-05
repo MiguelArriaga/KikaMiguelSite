@@ -2,6 +2,7 @@
   "use strict";
 
   var cfg = window.SITE_CONFIG || {};
+  var countdownTimer;
 
   /* ------------------------------------------------------------------
    * Apply theme tokens from config.js onto CSS variables
@@ -9,7 +10,11 @@
   function applyTheme() {
     var root = document.documentElement.style;
     var colors = (cfg.theme && cfg.theme.colors) || {};
-    var fonts = (cfg.theme && cfg.theme.fonts) || {};
+    var pair = ((cfg.theme && cfg.theme.fontPair) || "Instrument Serif|Work Sans").split("|");
+    var fonts = { display: "'" + pair[0] + "', serif", body: "'" + pair[1] + "', sans-serif" };
+    var fontLink = document.getElementById("themeFonts");
+    if (!fontLink) { fontLink = document.createElement("link"); fontLink.id = "themeFonts"; fontLink.rel = "stylesheet"; document.head.appendChild(fontLink); }
+    fontLink.href = "https://fonts.googleapis.com/css2?family=" + encodeURIComponent(pair[0]) + ":wght@400&family=" + encodeURIComponent(pair[1]) + ":wght@400;500;600&display=swap";
 
     if (colors.ink) root.setProperty("--color-ink", colors.ink);
     if (colors.paper) root.setProperty("--color-paper", colors.paper);
@@ -29,8 +34,13 @@
     document.querySelectorAll("[data-section]").forEach(function (el) {
       var key = el.getAttribute("data-section");
       if (Object.prototype.hasOwnProperty.call(sections, key) && !sections[key]) {
-        el.style.display = "none";
-      }
+        el.hidden = true;
+      } else { el.hidden = false; }
+    });
+    document.querySelectorAll('a[href^="#"]').forEach(function (link) {
+      var target = document.getElementById(link.getAttribute("href").slice(1));
+      link.hidden = !!(target && target.hidden);
+      if (link.parentElement.tagName === "LI") link.parentElement.hidden = link.hidden;
     });
   }
 
@@ -55,10 +65,53 @@
     });
   }
 
+  function initSectionNavigation() {
+    var nav = document.querySelector('.nav');
+    var anchors = Array.from(document.querySelectorAll('a[href^="#"]'));
+    var sections = Array.from(document.querySelectorAll('header[id], section[id]'));
+    var offset = 0;
+    function measure() {
+      offset = nav.getBoundingClientRect().height + 24;
+      document.documentElement.style.setProperty('--nav-offset', offset + 'px');
+    }
+    measure();
+    if ('ResizeObserver' in window) new ResizeObserver(measure).observe(nav);
+    else window.addEventListener('resize', measure);
+    anchors.forEach(function (link) {
+      link.addEventListener('click', function (event) {
+        if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+        var target = document.getElementById(link.hash.slice(1));
+        if (!target || target.hidden) return;
+        event.preventDefault();
+        document.getElementById('navLinks').classList.remove('open');
+        document.getElementById('navToggle').setAttribute('aria-expanded', 'false');
+        measure();
+        target.scrollIntoView({behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth', block:'start'});
+        history.pushState(null, '', link.hash);
+        target.setAttribute('tabindex', '-1');
+        target.focus({preventScroll:true});
+      });
+    });
+    var scheduled = false;
+    function updateActive() {
+      scheduled = false;
+      var active = sections.filter(function (section) { return !section.hidden && section.getBoundingClientRect().top <= offset + 32; }).pop();
+      anchors.forEach(function (link) {
+        if (active && link.hash === '#' + active.id) link.setAttribute('aria-current','location');
+        else link.removeAttribute('aria-current');
+      });
+    }
+    window.addEventListener('scroll', function () {
+      if (!scheduled) { scheduled = true; requestAnimationFrame(updateActive); }
+    }, {passive:true});
+    updateActive();
+  }
+
   /* ------------------------------------------------------------------
    * Countdown to the wedding date/time
    * ------------------------------------------------------------------ */
   function initCountdown() {
+    clearInterval(countdownTimer);
     var target = cfg.weddingDateTime ? new Date(cfg.weddingDateTime) : null;
     if (!target || isNaN(target.getTime())) return;
 
@@ -72,7 +125,7 @@
       var diff = target.getTime() - Date.now();
       if (diff <= 0) {
         elDays.textContent = elHours.textContent = elMins.textContent = elSecs.textContent = "0";
-        clearInterval(timer);
+        clearInterval(countdownTimer);
         return;
       }
       var s = Math.floor(diff / 1000);
@@ -87,80 +140,8 @@
       elSecs.textContent = String(secs).padStart(2, "0");
     }
 
+    countdownTimer = setInterval(tick, 1000);
     tick();
-    var timer = setInterval(tick, 1000);
-  }
-
-  /* ------------------------------------------------------------------
-   * RSVP: deadline gate + submission to the Google Apps Script endpoint
-   * ------------------------------------------------------------------ */
-  function initRSVP() {
-    var form = document.getElementById("rsvpForm");
-    var closedBox = document.getElementById("rsvpClosed");
-    var intro = document.getElementById("rsvp-intro");
-    if (!form) return;
-
-    var deadline = cfg.rsvpDeadline ? new Date(cfg.rsvpDeadline) : null;
-    var deadlineText = document.getElementById("rsvp-deadline-text");
-    if (deadline && deadlineText) {
-      deadlineText.textContent = deadline.toLocaleDateString("pt-PT", {
-        day: "numeric", month: "long", year: "numeric"
-      });
-    }
-
-    if (deadline && Date.now() > deadline.getTime()) {
-      form.hidden = true;
-      if (intro) intro.hidden = true;
-      closedBox.hidden = false;
-      return;
-    }
-
-    form.addEventListener("submit", function (evt) {
-      evt.preventDefault();
-      var note = document.getElementById("rsvpNote");
-      var submitBtn = document.getElementById("rsvpSubmit");
-      var endpoint = cfg.rsvpEndpoint;
-
-      var payload = {
-        nome: form.nome.value.trim(),
-        presenca: form.presenca.value,
-        restricoes: form.restricoes.value.trim(),
-        enviadoEm: new Date().toISOString()
-      };
-
-      if (!endpoint || endpoint.indexOf("PASTE_YOUR") === 0) {
-        note.textContent = "O formulário ainda não está ligado a um destino (falta configurar rsvpEndpoint em config.js).";
-        note.className = "form-note error";
-        return;
-      }
-
-      submitBtn.disabled = true;
-      note.textContent = "A enviar...";
-      note.className = "form-note";
-
-      // Apps Script Web Apps don't return a readable response under
-      // "no-cors" mode, so we can't confirm success from the response body.
-      // We treat "the request didn't throw" as success — a real network
-      // failure (offline, blocked, wrong URL) still surfaces in the catch.
-      fetch(endpoint, {
-        method: "POST",
-        mode: "no-cors",
-        headers: { "Content-Type": "text/plain;charset=utf-8" },
-        body: JSON.stringify(payload)
-      })
-        .then(function () {
-          note.textContent = "Obrigado! A vossa confirmação foi recebida.";
-          note.className = "form-note success";
-          form.reset();
-        })
-        .catch(function () {
-          note.textContent = "Não foi possível enviar agora. Por favor tentem novamente, ou contactem-nos diretamente.";
-          note.className = "form-note error";
-        })
-        .finally(function () {
-          submitBtn.disabled = false;
-        });
-    });
   }
 
   /* ------------------------------------------------------------------
@@ -201,12 +182,62 @@
     items.forEach(function (el) { observer.observe(el); });
   }
 
+  function applyContent() {
+    document.querySelectorAll("[data-content]").forEach(function (el) {
+      var value = (cfg.content || {})[el.dataset.content];
+      if (typeof value === "string") el.textContent = value;
+    });
+    var date = new Date(cfg.weddingDateTime);
+    if (!isNaN(date.getTime())) {
+      var label = date.toLocaleDateString('pt-PT', {timeZone:'Europe/Lisbon', day:'numeric', month:'long', year:'numeric'});
+      var time = date.toLocaleTimeString('pt-PT', {timeZone:'Europe/Lisbon', hour:'2-digit', minute:'2-digit'});
+      var dates = {time:label + ' · ' + time, place:label + ' · Lisboa', reception:label + ' · a seguir à missa'};
+      document.querySelectorAll('[data-date]').forEach(function (el) { el.textContent = dates[el.dataset.date]; });
+      document.title = cfg.content['couple.name'] + ' — ' + label;
+    }
+  }
+
+  function initLightbox() {
+    var dialog = document.getElementById("lightbox");
+    var img = document.getElementById("lightboxImage");
+    var caption = document.getElementById("lightboxCaption");
+    var links = Array.from(document.querySelectorAll("[data-lightbox]"));
+    var active = 0;
+    function show(index) {
+      active = (index + links.length) % links.length;
+      img.src = links[active].href;
+      img.classList.toggle('map-image', links[active].classList.contains('venue-map'));
+      img.alt = links[active].querySelector("img").alt;
+      caption.textContent = img.alt;
+    }
+    links.forEach(function (link, index) {
+      link.addEventListener("click", function (event) {
+        if (!dialog.showModal) return;
+        event.preventDefault(); show(index); dialog.showModal();
+      });
+    });
+    document.getElementById("lightboxClose").addEventListener("click", function () { dialog.close(); });
+    document.getElementById("lightboxPrev").addEventListener("click", function () { show(active - 1); });
+    document.getElementById("lightboxNext").addEventListener("click", function () { show(active + 1); });
+    dialog.addEventListener("keydown", function (event) {
+      if (event.key === "ArrowLeft") { event.preventDefault(); show(active - 1); }
+      if (event.key === "ArrowRight") { event.preventDefault(); show(active + 1); }
+    });
+    dialog.addEventListener("click", function (event) {
+      var rect = dialog.getBoundingClientRect();
+      if (event.target === dialog && (event.clientX < rect.left || event.clientX > rect.right || event.clientY < rect.top || event.clientY > rect.bottom)) dialog.close();
+    });
+    dialog.addEventListener("close", function () { links[active].focus(); });
+  }
+
   document.addEventListener("DOMContentLoaded", function () {
+    applyContent();
+    initLightbox();
     applyTheme();
     applySectionToggles();
     initNav();
+    initSectionNavigation();
     initCountdown();
-    initRSVP();
     initFAQ();
     initReveal();
   });

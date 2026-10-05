@@ -1,5 +1,4 @@
-// Generated from content/site.json by tools/build.py.
-window.SITE_CONFIG = {
+{
   "weddingDateTime": "2027-01-23T12:30:00+00:00",
   "theme": {
     "colors": {
@@ -79,4 +78,4 @@ window.SITE_CONFIG = {
     "story.fun": "A Divertirmo-nos",
     "story.proposal": "O Pedido"
   }
-};
+}
