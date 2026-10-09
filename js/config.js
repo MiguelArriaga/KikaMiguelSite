@@ -2,7 +2,7 @@
 window.SITE_CONFIG = {
   "weddingDateTime": "2027-01-23T12:30:00+00:00",
   "giftForm": {
-    "url": ""
+    "url": "https://docs.google.com/forms/d/e/1FAIpQLSdnnUQxGZ78u5RQVlN-WBxMYcdQK6cORLPvaqNQm06u_W8C7A/viewform"
   },
   "theme": {
     "colors": {
