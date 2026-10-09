@@ -69,11 +69,8 @@ The couple's latest instructions take precedence over this guide.
 
 ### Event details and FAQ
 
-- FAQ includes “É para levar crianças?” with the approved answer: “Não estamos
-  a contar com crianças para o Almoço, mas temos todo o gosto se quiserem trazer
-  os vossos filhos para a missa para nos verem casar!” Edit these under
-  `faq.question.children` and `faq.answer.children`.
-- FAQ includes “Têm alguma recomendação de hotéis?” and the answer “Em Lisboa
+- The children FAQ question and answer were removed at the couple’s request.
+- FAQ includes “Não vivo em Lisboa, têm alguma recomendação de estadia?” and the answer “Em Lisboa
   é tudo perto, mas duas opções ao pé do sítio da festa são”, followed by SANA
   Rex Hotel and Smy Lisboa links to Booking.com. Both links preselect check-in
   on 22 January 2027 and check-out on 24 January 2027, for two adults and one
@@ -182,6 +179,8 @@ The couple's latest instructions take precedence over this guide.
   Its caption and lightbox description are: “O nosso primeiro "date" a ver o
   pôr-do-sol no guincho”. Edit these under `story.caption.firstDate` and
   `story.photo.firstDate`.
+- The karts photograph caption and alt/lightbox description both read “Nós nos
+  karts”, using `story.caption.karts` and `story.photo.karts`.
 - Contact email is confirmed: **kikaemiguel2027@gmail.com**. The contact section
   shows only the heading and email address. Its invitation-reference sentence,
   bold couple-name line and telephone numbers were removed at the couple's request.
