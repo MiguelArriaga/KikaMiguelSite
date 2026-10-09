@@ -69,11 +69,8 @@ The couple's latest instructions take precedence over this guide.
 
 ### Event details and FAQ
 
-- FAQ includes “É para levar crianças?” with the approved answer: “Não estamos
-  a contar com crianças para o Almoço, mas temos todo o gosto se quiserem trazer
-  os vossos filhos para a missa para nos verem casar!” Edit these under
-  `faq.question.children` and `faq.answer.children`.
-- FAQ includes “Têm alguma recomendação de hotéis?” and the answer “Em Lisboa
+- The children FAQ question and answer were removed at the couple’s request.
+- FAQ includes “Não vivo em Lisboa, têm alguma recomendação de estadia?” and the answer “Em Lisboa
   é tudo perto, mas duas opções ao pé do sítio da festa são”, followed by SANA
   Rex Hotel and Smy Lisboa links to Booking.com. Both links preselect check-in
   on 22 January 2027 and check-out on 24 January 2027, for two adults and one
@@ -109,18 +106,18 @@ The couple's latest instructions take precedence over this guide.
 
 - Presence comes first. Presentes has two panels: “A Nossa Nova Casa” on the
   left and “Lua de Mel na Patagónia” on the right, with equal widths. Keep them side
-  by side on mobile; the honeymoon photographs use a vertical flow on phones
-  and a compact overlapping pair on wide screens. Use gentle opposing tilts,
+  by side on mobile; the honeymoon photographs retain a compact overlapping pair at all
+  screen widths, scaling down within their panel on phones. Use gentle opposing tilts,
   asymmetric photo widths, ivory frames and soft shadows for a scrapbook feel;
   keep photos and captions within the honeymoon panel at all screen widths.
 - Both gift cards use the same darker alternate-paper background.
   House PNG images have transparent backing, without ivory frames, shadows or
   image filters; their alpha channels show the card background through. Do not
   apply drop-shadow filters, which can emphasise faint pixels at the PNG edges.
-  All three supplied house PNGs now have alpha transparency, including the
+  All four supplied house PNGs now have alpha transparency, including the
   updated bed image. No colour blending is applied to the product images.
   House gallery images share a light stage using the main page paper colour;
-  all three products use their alpha transparency without colour blending. Gallery
+  all four products use their alpha transparency without colour blending. Gallery
   headers and captions retain the dark surround, and other gallery groups retain
   their dark stage. House image links suppress the
   browser's coloured tap overlay
@@ -131,12 +128,19 @@ The couple's latest instructions take precedence over this guide.
 - House copy: “Quem casa quer casa! Queremos montar uma casa acolhedora para a
   nossa família e sempre pronta para vos receber a todos!”
 - House photographs: `pictures/presentes/bimby.png`,
-  `pictures/presentes/MarriottBed.png` and
-  `pictures/presentes/Sofa.png`. Use the same
-  tilted arrangement as the honeymoon photos, with transparent image backing and a vertical
-  stagger on phones and a three-image collage on larger screens. Preserve full
+  `pictures/presentes/Cama.png`, `pictures/presentes/Sofa.png` and
+  `pictures/presentes/Frigorifico.png`. Use the same
+  tilted arrangement as the honeymoon photos, with transparent image backing and a
+  four-image, two-column collage at every screen width, scaled down on phones. Keep
+  the house collage compact with gently overlapping columns and a small stagger,
+  while keeping captions readable. Preserve full
   image proportions. Captions and alt text use `house.caption.*` and
   `house.photo.*` in the content configuration.
+- The fridge uses the supplied transparent `Frigorifico.png` photograph; its
+  thumbnail and lightbox link reference the same file.
+  Edit its caption/description under `house.caption.fridge` and `house.photo.fridge`.
+- Bed caption and description use “Cama” without Marriott branding. Keep the
+  supplied replacement `Cama.png` image for both the thumbnail and lightbox.
 - The Bimby image is displayed at 70% of its gallery frame width, centred,
   making it 30% smaller while keeping the caption and other images unchanged.
 - Honeymoon: Patagonia, confirmed by the couple on 4 October 2026.
@@ -182,6 +186,8 @@ The couple's latest instructions take precedence over this guide.
   Its caption and lightbox description are: “O nosso primeiro "date" a ver o
   pôr-do-sol no guincho”. Edit these under `story.caption.firstDate` and
   `story.photo.firstDate`.
+- The karts photograph caption and alt/lightbox description both read “Nós nos
+  karts”, using `story.caption.karts` and `story.photo.karts`.
 - Contact email is confirmed: **kikaemiguel2027@gmail.com**. The contact section
   shows only the heading and email address. Its invitation-reference sentence,
   bold couple-name line and telephone numbers were removed at the couple's request.
@@ -190,7 +196,7 @@ The couple's latest instructions take precedence over this guide.
 - Formal, restrained, mobile-first design. Keep configurable fonts, colors and
   section visibility, countdown, scroll reveal, FAQ accordion and accessible
   gallery dialog. Gallery supports previous/next, arrow keys, Escape and focus return.
-- There are 16 lightbox links: ten story photos, three house images, two
+- There are 17 lightbox links: ten story photos, four house images, two
   honeymoon photos and one map. The two gift panels have independent galleries;
   the house viewer uses “A Nossa Nova Casa” as its title.
 - Story uses a wider magazine-style layout with three distinct chapters:
@@ -228,7 +234,7 @@ The couple's latest instructions take precedence over this guide.
 | `js/config.js` | Generated `window.SITE_CONFIG`; never edit directly |
 | `pictures/our_story/` | Hero, story and retained personal media |
 | `pictures/patagonia/` | Supplied honeymoon photographs |
-| `pictures/presentes/` | Supplied Bimby, bed and sofa images |
+| `pictures/presentes/` | Supplied Bimby, bed, sofa and fridge images |
 | `pictures/locations/` | Venue images and maps in `MapaEF/` |
 | `tools/build.py` | Configuration validation, text baking and static artifact build |
 | `tools/dev.py` | Loopback-only server for `dist/`, with no write API |
@@ -380,3 +386,4 @@ This guide contains the available information from the README, plan and TODO,
 plus implementation details verified against the repository. Those three older
 documents can be removed after consolidation review; this guide does not rely on
 links to them. They have been left in place during creation of this file.
+
