@@ -47,7 +47,7 @@
     "house.photo.bimby": "Bimby TM7 para a nossa nova casa",
     "house.photo.bed": "Cama para a nossa nova casa",
     "house.photo.sofa": "Sofá bege de três lugares para a nossa nova casa",
-    "house.photo.fridge": "Frigorífico para a nossa nova casa — imagem provisória",
+    "house.photo.fridge": "Frigorífico para a nossa nova casa",
     "bank.iban": "PT50 0018 000370175294020 34",
     "bank.bic": "TOTAPTPL",
     "bank.mbWayMiguel": "916202487",
@@ -114,3 +114,4 @@
     "event.reception": "Almoço e Festa"
   }
 }
+

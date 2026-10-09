@@ -114,10 +114,10 @@ The couple's latest instructions take precedence over this guide.
   House PNG images have transparent backing, without ivory frames, shadows or
   image filters; their alpha channels show the card background through. Do not
   apply drop-shadow filters, which can emphasise faint pixels at the PNG edges.
-  All three supplied house PNGs now have alpha transparency, including the
+  All four supplied house PNGs now have alpha transparency, including the
   updated bed image. No colour blending is applied to the product images.
   House gallery images share a light stage using the main page paper colour;
-  all three products use their alpha transparency without colour blending. Gallery
+  all four products use their alpha transparency without colour blending. Gallery
   headers and captions retain the dark surround, and other gallery groups retain
   their dark stage. House image links suppress the
   browser's coloured tap overlay
@@ -128,17 +128,17 @@ The couple's latest instructions take precedence over this guide.
 - House copy: “Quem casa quer casa! Queremos montar uma casa acolhedora para a
   nossa família e sempre pronta para vos receber a todos!”
 - House photographs: `pictures/presentes/bimby.png`,
-  `pictures/presentes/MarriottBed.png`, `pictures/presentes/Sofa.png` and
-  `pictures/presentes/fridge-placeholder.svg`. Use the same
+  `pictures/presentes/Cama.png`, `pictures/presentes/Sofa.png` and
+  `pictures/presentes/Frigorifico.png`. Use the same
   tilted arrangement as the honeymoon photos, with transparent image backing and a vertical
   stagger on phones and a four-image, two-column collage on larger screens. Preserve full
   image proportions. Captions and alt text use `house.caption.*` and
   `house.photo.*` in the content configuration.
-- The fridge uses a neutral SVG placeholder until the couple supplies the actual
-  photograph; replace its source and lightbox link together when provided.
+- The fridge uses the supplied transparent `Frigorifico.png` photograph; its
+  thumbnail and lightbox link reference the same file.
   Edit its caption/description under `house.caption.fridge` and `house.photo.fridge`.
 - Bed caption and description use “Cama” without Marriott branding. Keep the
-  existing `MarriottBed.png` image unchanged until the couple supplies a replacement.
+  supplied replacement `Cama.png` image for both the thumbnail and lightbox.
 - The Bimby image is displayed at 70% of its gallery frame width, centred,
   making it 30% smaller while keeping the caption and other images unchanged.
 - Honeymoon: Patagonia, confirmed by the couple on 4 October 2026.
@@ -232,7 +232,7 @@ The couple's latest instructions take precedence over this guide.
 | `js/config.js` | Generated `window.SITE_CONFIG`; never edit directly |
 | `pictures/our_story/` | Hero, story and retained personal media |
 | `pictures/patagonia/` | Supplied honeymoon photographs |
-| `pictures/presentes/` | Supplied Bimby, bed and sofa images; fridge placeholder |
+| `pictures/presentes/` | Supplied Bimby, bed, sofa and fridge images |
 | `pictures/locations/` | Venue images and maps in `MapaEF/` |
 | `tools/build.py` | Configuration validation, text baking and static artifact build |
 | `tools/dev.py` | Loopback-only server for `dist/`, with no write API |
@@ -384,3 +384,4 @@ This guide contains the available information from the README, plan and TODO,
 plus implementation details verified against the repository. Those three older
 documents can be removed after consolidation review; this guide does not rely on
 links to them. They have been left in place during creation of this file.
+
