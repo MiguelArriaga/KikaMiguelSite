@@ -18,12 +18,14 @@ class Page(HTMLParser):
         self.references = []
         self.content_keys = []
         self.images = []
+        self.elements = {}
         self.feed(source)
 
     def handle_starttag(self, tag, attrs):
         attrs = dict(attrs)
         if "id" in attrs:
             self.ids.append(attrs["id"])
+            self.elements[attrs["id"]] = attrs
         if "data-content" in attrs:
             self.content_keys.append(attrs["data-content"])
         if "data-content-alt" in attrs:
@@ -109,6 +111,55 @@ class SiteTests(unittest.TestCase):
         self.assertEqual(self.request("GET", "/")[0], 200)
         self.assertEqual(self.request("GET", "/content/site.json")[0], 404)
         self.assertEqual(self.request("POST", "/", "{}")[0], 501)
+
+    def test_gift_form_configuration(self):
+        for url in ["javascript:alert(1)", "http://docs.google.com/forms/d/e/test/viewform",
+                    "https://docs.google.com.evil.example/forms/d/e/test/viewform",
+                    "https://docs.google.com/forms/d/e/test/viewform?entry.1=private",
+                    "https://docs.google.com/forms/d/e/test/viewform#fragment",
+                    "https://docs.google.com/forms/d/test/edit"]:
+            with self.subTest(url=url):
+                config = copy.deepcopy(self.config)
+                config["giftForm"]["url"] = url
+                with self.assertRaises(ValueError):
+                    validate(config)
+        for invalid in [{}, {"url": None}, {"url": "", "secret": "example"}]:
+            config = copy.deepcopy(self.config)
+            config["giftForm"] = invalid
+            with self.assertRaises(ValueError):
+                validate(config)
+
+    def test_gift_form_baking(self):
+        config = copy.deepcopy(self.config)
+        config["giftForm"]["url"] = ""
+        disabled = Page(render(config))
+        self.assertIn("hidden", disabled.elements["giftForm"])
+        self.assertNotIn("src", disabled.elements["giftFormFrame"])
+        config["giftForm"]["url"] = "https://docs.google.com/forms/d/e/test-form/viewform"
+        validate(config)
+        enabled_source = render(config)
+        enabled = Page(enabled_source)
+        self.assertNotIn("hidden", enabled.elements["giftForm"])
+        self.assertEqual(enabled.elements["giftFormFrame"]["src"],
+                         config["giftForm"]["url"] + "?embedded=true")
+        self.assertEqual(enabled.elements["giftFormLink"]["href"], config["giftForm"]["url"])
+        self.assertEqual(enabled.elements["giftFormFrame"]["loading"], "lazy")
+        self.assertLess(enabled_source.index('class="bank-block"'), enabled_source.index('id="giftForm"'))
+        self.assertLess(enabled_source.index('id="giftForm"'), enabled_source.index('id="contacto"'))
+        # Turning a configured form off must clear the previous baked URL as well.
+        from unittest.mock import patch
+        from pathlib import Path
+        original_read = Path.read_text
+        def read_with_baked_source(path, *args, **kwargs):
+            if path == ROOT / "index.html":
+                return enabled_source
+            return original_read(path, *args, **kwargs)
+        config["giftForm"]["url"] = ""
+        with patch.object(Path, "read_text", read_with_baked_source):
+            disabled = Page(render(config))
+        self.assertIn("hidden", disabled.elements["giftForm"])
+        self.assertNotIn("src", disabled.elements["giftFormFrame"])
+        self.assertEqual(disabled.elements["giftFormLink"]["href"], "#presentes")
 
 
 if __name__ == "__main__":

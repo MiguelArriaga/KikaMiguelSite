@@ -17,9 +17,10 @@ The couple's latest instructions take precedence over this guide.
   offset and render dates/times in `Europe/Lisbon`, including for overseas guests.
 - Static HTML, CSS and vanilla JavaScript, hosted on GitHub Pages. No framework
   or Node package installation is required for the site or Python build.
-- The response/RSVP page, form, deadline, backend, Google Sheets integration,
-  authentication, page editor, content-writing API and live preview were removed
-  from scope. Do not restore them without a new request.
+- The response/RSVP page, deadline, backend, authentication, page editor,
+  content-writing API and live preview remain out of scope. On 9 October 2026
+  the couple requested a gifts-only Google Form embedded beneath MB Way,
+  with responses saved to a private Google Sheet. This does not restore RSVP.
 - Content and design are edited directly in JSON, HTML and CSS.
 - The local implementation is complete; optional/deferred content and external
   hosting setup remain. Live hosting and DNS have not been verified in this work.
@@ -172,6 +173,48 @@ The couple's latest instructions take precedence over this guide.
   in “A Nossa Nova Casa” and replaced the old Bimby JPEG with `bimby.png`.
   Keep the honeymoon panel and shared IBAN copy button.
 
+### Gift notification form (draft, not connected)
+
+- The couple approved trying a themed Google Forms embed below all payment
+  details. Guests enter `Nome`, `Presente` and `Mensagem para os noivos`, then
+  use Google's submit button. Google supplies the submission timestamp and
+  confirmation. This records a guest's statement, not verified payment.
+- The private response spreadsheet has been created. The form itself has **not**
+  been created, themed, published or linked: browser sign-in was declined, and
+  the subsequent browser access check reported a saved permission block for
+  `docs.google.com`. Do not claim that submissions have been tested or enabled.
+- `content/site.json` now has `giftForm.url`, initially empty. The entire form
+  area remains hidden and the iframe has no `src` until a real published
+  responder URL is supplied. Use the full URL in the form
+  `https://docs.google.com/forms/d/e/FORM_ID/viewform`, without query parameters
+  or fragments. The build validates the host/path and adds `?embedded=true`
+  only to the iframe; a separate link opens the form in a new window.
+- The integration is baked into HTML and works without JavaScript. Do not add
+  custom POST requests, hidden submission frames, or a client-side success
+  message: the embedded Google Form handles and confirms its own submission.
+- Form copy uses `giftForm.title`, `giftForm.intro` and `giftForm.open`.
+  Website CSS styles only the surrounding section, not Google's iframe content.
+- To finish in Google Forms: create `Presentes — Kika e Miguel` in the couple's
+  designated Drive folder, add required short answers for `Nome` and `Presente`
+  and an optional paragraph for `Mensagem para os noivos`. Set a confirmation
+  such as `Obrigada! O vosso presente e a vossa mensagem ficaram registados.`
+- In Customize theme, use the site's brown accent `#78563B`, the closest
+  available cream background to `#F4EBDD`, and available fonts similar to
+  Playfair Display / Work Sans. No header photograph is needed. Inspect the
+  available choices rather than promising an exact background/font match.
+- Link Responses to the existing private gift spreadsheet. Google may create
+  its own response tab; keep any existing tab and do not overwrite private data.
+  Allow anyone with the published responder link to respond without requiring
+  a Google sign-in. Do not enable one-response limits, verified email collection,
+  file uploads, or sharing of response summaries with respondents.
+- Copy the actual responder link to `giftForm.url`, rebuild, then verify the
+  embed at phone and desktop widths, external-link fallback and anonymous
+  submission. Use clearly labelled synthetic test data and confirm the response
+  reaches the private Sheet. Remove only disposable test data if authorised.
+- Creation, theme, anonymous access, linking, real submission and rendered
+  verification remain pending. Keep the PR in draft until those checks pass;
+  merge only after the couple explicitly approves the identified version.
+
 ### Story, contact and styling
 
 - Story has three moments: “O Início” (McKinsey and the first date), shared
@@ -238,14 +281,15 @@ The couple's latest instructions take precedence over this guide.
 | `pictures/locations/` | Venue images and maps in `MapaEF/` |
 | `tools/build.py` | Configuration validation, text baking and static artifact build |
 | `tools/dev.py` | Loopback-only server for `dist/`, with no write API |
-| `tools/test_site.py` | Four automated validation tests |
+| `tools/test_site.py` | Static validation and gift-form configuration/baking tests |
 | `tools/browser-check.mjs` | Optional Windows Chrome browser checks |
 | `.github/workflows/pages.yml` | Validate, build and deploy via GitHub Actions |
 | `dist/` | Generated public site; ignored by Git; never edit directly |
 | `.preview/` | Ignored temporary browser profiles/screenshots |
 
 `content/site.json` is the source of truth for configurable fields. Its top-level
-keys are `weddingDateTime`, `theme`, `sections`, and `content`. Content values are
+keys are `weddingDateTime`, `giftForm`, `theme`, `sections`, and `content`. `giftForm`
+contains a `url` string; an empty value disables the form. Content values are
 strings (up to 5,000 characters); section values are booleans. Theme colors use
 six-digit hex values for `ink`, `paper`, `paperAlt`, `accent`, `accent2`.
 

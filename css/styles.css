@@ -825,6 +825,46 @@ Gifts
   color: var(--color-accent);
 }
 /* ==========================================================================
+Gift form — Google hosts and confirms submissions
+========================================================================== */
+.gift-form {
+  max-width: 800px;
+  margin: 2rem auto 0;
+  padding-top: 1.75rem;
+  border-top: 1px solid var(--line);
+}
+.gift-form[hidden] {
+  display: none;
+}
+.gift-form h3 {
+  margin-bottom: .75rem;
+}
+.gift-form > p {
+  line-height: 1.65;
+}
+.gift-form iframe {
+  display: block;
+  width: 100%;
+  height: 900px;
+  margin-top: 1rem;
+  border: 0;
+  border-radius: 12px;
+}
+.gift-form-link {
+  margin-top: .75rem;
+  font-size: .875rem;
+}
+.gift-form-link a {
+  color: var(--color-accent);
+  text-decoration: underline;
+  text-underline-offset: .2em;
+}
+@media (max-width: 480px) {
+  .gift-form iframe {
+    height: 1050px;
+  }
+}
+/* ==========================================================================
 Our story — three photographic chapters
 ========================================================================== */
 .story-container {
