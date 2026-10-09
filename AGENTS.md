@@ -84,9 +84,8 @@ The couple's latest instructions take precedence over this guide.
 - Retain both venue photographs, ceremony/reception details and Google Maps links.
 - The reception at Estufa Fria is labelled “Almoço e Festa”.
 - Show “Dress Code: Fraque” beneath the two venue cards in “Onde”.
-- Dress code: “Fraque.” Follow with “Sugestões para aluguer:”, Alta Roda linked
-  to <https://maps.app.goo.gl/TuYQHfsMTjD2f3cx8>, and Diadema linked to Google
-  Maps for Rua Ricardo Jorge, 8A, Lisboa, with regular link styling.
+- Dress-code FAQ answer: “Fraque.” The rental suggestions heading and the
+  Alta Roda and Diadema rental links were removed at the couple’s request.
 - Church parking approved copy: “Parque Largo de Jesus Telpark — mesmo ao lado
   da Igreja das Mercês. Aberto 24 horas/dia. Primeira hora 2 €”.
 - Church operator link:
