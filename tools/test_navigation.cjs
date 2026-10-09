@@ -26,7 +26,7 @@ function fixture(hash = '', sections = {}) {
     this.open = false;
   }};
   const doc = {
-    title: 'Home', documentElement: {style: {setProperty() {}}, classList: {add() {}}},
+    title: 'Home', documentElement: {style: {setProperty() {}}, classList: {add() {}, toggle() {}}},
     querySelectorAll(selector) { return selector === '[data-section]' ? views : links; },
     querySelector(selector) { return selector === '.closing-video' ? video : {getBoundingClientRect: () => ({height: 80})}; },
     getElementById(id) { return id === 'lightbox' ? dialog : id === 'navLinks' ? navLinks : navToggle; },
@@ -46,9 +46,9 @@ function fixture(hash = '', sections = {}) {
   return {views, links, video, doc, win, events, click, dialog};
 }
 
-test('home shows hero and video; topic click shows only that topic and focuses its heading', () => {
+test('home shows hero, Onde, Contacto and video; topic click shows only that topic', () => {
   const f = fixture();
-  assert.deepEqual(f.views.filter(v => !v.hidden).map(v => v.id), ['topo']);
+  assert.deepEqual(f.views.filter(v => !v.hidden).map(v => v.id), ['topo', 'detalhes', 'contacto']);
   assert.equal(f.video.hidden, false);
   assert.equal(f.click('presentes'), true);
   assert.deepEqual(f.views.filter(v => !v.hidden).map(v => v.id), ['presentes']);
@@ -95,12 +95,19 @@ test('history navigation closes an open gallery before hiding its topic', () => 
   assert.equal(f.views[3].hidden, false);
 });
 
+test('home still respects configured-off Onde and Contacto sections', () => {
+  const f = fixture('', {details: false, contact: false});
+  assert.deepEqual(f.views.filter(view => !view.hidden).map(view => view.id), ['topo']);
+  assert.equal(f.video.hidden, false);
+});
+
 test('every topic is exclusive and revisiting a view preserves its existing elements', () => {
   const f = fixture();
   const originalViews = [...f.views];
   for (const id of ['detalhes', 'historia', 'presentes', 'contacto', 'faq', 'topo', 'presentes']) {
     assert.equal(f.click(id), true);
-    assert.deepEqual(f.views.filter(view => !view.hidden).map(view => view.id), [id]);
+    assert.deepEqual(f.views.filter(view => !view.hidden).map(view => view.id),
+      id === 'topo' ? ['topo', 'detalhes', 'contacto'] : [id]);
     assert.equal(f.video.hidden, id !== 'topo');
     assert.deepEqual(f.views, originalViews);
     assert.equal(f.links.filter(link => link.attributes['aria-current'] === 'page').length, 1);

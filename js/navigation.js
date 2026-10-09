@@ -25,7 +25,12 @@
       var active = resolve();
       var dialog = doc.getElementById('lightbox');
       if (dialog && dialog.open) dialog.close();
-      views.forEach(function (view) { view.hidden = view !== active || !enabled(view); });
+      var home = active.id === 'topo';
+      doc.documentElement.classList.toggle('home-view', home);
+      views.forEach(function (view) {
+        var onHome = home && ['topo', 'detalhes', 'contacto'].includes(view.id);
+        view.hidden = !(view === active || onHome) || !enabled(view);
+      });
       video.hidden = active.id !== 'topo';
       anchors.forEach(function (link) {
         if (link.hash === '#' + active.id) link.setAttribute('aria-current', 'page');

@@ -1305,7 +1305,9 @@ section, header {
 
 /* Each topic opens as its own view beneath the shared navigation. */
 .topic-views .section {
-  min-height: calc(100svh - var(--nav-offset, 8rem));
   padding-top: clamp(2rem, 5vw, 4rem);
   border-top: 0;
+}
+.topic-views:not(.home-view) .section {
+  min-height: calc(100svh - var(--nav-offset, 8rem));
 }

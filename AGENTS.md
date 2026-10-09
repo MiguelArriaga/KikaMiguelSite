@@ -47,7 +47,8 @@ The couple's latest instructions take precedence over this guide.
   navigation opens each view at the top and focuses its heading after a click.
   Mark the current destination with `aria-current="page"`.
 - Section configuration keys: `hero`, `details`, `gifts`, `story`, `faq`, `contact`.
-- Home shows only the hero and closing video, followed by the shared footer.
+- Home shows the hero, Onde, Contacto and closing video in that order,
+  followed by the shared footer. Configured-off sections remain hidden.
   Navigation opens one topic at a time: Onde, A Nossa História, Presentes,
   Contacto or FAQ. Clicking the names returns home. Hash URLs open a topic
   directly; Back/Forward restores views. Without JavaScript the full page
