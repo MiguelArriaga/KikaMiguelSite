@@ -28,14 +28,15 @@ try {
   await send('Runtime.enable');await send('Page.enable');
   await send('Page.navigate',{url:'http://127.0.0.1:8000/'});
   for(let n=0;n<100;n++){if(await evaluate('!!document.getElementById("lightbox") && document.readyState === "complete"'))break;await pause(100)}
-  assert.equal(await evaluate('document.querySelectorAll("[data-lightbox]").length'),16);
+  assert.equal(await evaluate('document.querySelectorAll("[data-lightbox]").length'),17);
   assert.deepEqual(await evaluate('Array.from(document.querySelectorAll("section[data-section]")).map(el=>el.id)'),['detalhes','historia','presentes','contacto','faq'],'page section order');
   assert.deepEqual(await evaluate('Array.from(document.querySelectorAll("#navLinks a")).map(el=>el.hash)'),['#detalhes','#historia','#presentes','#contacto','#faq'],'menu follows section order');
   assert.equal(await evaluate('document.body.innerText.includes("RSVP")'),false);
-  assert.equal(await evaluate('document.body.innerText.includes("Patagónia")'),true);
+  assert.equal(await evaluate('document.getElementById("presentes").textContent.includes("Patagónia")'),true);
   assert.match(await evaluate('document.getElementById("cd-days").textContent'),/^\d+$/);
   assert.equal(await evaluate('document.getElementById("closingVideo").paused'),true,'closing video stays idle off-screen');
   assert.equal(await evaluate('document.getElementById("closingVideo").readyState'),0,'closing video is not fetched before reaching it');
+  await evaluate('document.querySelector(".nav-links a[href$=presentes]").click()');
   // Exercise copying without changing the computer's clipboard.
   await evaluate(`(() => {
     window.testClipboardDescriptor = Object.getOwnPropertyDescriptor(navigator, 'clipboard');
@@ -64,14 +65,14 @@ try {
   await evaluate(`if(window.testClipboardDescriptor) Object.defineProperty(navigator, 'clipboard', window.testClipboardDescriptor); else delete navigator.clipboard; window.getSelection().removeAllRanges()`);
   // The house and honeymoon panels have independent galleries.
   await evaluate('document.querySelector(".house-gallery [data-lightbox]").click()');
-  assert.equal(await evaluate('document.getElementById("lightboxCounter").textContent'),'1 / 3');
+  assert.equal(await evaluate('document.getElementById("lightboxCounter").textContent'),'1 / 4');
   assert.equal(await evaluate('getComputedStyle(document.querySelector(".lightbox-stage")).backgroundColor'),await evaluate('getComputedStyle(document.body).backgroundColor'),'house gallery matches the page background');
   assert.equal(await evaluate('document.getElementById("lightboxTitle").textContent'),await evaluate('window.SITE_CONFIG.content["house.title"]'));
-  for (let n=0;n<3;n++) {
+  for (let n=0;n<4;n++) {
     await evaluate('document.getElementById("lightboxNext").click()');
     assert.equal(await evaluate('getComputedStyle(document.getElementById("lightboxImage")).mixBlendMode'),'normal','transparent gift images keep their original colours');
   }
-  assert.equal(await evaluate('document.getElementById("lightboxCounter").textContent'),'1 / 3','wrap within house photos');
+  assert.equal(await evaluate('document.getElementById("lightboxCounter").textContent'),'1 / 4','wrap within house photos');
   await evaluate('document.getElementById("lightboxClose").click()');
   await pause(150);
   assert.equal(await evaluate('document.activeElement === document.querySelector(".house-gallery [data-lightbox]")'),true,'house gallery returns focus');
@@ -91,15 +92,18 @@ try {
   assert.equal(await evaluate('document.getElementById("lightbox").open'),false);
   assert.equal(await evaluate('document.activeElement === document.querySelector(".honeymoon-gallery [data-lightbox]")'),true,'focus returns to opener');
   assert.notEqual(await evaluate('getComputedStyle(document.documentElement).overflow'),'hidden');
-  await evaluate('document.querySelectorAll(".faq-question")[3].click()');
+  await evaluate('document.querySelector(".nav-links a[href$=faq]").click(); document.querySelectorAll(".faq-question")[3].click()');
   assert.equal(await evaluate('document.querySelectorAll(".faq-question")[3].getAttribute("aria-expanded")'),'true');
   for (const width of [320,375,640,768,1280]) {
     const height=width===320?568:width===375?667:800;
     await send('Emulation.setDeviceMetricsOverride',{width,height,deviceScaleFactor:1,mobile:width<640});
     await pause(150);
+    await evaluate('document.querySelector(".nav-mark").click()');
     assert.equal(await evaluate('document.documentElement.scrollWidth <= innerWidth'),true,'horizontal overflow at '+width);
     assert.equal(await evaluate('(()=>{const r=document.getElementById("closingVideo").getBoundingClientRect();return r.left>=0&&r.right<=innerWidth&&Math.abs(r.width/r.height-16/9)<0.02})()'),true,'closing video retains its full frame at '+width);
+    await evaluate('document.querySelector(".nav-links a[href$=presentes]").click()');
     assert.equal(await evaluate('(()=>{const r=document.getElementById("copyIban").getBoundingClientRect();return r.left>=0&&r.right<=innerWidth&&r.width>=24&&r.width<=32&&r.height>=24&&r.height<=32})()'),true,'compact copy icon fits at '+width);
+    await evaluate('document.querySelector(".nav-mark").click()');
     assert.equal(await evaluate('Array.from(document.querySelectorAll(".hero-link")).every(el=>{const r=el.getBoundingClientRect();return r.left>=0 && r.right<=innerWidth})'),true,'hero links clipped at '+width);
     if(width===375){await evaluate('document.getElementById("navToggle").click()');assert.equal(await evaluate('document.getElementById("navToggle").getAttribute("aria-expanded")'),'true');}
     if(width>=640) assert.equal(await evaluate('getComputedStyle(document.getElementById("navLinks")).position'),'static');
@@ -107,6 +111,7 @@ try {
     await pause(250);
     await evaluate('document.fonts.ready.then(()=>window.scrollTo({top:0,behavior:"instant"}))');
     assert.equal(await evaluate('document.querySelector(".hero-links").getBoundingClientRect().bottom <= innerHeight'),true,'navigation below first screen at '+width);
+    await evaluate('document.querySelector(".nav-links a[href$=historia]").click()');
     await evaluate('Promise.all(Array.from(document.querySelectorAll(".story-photo img")).map(img=>{img.loading="eager";return img.decode()}))');
     assert.equal(await evaluate('Array.from(document.querySelectorAll(".story-photo img")).every(img=>{const r=img.getBoundingClientRect();return r.width>0&&r.height>0&&Math.abs(r.width/r.height-img.naturalWidth/img.naturalHeight)<.01})'),true,'story photos keep original proportions at '+width);
     assert.equal(await evaluate('Array.from(document.querySelectorAll(".story-photo")).every(photo=>{const r=photo.getBoundingClientRect();return r.left>=0&&r.right<=innerWidth})'),true,'story collage fits at '+width);
@@ -123,17 +128,13 @@ try {
     fs.writeFileSync(path.resolve('.preview/site-'+width+'.png'),Buffer.from(screenshot.data,'base64'));
     for (const id of ['detalhes','historia','presentes','faq']) {
       await evaluate(`document.querySelector('.hero-link[href="#${id}"]').click()`);
-      let aligned=false;
-      for(let n=0;n<40;n++) {
-        await pause(50);
-        aligned=await evaluate(`(()=>{const top=document.getElementById('${id}').getBoundingClientRect().top;const nav=document.querySelector('.nav').getBoundingClientRect().bottom;return top>=nav+20&&top<=nav+28})()`);
-        if(aligned)break;
-      }
-      assert.equal(aligned,true,'section scroll offset: '+id+' at '+width);
+      assert.deepEqual(await evaluate('Array.from(document.querySelectorAll("[data-section]")).filter(el=>!el.hidden).map(el=>el.id)'),[id],'only chosen topic visible at '+width);
+      assert.equal(await evaluate('document.querySelector(".closing-video").hidden'),true,'video stays on home');
+      assert.equal(await evaluate('window.scrollY'),0,'topic opens at the top');
       assert.equal(await evaluate('location.hash'),'#'+id);
     }
   }
-  await evaluate('document.querySelector(".venue-map").click()');
+  await evaluate('document.querySelector(".nav-links a[href$=faq]").click(); document.querySelector(".venue-map").click()');
   assert.equal(await evaluate('document.getElementById("lightboxCounter").textContent'),'1 / 1');
   assert.equal(await evaluate('document.getElementById("lightboxPrev").hidden && document.getElementById("lightboxNext").hidden'),true,'map has no unrelated photo navigation');
   await evaluate('document.getElementById("lightboxClose").click()');
@@ -141,6 +142,7 @@ try {
   // Let the gallery close event and viewport reflow finish before scrolling.
   await pause(300);
   // The silent rendered boomerang autoplays only while visible; guests can pause it.
+  await evaluate('document.querySelector(".nav-mark").click()');
   const video='document.getElementById("closingVideo")';
   const scrollVideo=()=>evaluate(video+'.scrollIntoView({behavior:"instant",block:"center"})');
   const waitForPlayback=async()=>{

@@ -71,47 +71,6 @@
     });
   }
 
-  function initSectionNavigation() {
-    var nav = document.querySelector('.nav');
-    var anchors = Array.from(document.querySelectorAll('a[href^="#"]'));
-    var sections = Array.from(document.querySelectorAll('header[id], section[id]'));
-    var offset = 0;
-    function measure() {
-      offset = nav.getBoundingClientRect().height + 24;
-      document.documentElement.style.setProperty('--nav-offset', offset + 'px');
-    }
-    measure();
-    if ('ResizeObserver' in window) new ResizeObserver(measure).observe(nav);
-    else window.addEventListener('resize', measure);
-    anchors.forEach(function (link) {
-      link.addEventListener('click', function (event) {
-        if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
-        var target = document.getElementById(link.hash.slice(1));
-        if (!target || target.hidden) return;
-        event.preventDefault();
-        document.getElementById('navLinks').classList.remove('open');
-        document.getElementById('navToggle').setAttribute('aria-expanded', 'false');
-        measure();
-        target.scrollIntoView({behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth', block:'start'});
-        history.pushState(null, '', link.hash);
-        target.setAttribute('tabindex', '-1');
-        target.focus({preventScroll:true});
-      });
-    });
-    var scheduled = false;
-    function updateActive() {
-      scheduled = false;
-      var active = sections.filter(function (section) { return !section.hidden && section.getBoundingClientRect().top <= offset + 32; }).pop();
-      anchors.forEach(function (link) {
-        if (active && link.hash === '#' + active.id) link.setAttribute('aria-current','location');
-        else link.removeAttribute('aria-current');
-      });
-    }
-    window.addEventListener('scroll', function () {
-      if (!scheduled) { scheduled = true; requestAnimationFrame(updateActive); }
-    }, {passive:true});
-    updateActive();
-  }
 
   /* ------------------------------------------------------------------
    * Countdown to the wedding date/time
@@ -331,7 +290,7 @@
     dialog.addEventListener("close", function () {
       touchStart = null;
       document.documentElement.classList.remove("gallery-open");
-      opener.focus({preventScroll: true});
+      if (!opener.closest('[data-section]').hidden) opener.focus({preventScroll: true});
     });
   }
 
@@ -349,7 +308,7 @@
       video.setAttribute("aria-label", (cfg.content && cfg.content[key]) || (video.paused ? "Reproduzir vídeo" : "Pausar vídeo"));
     }
     function syncPlayback() {
-      if (inView && !document.hidden && allowMotion && !userPaused) {
+      if (inView && !video.closest(".closing-video").hidden && !document.hidden && allowMotion && !userPaused) {
         var playback = video.play();
         if (playback) playback.catch(updateLabel);
       } else {
@@ -373,6 +332,7 @@
       }
     });
     document.addEventListener("visibilitychange", syncPlayback);
+    document.addEventListener("topicchange", syncPlayback);
     motion.addEventListener("change", function () {
       allowMotion = !motion.matches;
       syncPlayback();
@@ -396,7 +356,7 @@
     applyTheme();
     applySectionToggles();
     initNav();
-    initSectionNavigation();
+    window.initTopicNavigation({window: window, document: document, config: cfg});
     initCountdown();
     initFAQ();
     initReveal();

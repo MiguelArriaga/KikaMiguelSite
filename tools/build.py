@@ -8,6 +8,7 @@ import tempfile
 import time
 from datetime import datetime
 from pathlib import Path
+from urllib.parse import urlsplit
 from zoneinfo import ZoneInfo
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -60,6 +61,18 @@ def validate(config):
         raise ValueError("Use cores hexadecimais de seis dígitos.")
     if theme["fontPair"] not in FONTS:
         raise ValueError("Combinação de fontes inválida.")
+    form = config.get("giftForm")
+    if not isinstance(form, dict) or set(form) != {"url"}:
+        raise ValueError("Configuração do formulário inválida.")
+    url = form["url"]
+    if not isinstance(url, str) or len(url) > 2048:
+        raise ValueError("Endereço do formulário inválido.")
+    if url:
+        parsed = urlsplit(url)
+        if (parsed.scheme != "https" or parsed.netloc != "docs.google.com"
+                or not re.fullmatch(r"/forms/d/e/[A-Za-z0-9_-]+/viewform", parsed.path)
+                or parsed.query or parsed.fragment):
+            raise ValueError("Use o endereço público completo do Google Forms, sem parâmetros.")
     return config
 
 
@@ -80,6 +93,21 @@ def render(config):
     dates = {"date": label, "clock": date.strftime("%H:%M"), "time": label + " · " + date.strftime("%H:%M"), "place": label + " · Lisboa", "reception": label + " · a seguir à missa"}
     source = re.sub(r'(<[^>]+data-date="([^"]+)"[^>]*>)[^<]*(</[^>]+>)', lambda m: m[1] + dates[m[2]] + m[3], source)
     source = re.sub(r'<title>.*?</title>', '<title>' + html.escape(config['content']['couple.name']) + ' — ' + label + '</title>', source)
+    # Bake the integration into HTML so it also works without JavaScript.
+    # Never load an empty iframe URL: it could embed the website inside itself.
+    form_url = config["giftForm"]["url"]
+    def form_container(match):
+        tag = re.sub(r'\s+hidden(?:="[^"]*")?', '', match.group(0))
+        return tag if form_url else tag[:-1] + ' hidden>'
+    source = re.sub(r'<div\b[^>]*\bid="giftForm"[^>]*>', form_container, source)
+    def form_frame(match):
+        tag = re.sub(r'\s+src="[^"]*"', '', match.group(0))
+        if form_url:
+            tag = tag[:-1] + ' src="' + html.escape(form_url + '?embedded=true', quote=True) + '">'
+        return tag
+    source = re.sub(r'<iframe\b[^>]*\bid="giftFormFrame"[^>]*>', form_frame, source)
+    source = re.sub(r'(<a\b[^>]*\bid="giftFormLink"[^>]*\bhref=")[^"]*(")',
+                    lambda m: m[1] + html.escape(form_url or '#presentes', quote=True) + m[2], source)
     return source
 
 

@@ -17,9 +17,10 @@ The couple's latest instructions take precedence over this guide.
   offset and render dates/times in `Europe/Lisbon`, including for overseas guests.
 - Static HTML, CSS and vanilla JavaScript, hosted on GitHub Pages. No framework
   or Node package installation is required for the site or Python build.
-- The response/RSVP page, form, deadline, backend, Google Sheets integration,
-  authentication, page editor, content-writing API and live preview were removed
-  from scope. Do not restore them without a new request.
+- The response/RSVP page, deadline, backend, authentication, page editor,
+  content-writing API and live preview remain out of scope. On 9 October 2026
+  the couple requested a gifts-only Google Form embedded beneath MB Way,
+  with responses saved to a private Google Sheet. This does not restore RSVP.
 - Content and design are edited directly in JSON, HTML and CSS.
 - The local implementation is complete; optional/deferred content and external
   hosting setup remain. Live hosting and DNS have not been verified in this work.
@@ -42,18 +43,23 @@ The couple's latest instructions take precedence over this guide.
   They form two columns on phones/tablets and four on wide screens; hover and
   keyboard focus animate the rule and fill the arrow in warm ivory, respecting
   reduced motion. Keep all four links visible on the first screen.
-- Preserve hover/tap feedback, smooth scrolling and the measured sticky-header
-  offset. Navigation must stay synchronized with section visibility.
+- Preserve hover/tap feedback and the measured sticky-header offset. Topic
+  navigation opens each view at the top and focuses its heading after a click.
+  Mark the current destination with `aria-current="page"`.
 - Section configuration keys: `hero`, `details`, `gifts`, `story`, `faq`, `contact`.
-- Page and navigation order: hero, Onde, A Nossa História, Presentes, Contacto, FAQ.
-  FAQ is the last section before the footer.
+- Home shows the hero, Onde, Contacto and closing video in that order,
+  followed by the shared footer. Configured-off sections remain hidden.
+  Navigation opens one topic at a time: Onde, A Nossa História, Presentes,
+  Contacto or FAQ. Clicking the names returns home. Hash URLs open a topic
+  directly; Back/Forward restores views. Without JavaScript the full page
+  remains available through ordinary anchors.
 - Existing HTML targets: `topo`, `detalhes`, `historia`, `presentes`, `contacto`, `faq`.
 - Use “Onde” for both navigation labels and the event section heading.
 - The sticky banner displays “Kika e Miguel” in Playfair Display at weight 600
   above the wedding date. The names link to `#topo`, returning guests to the
-  beginning with the existing smooth scrolling and reduced-motion support.
+  home view without a scroll animation.
 - The footer also displays “Kika e Miguel” above the date and city.
-- The final item below the footer uses `pictures/our_story/HavingFun-boomerang.mp4`,
+- The home view's closing video before the footer uses `pictures/our_story/HavingFun-boomerang.mp4`,
   a silent full-HD forward/reverse loop derived from the retained `HavingFun.mp4`.
   It has no visible playback controls and plays inline automatically while visible,
   pausing off-screen or when the tab is hidden. Tap/click the clip or press Enter/Space
@@ -172,6 +178,61 @@ The couple's latest instructions take precedence over this guide.
   in “A Nossa Nova Casa” and replaced the old Bimby JPEG with `bimby.png`.
   Keep the honeymoon panel and shared IBAN copy button.
 
+### Gift notification form (draft, published form configured)
+
+- The couple approved trying a themed Google Forms embed below all payment
+  details. Guests enter `Nome`, `Presente` and `Mensagem para os noivos`, then
+  use Google's submit button. Google supplies the submission timestamp and
+  confirmation. This records a guest's statement, not verified payment.
+- The couple created the form themselves in KikaMiguel and supplied its published
+  responder link on 9 October 2026. `giftForm.url` now contains that link, with
+  the editor's sharing query parameter removed. The embed is enabled in the
+  draft site build, below MB Way. Publication is user-confirmed; form fields,
+  theme, anonymous access, response destination and actual saving have not been
+  independently verified. Browser access to `docs.google.com` remains blocked
+  by a saved permission setting, and the public retrieval tool could not read
+  the form. Do not claim a successful guest submission.
+- An initial private response spreadsheet was created in Primary, but the couple
+  subsequently chose KikaMiguel for the form and response spreadsheet. Do not
+  share, move, delete or link the initial spreadsheet without a request. The
+  intended destination is a response spreadsheet in KikaMiguel; linking remains
+  unverified.
+- To change `giftForm.url`, use the full URL in the form
+  `https://docs.google.com/forms/d/e/FORM_ID/viewform`, without query parameters
+  or fragments. An empty URL hides the entire section and removes the iframe
+  `src`. The build validates the host/path and adds `?embedded=true`
+  only to the iframe; a separate link opens the form in a new window.
+- The integration is baked into HTML and works without JavaScript. Do not add
+  custom POST requests, hidden submission frames, or a client-side success
+  message: the embedded Google Form handles and confirms its own submission.
+- Form copy uses `giftForm.title`, `giftForm.intro` and `giftForm.open`.
+  Website CSS styles only the surrounding section, not Google's iframe content.
+- The couple confirmed the embed renders. After trying a compact iframe they
+  requested separate topic views so the long form no longer interrupts other
+  topics. Keep the 640px wrapper and tighter spacing, with a 900px iframe
+  (1050px on phones). Do not crop or scale Google's text and controls.
+  The new topic views and form sizing need visual review.
+- The requested Google Forms specification is `Presentes — Kika e Miguel` in
+  KikaMiguel, with required short answers for `Nome` and `Presente`
+  and an optional paragraph for `Mensagem para os noivos`. The proposed
+  confirmation is `Muito obrigado! A vossa resposta ficou registada.`
+- In Customize theme, use the site's brown accent `#78563B`, the closest
+  available cream background to `#F4EBDD`, and available fonts similar to
+  Playfair Display / Work Sans. No header photograph is needed. Inspect the
+  available choices rather than promising an exact background/font match.
+- Link Responses to a private gift spreadsheet in KikaMiguel. Google may create
+  its own response tab; keep any existing tab and do not overwrite private data.
+  Allow anyone with the published responder link to respond without requiring
+  a Google sign-in. Do not enable one-response limits, verified email collection,
+  file uploads, or sharing of response summaries with respondents.
+- With the responder link now configured, verify the embed at phone and desktop
+  widths, external-link fallback and anonymous
+  submission. Use clearly labelled synthetic test data and confirm the response
+  reaches the private Sheet. Remove only disposable test data if authorised.
+- Theme, fields, anonymous access, linking, real submission and rendered
+  verification remain unverified. Keep the PR in draft until those checks pass;
+  merge only after the couple explicitly approves the identified version.
+
 ### Story, contact and styling
 
 - Story has three moments: “O Início” (McKinsey and the first date), shared
@@ -230,7 +291,8 @@ The couple's latest instructions take precedence over this guide.
 | `content/site.json` | Editable wording, date, theme and section configuration |
 | `index.html` | Page structure, image paths, links and build-baked text |
 | `css/styles.css` | Responsive styling, component styles and animations |
-| `js/main.js` | Theme/section application, navigation, countdown, FAQ and gallery |
+| `js/main.js` | Theme/section application, countdown, FAQ, video and gallery |
+| `js/navigation.js` | Home/topic routing, hash history, focus and active navigation |
 | `js/config.js` | Generated `window.SITE_CONFIG`; never edit directly |
 | `pictures/our_story/` | Hero, story and retained personal media |
 | `pictures/patagonia/` | Supplied honeymoon photographs |
@@ -238,14 +300,16 @@ The couple's latest instructions take precedence over this guide.
 | `pictures/locations/` | Venue images and maps in `MapaEF/` |
 | `tools/build.py` | Configuration validation, text baking and static artifact build |
 | `tools/dev.py` | Loopback-only server for `dist/`, with no write API |
-| `tools/test_site.py` | Four automated validation tests |
+| `tools/test_site.py` | Static validation and gift-form configuration/baking tests |
+| `tools/test_navigation.cjs` | Topic routing, history, focus and disabled-topic tests |
 | `tools/browser-check.mjs` | Optional Windows Chrome browser checks |
 | `.github/workflows/pages.yml` | Validate, build and deploy via GitHub Actions |
 | `dist/` | Generated public site; ignored by Git; never edit directly |
 | `.preview/` | Ignored temporary browser profiles/screenshots |
 
 `content/site.json` is the source of truth for configurable fields. Its top-level
-keys are `weddingDateTime`, `theme`, `sections`, and `content`. Content values are
+keys are `weddingDateTime`, `giftForm`, `theme`, `sections`, and `content`. `giftForm`
+contains a `url` string; an empty value disables the form. Content values are
 strings (up to 5,000 characters); section values are booleans. Theme colors use
 six-digit hex values for `ink`, `paper`, `paperAlt`, `accent`, `accent2`.
 
@@ -311,6 +375,8 @@ For content, build or application changes, run the relevant checks:
 ```powershell
 & "C:\Users\migue\anaconda3\python.exe" tools/test_site.py
 node --check js/main.js
+node --check js/navigation.js
+node --test tools/test_navigation.cjs
 git diff --check
 ```
 

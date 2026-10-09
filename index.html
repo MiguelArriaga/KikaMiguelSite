@@ -225,6 +225,13 @@
       <p class="copy-status" id="copyIbanStatus" role="status" aria-live="polite" aria-atomic="true"><span data-content="bank.copySuccess" hidden>IBAN copiado.</span><span data-content="bank.copyError" hidden>Não foi possível copiar automaticamente. O IBAN está selecionado para copiar manualmente.</span></p>
     </div>
 
+    <div class="gift-form" id="giftForm">
+      <h3 id="giftFormHeading" data-content="giftForm.title">O vosso presente</h3>
+      <p data-content="giftForm.intro">Deixem o vosso nome, o presente que nos querem oferecer e uma mensagem para nós.</p>
+      <iframe id="giftFormFrame" title="Formulário de presentes para Kika e Miguel" aria-labelledby="giftFormHeading" loading="lazy" referrerpolicy="no-referrer" src="https://docs.google.com/forms/d/e/1FAIpQLSdnnUQxGZ78u5RQVlN-WBxMYcdQK6cORLPvaqNQm06u_W8C7A/viewform?embedded=true"></iframe>
+      <p class="gift-form-link"><a id="giftFormLink" href="https://docs.google.com/forms/d/e/1FAIpQLSdnnUQxGZ78u5RQVlN-WBxMYcdQK6cORLPvaqNQm06u_W8C7A/viewform" target="_blank" rel="noopener noreferrer" data-content="giftForm.open">Abrir o formulário numa nova janela</a></p>
+    </div>
+
   </div>
 </section>
 
@@ -314,11 +321,6 @@
   </div>
 </section>
 
-<footer>
-  <span class="footer-mark" data-content="footer.monogram">Kika e Miguel</span>
-  <span data-date="place">23 de janeiro de 2027 · Lisboa</span>
-</footer>
-
 <figure class="closing-video">
   <video id="closingVideo" muted loop playsinline preload="none" poster="pictures/our_story/HavingFun-poster.webp" width="1920" height="1080" tabindex="0" role="button" aria-label="Reproduzir vídeo" aria-describedby="closingVideoCaption">
     <source src="pictures/our_story/HavingFun-boomerang.mp4" type="video/mp4">
@@ -328,6 +330,11 @@
   <span hidden data-content="closing.videoPlay">Reproduzir vídeo</span>
   <span hidden data-content="closing.videoPause">Pausar vídeo</span>
 </figure>
+
+<footer>
+  <span class="footer-mark" data-content="footer.monogram">Kika e Miguel</span>
+  <span data-date="place">23 de janeiro de 2027 · Lisboa</span>
+</footer>
 
 <dialog id="lightbox" class="lightbox" aria-label="Imagem ampliada" aria-describedby="lightboxCaption">
   <div class="lightbox-header">
@@ -345,6 +352,7 @@
   </div>
 </dialog>
 <script src="js/config.js"></script>
+<script src="js/navigation.js"></script>
 <script src="js/main.js"></script>
 </body>
 </html>
