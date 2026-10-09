@@ -394,7 +394,7 @@ Hero
 .hero-link:active .hero-link-arrow {
   transform: rotate(-45deg) scale(.9);
 }
-.nav-links a[aria-current="location"] {
+.nav-links a[aria-current="page"] {
   border-color: var(--color-accent);
 }
 @media (max-width: 900px) {
@@ -845,7 +845,7 @@ Gift form — Google hosts and confirms submissions
 .gift-form iframe {
   display: block;
   width: 100%;
-  height: 650px;
+  height: 900px;
   margin-top: .5rem;
   border: 0;
   border-radius: 12px;
@@ -861,7 +861,7 @@ Gift form — Google hosts and confirms submissions
 }
 @media (max-width: 480px) {
   .gift-form iframe {
-    height: 750px;
+    height: 1050px;
   }
 }
 /* ==========================================================================
@@ -1301,4 +1301,11 @@ section, header {
   #lightboxCaption {
     font-size: .75rem;
   }
+}
+
+/* Each topic opens as its own view beneath the shared navigation. */
+.topic-views .section {
+  min-height: calc(100svh - var(--nav-offset, 8rem));
+  padding-top: clamp(2rem, 5vw, 4rem);
+  border-top: 0;
 }

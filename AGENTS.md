@@ -43,18 +43,22 @@ The couple's latest instructions take precedence over this guide.
   They form two columns on phones/tablets and four on wide screens; hover and
   keyboard focus animate the rule and fill the arrow in warm ivory, respecting
   reduced motion. Keep all four links visible on the first screen.
-- Preserve hover/tap feedback, smooth scrolling and the measured sticky-header
-  offset. Navigation must stay synchronized with section visibility.
+- Preserve hover/tap feedback and the measured sticky-header offset. Topic
+  navigation opens each view at the top and focuses its heading after a click.
+  Mark the current destination with `aria-current="page"`.
 - Section configuration keys: `hero`, `details`, `gifts`, `story`, `faq`, `contact`.
-- Page and navigation order: hero, Onde, A Nossa História, Presentes, Contacto, FAQ.
-  FAQ is the last section before the footer.
+- Home shows only the hero and closing video, followed by the shared footer.
+  Navigation opens one topic at a time: Onde, A Nossa História, Presentes,
+  Contacto or FAQ. Clicking the names returns home. Hash URLs open a topic
+  directly; Back/Forward restores views. Without JavaScript the full page
+  remains available through ordinary anchors.
 - Existing HTML targets: `topo`, `detalhes`, `historia`, `presentes`, `contacto`, `faq`.
 - Use “Onde” for both navigation labels and the event section heading.
 - The sticky banner displays “Kika e Miguel” in Playfair Display at weight 600
   above the wedding date. The names link to `#topo`, returning guests to the
-  beginning with the existing smooth scrolling and reduced-motion support.
+  home view without a scroll animation.
 - The footer also displays “Kika e Miguel” above the date and city.
-- The final item below the footer uses `pictures/our_story/HavingFun-boomerang.mp4`,
+- The home view's closing video before the footer uses `pictures/our_story/HavingFun-boomerang.mp4`,
   a silent full-HD forward/reverse loop derived from the retained `HavingFun.mp4`.
   It has no visible playback controls and plays inline automatically while visible,
   pausing off-screen or when the tab is hidden. Tap/click the clip or press Enter/Space
@@ -202,10 +206,11 @@ The couple's latest instructions take precedence over this guide.
   message: the embedded Google Form handles and confirms its own submission.
 - Form copy uses `giftForm.title`, `giftForm.intro` and `giftForm.open`.
   Website CSS styles only the surrounding section, not Google's iframe content.
-- The couple confirmed the embed renders, but requested a more compact layout.
-  The wrapper is limited to 640px, with a 650px iframe (750px on phones) and
-  tighter spacing. The form can scroll internally to reach the submit button;
-  do not crop or scale Google's text and controls. This sizing needs visual review.
+- The couple confirmed the embed renders. After trying a compact iframe they
+  requested separate topic views so the long form no longer interrupts other
+  topics. Keep the 640px wrapper and tighter spacing, with a 900px iframe
+  (1050px on phones). Do not crop or scale Google's text and controls.
+  The new topic views and form sizing need visual review.
 - The requested Google Forms specification is `Presentes — Kika e Miguel` in
   KikaMiguel, with required short answers for `Nome` and `Presente`
   and an optional paragraph for `Mensagem para os noivos`. The proposed
@@ -285,7 +290,8 @@ The couple's latest instructions take precedence over this guide.
 | `content/site.json` | Editable wording, date, theme and section configuration |
 | `index.html` | Page structure, image paths, links and build-baked text |
 | `css/styles.css` | Responsive styling, component styles and animations |
-| `js/main.js` | Theme/section application, navigation, countdown, FAQ and gallery |
+| `js/main.js` | Theme/section application, countdown, FAQ, video and gallery |
+| `js/navigation.js` | Home/topic routing, hash history, focus and active navigation |
 | `js/config.js` | Generated `window.SITE_CONFIG`; never edit directly |
 | `pictures/our_story/` | Hero, story and retained personal media |
 | `pictures/patagonia/` | Supplied honeymoon photographs |
@@ -294,6 +300,7 @@ The couple's latest instructions take precedence over this guide.
 | `tools/build.py` | Configuration validation, text baking and static artifact build |
 | `tools/dev.py` | Loopback-only server for `dist/`, with no write API |
 | `tools/test_site.py` | Static validation and gift-form configuration/baking tests |
+| `tools/test_navigation.cjs` | Topic routing, history, focus and disabled-topic tests |
 | `tools/browser-check.mjs` | Optional Windows Chrome browser checks |
 | `.github/workflows/pages.yml` | Validate, build and deploy via GitHub Actions |
 | `dist/` | Generated public site; ignored by Git; never edit directly |
@@ -367,6 +374,8 @@ For content, build or application changes, run the relevant checks:
 ```powershell
 & "C:\Users\migue\anaconda3\python.exe" tools/test_site.py
 node --check js/main.js
+node --check js/navigation.js
+node --test tools/test_navigation.cjs
 git diff --check
 ```
 
