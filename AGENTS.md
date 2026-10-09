@@ -202,6 +202,10 @@ The couple's latest instructions take precedence over this guide.
   message: the embedded Google Form handles and confirms its own submission.
 - Form copy uses `giftForm.title`, `giftForm.intro` and `giftForm.open`.
   Website CSS styles only the surrounding section, not Google's iframe content.
+- The couple confirmed the embed renders, but requested a more compact layout.
+  The wrapper is limited to 640px, with a 650px iframe (750px on phones) and
+  tighter spacing. The form can scroll internally to reach the submit button;
+  do not crop or scale Google's text and controls. This sizing needs visual review.
 - The requested Google Forms specification is `Presentes — Kika e Miguel` in
   KikaMiguel, with required short answers for `Nome` and `Presente`
   and an optional paragraph for `Mensagem para os noivos`. The proposed
