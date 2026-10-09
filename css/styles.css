@@ -707,11 +707,9 @@ Gifts
     padding: .75rem .5rem;
   }
   .house-gallery figure:first-child {
-    grid-row: 1 / 3;
     align-self: center;
   }
   .house-gallery figure:nth-child(2), .house-gallery figure:last-child {
-    grid-column: 2;
     width: 100%;
   }
 }
