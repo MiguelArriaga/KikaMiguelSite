@@ -106,8 +106,8 @@ The couple's latest instructions take precedence over this guide.
 
 - Presence comes first. Presentes has two panels: “A Nossa Nova Casa” on the
   left and “Lua de Mel na Patagónia” on the right, with equal widths. Keep them side
-  by side on mobile; the honeymoon photographs use a vertical flow on phones
-  and a compact overlapping pair on wide screens. Use gentle opposing tilts,
+  by side on mobile; the honeymoon photographs retain a compact overlapping pair at all
+  screen widths, scaling down within their panel on phones. Use gentle opposing tilts,
   asymmetric photo widths, ivory frames and soft shadows for a scrapbook feel;
   keep photos and captions within the honeymoon panel at all screen widths.
 - Both gift cards use the same darker alternate-paper background.
@@ -130,8 +130,10 @@ The couple's latest instructions take precedence over this guide.
 - House photographs: `pictures/presentes/bimby.png`,
   `pictures/presentes/Cama.png`, `pictures/presentes/Sofa.png` and
   `pictures/presentes/Frigorifico.png`. Use the same
-  tilted arrangement as the honeymoon photos, with transparent image backing and a vertical
-  stagger on phones and a four-image, two-column collage on larger screens. Preserve full
+  tilted arrangement as the honeymoon photos, with transparent image backing and a
+  four-image, two-column collage at every screen width, scaled down on phones. Keep
+  the house collage compact with gently overlapping columns and a small stagger,
+  while keeping captions readable. Preserve full
   image proportions. Captions and alt text use `house.caption.*` and
   `house.photo.*` in the content configuration.
 - The fridge uses the supplied transparent `Frigorifico.png` photograph; its

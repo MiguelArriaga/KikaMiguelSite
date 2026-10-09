@@ -699,34 +699,41 @@ Gifts
 .house-gallery figure:last-child {
   transform: rotate(-2deg);
 }
-@media (min-width: 640px) {
-  .house-gallery {
-    grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr);
-    align-items: start;
-    gap: 1.5rem .75rem;
-    padding: .75rem .5rem;
-  }
-  .house-gallery figure:first-child {
-    align-self: center;
-  }
-  .house-gallery figure:nth-child(2), .house-gallery figure:last-child {
-    width: 100%;
-  }
+/* Keep the desktop collage at every viewport; scale spacing with screen width. */
+.house-gallery {
+  --house-overlap: clamp(.2rem, 1.25vw, 1rem);
+  grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr);
+  align-items: start;
+  gap: clamp(.15rem, .5vw, .4rem) 0;
+  padding: clamp(.2rem, .94vw, .75rem) clamp(.15rem, .625vw, .5rem);
 }
-@media (min-width: 900px) {
-  .honeymoon-gallery {
-    grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
-    align-items: start;
-    gap: 0;
-    padding: .65rem .5rem .5rem;
-  }
-  .honeymoon-gallery figure:first-child {
-    width: 100%;
-  }
-  .honeymoon-gallery figure:last-child {
-    width: calc(100% + .65rem);
-    margin: 2rem 0 0 -.65rem;
-  }
+.house-gallery figure:first-child {
+  align-self: center;
+}
+.house-gallery figure:nth-child(2), .house-gallery figure:last-child {
+  width: calc(100% + var(--house-overlap));
+  margin-left: calc(-1 * var(--house-overlap));
+}
+.house-gallery figure:nth-child(3) {
+  margin-top: clamp(-.6rem, -.75vw, -.2rem);
+}
+.house-gallery figure:nth-child(2) {
+  position: relative;
+  z-index: 1;
+}
+.honeymoon-gallery {
+  --photo-overlap: clamp(.15rem, .8125vw, .65rem);
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+  align-items: start;
+  gap: 0;
+  padding: clamp(.15rem, .8125vw, .65rem) clamp(.15rem, .625vw, .5rem) clamp(.15rem, .625vw, .5rem);
+}
+.honeymoon-gallery figure:first-child {
+  width: 100%;
+}
+.honeymoon-gallery figure:last-child {
+  width: calc(100% + var(--photo-overlap));
+  margin: clamp(.5rem, 2.5vw, 2rem) 0 0 calc(-1 * var(--photo-overlap));
 }
 @media (max-width: 480px) {
   #presentes .container {
