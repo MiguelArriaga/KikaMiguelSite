@@ -194,8 +194,12 @@ The couple's latest instructions take precedence over this guide.
   warn that an unconfirmed request may already have saved, and never retry automatically.
 - Disable repeated submits while pending; enforce matching length limits and a honeypot.
   Honeypot filtering is basic spam protection, not authentication or rate limiting.
-- The heading remains Presente and the approved introduction is unchanged.
-- Browser-to-Apps-Script submission and phone/desktop rendering still require verification.
+- The visible Presente heading was removed at Miguel’s request. Keep its hidden
+  label for the fallback iframe. The approved introduction remains unchanged.
+- The form spans the same container width as the payment details above.
+- Miguel reported testing the form successfully on 10 October. This is user-reported
+  verification; the assistant has not independently observed a browser submission.
+- The latest width and heading presentation edits still need visual review.
   Keep the PR in draft until these checks pass. Merge only with explicit approval.
 
 ### Story, contact and styling
