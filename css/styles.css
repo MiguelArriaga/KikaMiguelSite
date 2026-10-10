@@ -837,6 +837,7 @@ Gift form — Google hosts and confirms submissions
   display: none;
 }
 .gift-form > p {
+  max-width: none;
   line-height: 1.65;
 }
 .gift-form iframe {
