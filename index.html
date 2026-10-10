@@ -228,6 +228,20 @@
     <div class="gift-form" id="giftForm">
       <h3 id="giftFormHeading" data-content="giftForm.title">Presente</h3>
       <p data-content="giftForm.intro">Para podermos agradecer, pedimos que preencham o seguinte formulário</p>
+      <form id="customGiftForm" hidden data-endpoint="https://script.google.com/macros/s/AKfycbx-ztRzOXw5YSx06odJkNbCUoe7E1ov6yfULaT5gcZmlSHtW9ROfE-mI3DYeg9OhtJrsA/exec">
+        <label for="giftName">Nome <span aria-hidden="true">*</span></label>
+        <input id="giftName" name="name" autocomplete="name" required maxlength="200">
+        <label for="giftPresent">Presente <span aria-hidden="true">*</span></label>
+        <input id="giftPresent" name="gift" required maxlength="500">
+        <label for="giftMessage">Mensagem para os noivos (opcional)</label>
+        <textarea id="giftMessage" name="message" rows="4" maxlength="3000"></textarea>
+        <div class="gift-trap" aria-hidden="true">
+          <label for="giftWebsite">Website</label>
+          <input id="giftWebsite" name="website" tabindex="-1" autocomplete="off">
+        </div>
+        <button type="submit">Enviar</button>
+        <p id="giftStatus" role="status" aria-live="polite"></p>
+      </form>
       <iframe id="giftFormFrame" title="Formulário de presentes para Kika e Miguel" aria-labelledby="giftFormHeading" loading="lazy" referrerpolicy="no-referrer" src="https://docs.google.com/forms/d/e/1FAIpQLSdnnUQxGZ78u5RQVlN-WBxMYcdQK6cORLPvaqNQm06u_W8C7A/viewform?embedded=true"></iframe>
       <p class="gift-form-link"><a id="giftFormLink" href="https://docs.google.com/forms/d/e/1FAIpQLSdnnUQxGZ78u5RQVlN-WBxMYcdQK6cORLPvaqNQm06u_W8C7A/viewform" target="_blank" rel="noopener noreferrer" data-content="giftForm.open">Abrir o formulário numa nova janela</a></p>
     </div>
@@ -354,5 +368,6 @@
 <script src="js/config.js"></script>
 <script src="js/navigation.js"></script>
 <script src="js/main.js"></script>
+<script src="js/gift-form.js"></script>
 </body>
 </html>

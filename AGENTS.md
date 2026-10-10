@@ -178,64 +178,25 @@ The couple's latest instructions take precedence over this guide.
   in “A Nossa Nova Casa” and replaced the old Bimby JPEG with `bimby.png`.
   Keep the honeymoon panel and shared IBAN copy button.
 
-### Gift notification form (draft, published form configured)
+### Gift notification form (custom form prototype)
 
-- The couple approved trying a themed Google Forms embed below all payment
-  details. Guests enter `Nome`, `Presente` and `Mensagem para os noivos`, then
-  use Google's submit button. Google supplies the submission timestamp and
-  confirmation. This records a guest's statement, not verified payment.
-- The couple created the form themselves in KikaMiguel and supplied its published
-  responder link on 9 October 2026. `giftForm.url` now contains that link, with
-  the editor's sharing query parameter removed. The embed is enabled in the
-  draft site build, below MB Way. Publication is user-confirmed; form fields,
-  theme, anonymous access, response destination and actual saving have not been
-  independently verified. Browser access to `docs.google.com` remains blocked
-  by a saved permission setting, and the public retrieval tool could not read
-  the form. Do not claim a successful guest submission.
-- An initial private response spreadsheet was created in Primary, but the couple
-  subsequently chose KikaMiguel for the form and response spreadsheet. Do not
-  share, move, delete or link the initial spreadsheet without a request. The
-  intended destination is a response spreadsheet in KikaMiguel; linking remains
-  unverified.
-- To change `giftForm.url`, use the full URL in the form
-  `https://docs.google.com/forms/d/e/FORM_ID/viewform`, without query parameters
-  or fragments. An empty URL hides the entire section and removes the iframe
-  `src`. The build validates the host/path and adds `?embedded=true`
-  only to the iframe; a separate link opens the form in a new window.
-- The integration is baked into HTML and works without JavaScript. Do not add
-  custom POST requests, hidden submission frames, or a client-side success
-  message: the embedded Google Form handles and confirms its own submission.
-- The form heading is “Presente”, under
-  `giftForm.title`.
-- The introduction is “Para podermos agradecer, pedimos que preencham o seguinte formulário”,
-  under `giftForm.intro`.
-- Form copy uses `giftForm.title`, `giftForm.intro` and `giftForm.open`.
-  Website CSS styles only the surrounding section, not Google's iframe content.
-- The couple confirmed the embed renders. After trying a compact iframe they
-  requested separate topic views so the long form no longer interrupts other
-  topics. Keep the 640px wrapper and tighter spacing, with a 900px iframe
-  (1050px on phones). Do not crop or scale Google's text and controls.
-  The new topic views and form sizing need visual review.
-- The requested Google Forms specification is `Presentes — Kika e Miguel` in
-  KikaMiguel, with required short answers for `Nome` and `Presente`
-  and an optional paragraph for `Mensagem para os noivos`. The proposed
-  confirmation is `Muito obrigado! A vossa resposta ficou registada.`
-- In Customize theme, use the site's brown accent `#78563B`, the closest
-  available cream background to `#F4EBDD`, and available fonts similar to
-  Playfair Display / Work Sans. No header photograph is needed. Inspect the
-  available choices rather than promising an exact background/font match.
-- Link Responses to a private gift spreadsheet in KikaMiguel. Google may create
-  its own response tab; keep any existing tab and do not overwrite private data.
-  Allow anyone with the published responder link to respond without requiring
-  a Google sign-in. Do not enable one-response limits, verified email collection,
-  file uploads, or sharing of response summaries with respondents.
-- With the responder link now configured, verify the embed at phone and desktop
-  widths, external-link fallback and anonymous
-  submission. Use clearly labelled synthetic test data and confirm the response
-  reaches the private Sheet. Remove only disposable test data if authorised.
-- Theme, fields, anonymous access, linking, real submission and rendered
-  verification remain unverified. Keep the PR in draft until those checks pass;
-  merge only after the couple explicitly approves the identified version.
+- On 10 October the couple requested a custom styled form backed by their deployed
+  Google Apps Script. Fields: required Nome and Presente, optional Mensagem para os
+  noivos. The script writes timestamped rows to the private Presentes tab in Primary.
+  Miguel confirmed a PowerShell POST returned ok:true and a test row appeared.
+- `js/gift-form.js` replaces the embed visually when JavaScript is available.
+  The endpoint is in `customGiftForm`'s data-endpoint attribute in index.html.
+  It is a public submission URL, not a credential. Never publish the private sheet ID.
+- Keep the existing Google Forms embed as the no-JavaScript fallback. Existing
+  giftForm.url build configuration still controls the fallback and section visibility.
+- Success requires a readable JSON response with ok:true. An opaque response,
+  timeout or network error must not count as success. Preserve inputs on failure;
+  warn that an unconfirmed request may already have saved, and never retry automatically.
+- Disable repeated submits while pending; enforce matching length limits and a honeypot.
+  Honeypot filtering is basic spam protection, not authentication or rate limiting.
+- The heading remains Presente and the approved introduction is unchanged.
+- Browser-to-Apps-Script submission and phone/desktop rendering still require verification.
+  Keep the PR in draft until these checks pass. Merge only with explicit approval.
 
 ### Story, contact and styling
 
