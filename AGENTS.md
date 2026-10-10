@@ -195,7 +195,8 @@ The couple's latest instructions take precedence over this guide.
 - Disable repeated submits while pending; enforce matching length limits and a honeypot.
   Honeypot filtering is basic spam protection, not authentication or rate limiting.
 - The visible Presente heading was removed at Miguel’s request. Keep its hidden
-  label for the fallback iframe. The approved introduction remains unchanged.
+  label for the fallback iframe. The introduction under `giftForm.intro` is:
+  “Agradecemos muito a ajuda que nos quiserem dar para ajudar a montar a nossa casa ou para a nossa lua de mel. Se possível, pedimos que preencham este curto formulário com o presente que escolheram, para podermos agradecer a cada um.”
 - The form spans the same container width as the payment details above.
 - Miguel reported testing the form successfully on 10 October. This is user-reported
   verification; the assistant has not independently observed a browser submission.
