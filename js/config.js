@@ -24,7 +24,7 @@ window.SITE_CONFIG = {
   },
   "content": {
     "giftForm.title": "Presente",
-    "giftForm.intro": "Deixem o vosso nome, o presente que nos querem oferecer e uma mensagem para nós.",
+    "giftForm.intro": "Para podermos agradecer, pedimos que preencham o seguinte formulário",
     "giftForm.open": "Abrir o formulário numa nova janela",
     "hero.venue": "Igreja de Nossa Senhora das Mercês, Lisboa",
     "honeymoon.title": "Lua de Mel na Patagónia",

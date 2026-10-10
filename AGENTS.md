@@ -207,6 +207,8 @@ The couple's latest instructions take precedence over this guide.
   message: the embedded Google Form handles and confirms its own submission.
 - The form heading is “Presente”, under
   `giftForm.title`.
+- The introduction is “Para podermos agradecer, pedimos que preencham o seguinte formulário”,
+  under `giftForm.intro`.
 - Form copy uses `giftForm.title`, `giftForm.intro` and `giftForm.open`.
   Website CSS styles only the surrounding section, not Google's iframe content.
 - The couple confirmed the embed renders. After trying a compact iframe they
