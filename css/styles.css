@@ -828,7 +828,7 @@ Gifts
 Gift form — Google hosts and confirms submissions
 ========================================================================== */
 .gift-form {
-  max-width: 640px;
+  max-width: none;
   margin: 1.5rem auto 0;
   padding-top: 1.25rem;
   border-top: 1px solid var(--line);
@@ -836,10 +836,8 @@ Gift form — Google hosts and confirms submissions
 .gift-form[hidden] {
   display: none;
 }
-.gift-form h3 {
-  margin-bottom: .5rem;
-}
 .gift-form > p {
+  max-width: none;
   line-height: 1.65;
 }
 .gift-form iframe {
@@ -1311,3 +1309,24 @@ section, header {
 .topic-views:not(.home-view) .section {
   min-height: calc(100svh - var(--nav-offset, 8rem));
 }
+
+/* Custom gift notification form; the Google embed remains a no-JS fallback. */
+.gift-form [hidden] { display: none !important; }
+#customGiftForm { display: grid; gap: .65rem; margin-top: 1.25rem; }
+#customGiftForm label { font-weight: 600; margin-top: .5rem; }
+#customGiftForm input, #customGiftForm textarea {
+  width: 100%; min-width: 0; box-sizing: border-box; font: inherit;
+  color: var(--color-ink); background: var(--color-paper);
+  border: 1px solid var(--line); border-radius: 8px; padding: .8rem;
+}
+#customGiftForm textarea { resize: vertical; }
+#customGiftForm input:focus-visible, #customGiftForm textarea:focus-visible,
+#customGiftForm button:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 3px; }
+#customGiftForm button {
+  justify-self: start; font: inherit; padding: .75rem 1.5rem;
+  background: var(--color-accent); color: var(--color-paper);
+  border: 0; border-radius: 8px; cursor: pointer;
+}
+#customGiftForm button:disabled { opacity: .65; cursor: wait; }
+#customGiftForm .gift-trap { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+#giftStatus { margin: .25rem 0 0; line-height: 1.6; }
