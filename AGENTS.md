@@ -205,7 +205,7 @@ The couple's latest instructions take precedence over this guide.
 - The integration is baked into HTML and works without JavaScript. Do not add
   custom POST requests, hidden submission frames, or a client-side success
   message: the embedded Google Form handles and confirms its own submission.
-- The form heading is “Para podermos agradecer, pedimos que preencham o seguinte formulário”, under
+- The form heading is “Presente”, under
   `giftForm.title`.
 - Form copy uses `giftForm.title`, `giftForm.intro` and `giftForm.open`.
   Website CSS styles only the surrounding section, not Google's iframe content.

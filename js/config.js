@@ -23,7 +23,7 @@ window.SITE_CONFIG = {
     "contact": true
   },
   "content": {
-    "giftForm.title": "Para podermos agradecer, pedimos que preencham o seguinte formulário",
+    "giftForm.title": "Presente",
     "giftForm.intro": "Deixem o vosso nome, o presente que nos querem oferecer e uma mensagem para nós.",
     "giftForm.open": "Abrir o formulário numa nova janela",
     "hero.venue": "Igreja de Nossa Senhora das Mercês, Lisboa",
