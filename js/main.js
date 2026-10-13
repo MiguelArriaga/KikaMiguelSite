@@ -205,7 +205,7 @@
     if (!isNaN(date.getTime())) {
       var label = date.toLocaleDateString('pt-PT', {timeZone:'Europe/Lisbon', day:'numeric', month:'long', year:'numeric'});
       var time = date.toLocaleTimeString('pt-PT', {timeZone:'Europe/Lisbon', hour:'2-digit', minute:'2-digit'});
-      var dates = {date:label, clock:time, time:label + ' · ' + time, place:label + ' · Lisboa', reception:label + ' · a seguir à missa'};
+      var dates = {date:label, clock:time, time:label + ' · ' + time, place:label + ' · Lisboa', reception:label + ' · a seguir à Missa'};
       document.querySelectorAll('[data-date]').forEach(function (el) { el.textContent = dates[el.dataset.date]; });
       document.title = cfg.content['couple.name'] + ' — ' + label;
     }

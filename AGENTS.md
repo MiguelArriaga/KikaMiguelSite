@@ -86,6 +86,7 @@ The couple's latest instructions take precedence over this guide.
   também em Lisboa!”
 - Retain both venue photographs, ceremony/reception details and Google Maps links.
 - The reception at Estufa Fria is labelled “Almoço e Festa”.
+- Capitalize “Missa” throughout the site, including “a seguir à Missa”.
 - Show “Fraque” beneath the two venue cards in “Onde”.
 - Dress-code FAQ question: “É de Fraque?”; answer: “Sim! :)”. The rental suggestions heading and the
   Alta Roda and Diadema rental links were removed at the couple’s request.

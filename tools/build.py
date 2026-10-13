@@ -90,7 +90,7 @@ def render(config):
     date = datetime.fromisoformat(config["weddingDateTime"]).astimezone(ZoneInfo("Europe/Lisbon"))
     months = "janeiro fevereiro março abril maio junho julho agosto setembro outubro novembro dezembro".split()
     label = f"{date.day} de {months[date.month-1]} de {date.year}"
-    dates = {"date": label, "clock": date.strftime("%H:%M"), "time": label + " · " + date.strftime("%H:%M"), "place": label + " · Lisboa", "reception": label + " · a seguir à missa"}
+    dates = {"date": label, "clock": date.strftime("%H:%M"), "time": label + " · " + date.strftime("%H:%M"), "place": label + " · Lisboa", "reception": label + " · a seguir à Missa"}
     source = re.sub(r'(<[^>]+data-date="([^"]+)"[^>]*>)[^<]*(</[^>]+>)', lambda m: m[1] + dates[m[2]] + m[3], source)
     source = re.sub(r'<title>.*?</title>', '<title>' + html.escape(config['content']['couple.name']) + ' — ' + label + '</title>', source)
     # Bake the integration into HTML so it also works without JavaScript.
