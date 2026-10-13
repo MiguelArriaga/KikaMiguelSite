@@ -86,8 +86,8 @@ The couple's latest instructions take precedence over this guide.
   também em Lisboa!”
 - Retain both venue photographs, ceremony/reception details and Google Maps links.
 - The reception at Estufa Fria is labelled “Almoço e Festa”.
-- Show “Dress Code: Fraque” beneath the two venue cards in “Onde”.
-- Dress-code FAQ answer: “Fraque.” The rental suggestions heading and the
+- Show “Fraque” beneath the two venue cards in “Onde”.
+- Dress-code FAQ question: “É de Fraque?”; answer: “Sim! :)”. The rental suggestions heading and the
   Alta Roda and Diadema rental links were removed at the couple’s request.
 - Church parking approved copy: “Parque Largo de Jesus Telpark — mesmo ao lado
   da Igreja das Mercês. Aberto 24 horas/dia. Primeira hora 2 €”.
@@ -170,9 +170,9 @@ The couple's latest instructions take precedence over this guide.
   These supplied numbers are payment details.
 - A compact 28px copy-icon button sits inline with the IBAN. It has an accessible
   “Copiar IBAN” label, copies without spaces and briefly changes to a check icon
-  with an accessible success message. If clipboard access fails, select the
-  displayed IBAN and show manual-copy instructions. Hide the button without
-  JavaScript.
+  with an accessible success message beneath BIC/SWIFT, before the MB Way divider.
+  If clipboard access fails, select the displayed IBAN and show manual-copy
+  instructions in the same position. Hide the button without JavaScript.
 - “Outros presentes”, both gift placeholders and the purchase-notification note
   remain removed. The couple subsequently requested Bimby, bed and sofa images
   in “A Nossa Nova Casa” and replaced the old Bimby JPEG with `bimby.png`.
@@ -196,7 +196,7 @@ The couple's latest instructions take precedence over this guide.
   Honeypot filtering is basic spam protection, not authentication or rate limiting.
 - The visible Presente heading was removed at Miguel’s request. Keep its hidden
   label for the fallback iframe. The introduction under `giftForm.intro` is:
-  “Agradecemos muito a ajuda que nos quiserem dar para ajudar a montar a nossa casa ou para a nossa lua de mel. Se possível, pedimos que preencham este curto formulário com o presente que escolheram, para podermos agradecer a cada um.”
+  “Agradecemos muito a ajuda que nos quiserem dar para ajudar a montar a nossa casa ou para a nossa lua de mel. Se possível, pedimos que preencham este formulário, para podermos agradecer a cada um.”
 - The form spans the same container width as the payment details above.
 - Miguel reported testing the form successfully on 10 October. This is user-reported
   verification; the assistant has not independently observed a browser submission.
@@ -205,15 +205,16 @@ The couple's latest instructions take precedence over this guide.
 
 ### Story, contact and styling
 
-- Story has three moments: “O Início” (McKinsey and the first date), shared
-  moments, and the proposal in Paris on a trip to Disneyland. Current text:
-  > Conhecemo-nos a trabalhar juntos na McKinsey. Quando demos por isso, já andávamos a inventar cada vez mais coisas para fazer juntos. Fomos a Paris para ir à Disney, mas o Miguel tinha outros planos...
+- Story has three moments: “Conhecemo-nos na McKinsey” (McKinsey and the first
+  date), “Em programas” (shared moments), and “O pedido em Paris”. The short
+  descriptions beneath the chapter headings were removed on 14 October 2026;
+  photograph captions and lightbox descriptions remain.
 - Ten story photos have lightbox access: `working1.jpg`, `first_date3.jpg`; `having_fun6.jpg`,
   `having_fun1.jpg`, `having_fun5b.jpg`, `having_fun7.jpg`; `engagement0.jpeg`,
   `engagement2.jpg`, `engagement4.jpg`, `engagement5.jpg`, all under
   `pictures/our_story/`. `having_fun6.jpg` replaced the former fun photo;
   `having_fun7.jpg` was added.
-- The first date is now included in “O Início”, after the McKinsey photograph.
+- The first date is included in “Conhecemo-nos na McKinsey”, after the McKinsey photograph.
   Its caption and lightbox description are: “O nosso primeiro "date" a ver o
   pôr-do-sol no guincho”. Edit these under `story.caption.firstDate` and
   `story.photo.firstDate`.
@@ -231,8 +232,8 @@ The couple's latest instructions take precedence over this guide.
   honeymoon photos and one map. The two gift panels have independent galleries;
   the house viewer uses “A Nossa Nova Casa” as its title.
 - Story uses a wider magazine-style layout with three distinct chapters:
-  “O Início” text beside the McKinsey photo and a smaller first-date photo
-  beneath it on desktop. The “01 O Início” heading and text align with the top
+  “Conhecemo-nos na McKinsey” heading beside the McKinsey photo and a smaller first-date photo
+  beneath it on desktop. The “01 Conhecemo-nos na McKinsey” heading aligns with the top
   of the McKinsey photo on wide screens. The other chapters use an asymmetric collage of
   shared moments, and a lead proposal portrait followed by restaurant, Disneyland
   and Paris photographs. Mobile uses a vertical flow and compact photo pairs.
@@ -246,7 +247,7 @@ The couple's latest instructions take precedence over this guide.
   a counter, supports touch swipes, locks background scrolling and returns focus
   to the photo that opened it. The map opens on its own without navigation arrows.
   Story lightbox titles combine the section and current moment (for example,
-  “A Nossa História - O Início”) and update as guests browse across moments.
+  “A Nossa História - Conhecemo-nos na McKinsey”) and update as guests browse across moments.
   Honeymoon lightbox titles use the honeymoon panel heading,
   “Lua de Mel na Patagónia”, without the subsection number.
 - Use supplied couple photos; do not substitute unrelated stock couple photos.
