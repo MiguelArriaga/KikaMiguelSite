@@ -92,6 +92,8 @@ The couple's latest instructions take precedence over this guide.
   discreet body font, size and colour for both “Traje:” and “Fraque”.
   Keep this dress-code note discreet but easy to spot. The label uses
   `details.dressCodeLabel`; the value uses `details.dressCode`.
+  On the home view, keep the gap from this note to “Contacto” compact (32–48px
+  across screen widths), without stacking the two sections' usual padding.
 - Dress-code FAQ question: “É de Fraque?”; answer: “Sim! :)”. The rental suggestions heading and the
   Alta Roda and Diadema rental links were removed at the couple’s request.
 - Church parking approved copy: “Parque Largo de Jesus Telpark — mesmo ao lado
