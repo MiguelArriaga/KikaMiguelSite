@@ -41,6 +41,7 @@ window.SITE_CONFIG = {
     "nav.details": "Onde",
     "nav.faq": "FAQ",
     "details.title": "Onde",
+    "details.dressCodeLabel": "Traje:",
     "details.dressCode": "Fraque",
     "details.intro": "Conhecemo-nos em Lisboa, vamos viver em Lisboa e casamos também em Lisboa!",
     "gifts.title": "Presentes",

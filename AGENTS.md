@@ -87,7 +87,11 @@ The couple's latest instructions take precedence over this guide.
 - Retain both venue photographs, ceremony/reception details and Google Maps links.
 - The reception at Estufa Fria is labelled “Almoço e Festa”.
 - Capitalize “Missa” throughout the site, including “a seguir à Missa”.
-- Show “Fraque” beneath the two venue cards in “Onde”.
+- Show “Traje: Fraque” beneath the two venue cards in “Onde”, centred on one
+  line between short, fine horizontal rules above and below. Use the same
+  discreet body font, size and colour for both “Traje:” and “Fraque”.
+  Keep this dress-code note discreet but easy to spot. The label uses
+  `details.dressCodeLabel`; the value uses `details.dressCode`.
 - Dress-code FAQ question: “É de Fraque?”; answer: “Sim! :)”. The rental suggestions heading and the
   Alta Roda and Diadema rental links were removed at the couple’s request.
 - Church parking approved copy: “Parque Largo de Jesus Telpark — mesmo ao lado

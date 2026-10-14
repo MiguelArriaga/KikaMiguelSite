@@ -565,8 +565,23 @@ Event details
   margin-bottom: 0.3rem;
 }
 .details-dress-code {
-  margin: 1.5rem 0 0;
+  width: 16rem;
+  max-width: 100%;
+  margin: 2rem auto 0;
+  padding: 0.75rem 0.5rem;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  text-align: center;
+}
+.details-dress-code p {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: center;
+  gap: 0.45rem;
+  margin: 0;
   color: var(--color-accent);
+  font-size: 0.9rem;
   font-weight: 500;
 }
 .event-photo {
