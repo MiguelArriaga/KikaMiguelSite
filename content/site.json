@@ -22,99 +22,506 @@
     "contact": true
   },
   "content": {
-    "giftForm.title": "Presente",
-    "giftForm.intro": "Agradecemos muito a ajuda que nos quiserem dar para ajudar a montar a nossa casa ou para a nossa lua de mel. Se possível, pedimos que preencham este formulário, para podermos agradecer a cada um.",
-    "giftForm.open": "Abrir o formulário numa nova janela",
-    "hero.venue": "Igreja de Nossa Senhora das Mercês, Lisboa",
-    "honeymoon.title": "Lua de Mel na Patagónia",
-    "honeymoon.intro": "Queremos começar esta grande aventura juntos num dos lugares mais bonitos do planeta - na Patagónia Argentina e Chilena.",
-    "honeymoon.chalten": "El Chaltén · Fitz Roy",
-    "honeymoon.paine": "Torres del Paine",
-    "nav.monogram": "Kika e Miguel",
-    "countdown.days": "dias",
-    "countdown.hours": "horas",
-    "countdown.minutes": "min.",
-    "countdown.seconds": "seg.",
-    "nav.story": "A nossa história",
-    "nav.gifts": "Presentes",
-    "nav.details": "Onde",
-    "nav.faq": "FAQ",
-    "details.title": "Onde",
-    "details.dressCodeLabel": "Traje:",
-    "details.dressCode": "Fraque",
-    "details.intro": "Conhecemo-nos em Lisboa, vamos viver em Lisboa e casamos também em Lisboa!",
-    "gifts.title": "Presentes",
-    "gifts.intro": "A vossa presença é o mais importante, mas se nos quiserem ajudar a começar esta nossa nova fase, deixamos algumas ideias de presentes.",
-    "house.title": "A Nossa Nova Casa",
-    "house.intro": "Quem casa quer casa! Queremos montar uma casa acolhedora para a nossa família e sempre pronta para vos receber a todos!",
-    "house.caption.bimby": "Bimby TM7",
-    "house.caption.bed": "Cama",
-    "house.caption.sofa": "Sofá",
-    "house.caption.fridge": "Frigorífico",
-    "house.photo.bimby": "Bimby TM7 para a nossa nova casa",
-    "house.photo.bed": "Cama para a nossa nova casa",
-    "house.photo.sofa": "Sofá bege de três lugares para a nossa nova casa",
-    "house.photo.fridge": "Frigorífico para a nossa nova casa",
-    "bank.iban": "PT50 0018 000370175294020 34",
-    "bank.bic": "TOTAPTPL",
-    "bank.mbWayMiguel": "916202487",
-    "bank.mbWayKika": "931847410",
-    "bank.copy": "Copiar IBAN",
-    "bank.copied": "IBAN copiado",
-    "bank.copySuccess": "IBAN copiado.",
-    "bank.copyError": "Não foi possível copiar automaticamente. O IBAN está selecionado para copiar manualmente.",
-    "story.title": "A Nossa História",
-    "story.workNumber": "01",
-    "story.work": "Conhecemo-nos na McKinsey",
-    "story.caption.work": "McKinsey, às 01:24",
-    "story.photo.work": "Kika e Miguel na McKinsey (fotografia tirada às 01:24!)",
-    "story.caption.firstDate": "O nosso primeiro \"date\" a ver o pôr-do-sol no guincho",
-    "story.photo.firstDate": "O nosso primeiro \"date\" a ver o pôr-do-sol no guincho",
-    "story.funNumber": "02",
-    "story.fun": "Em programas",
-    "story.caption.douro": "Pelo Douro",
-    "story.photo.douro": "Kika e Miguel no Douro",
-    "story.caption.karts": "Nós nos karts",
-    "story.photo.karts": "Nós nos karts",
-    "story.caption.bankers": "A representar os bancários",
-    "story.photo.bankers": "A representar a classe dos Bancários!",
-    "story.caption.hike": "Pela Serra da Estrela",
-    "story.photo.hike": "Caminhada na Serra da Estrela",
-    "story.proposalNumber": "03",
-    "story.proposal": "O pedido em Paris",
-    "story.caption.proposal": "O nosso primeiro jantar em Paris",
-    "story.photo.proposal": "O pedido foi feito no nosso primeiro jantar em Paris!",
-    "story.caption.proposalMemories": "Closerie des Lilas",
-    "story.photo.proposalMemories": "O Jantar foi na 'closerie de lilas' - a 'casa' do Hemingway e Cole Porter, entre outros!",
-    "story.caption.disneyland": "O dia seguinte, na Disneyland",
-    "story.photo.disneyland": "O dia seguinte foi passado na Disneyland!",
-    "story.caption.paris": "A passear por Paris",
-    "story.photo.paris": "E o último dia foi passado a passear por Paris.",
-    "faq.title": "FAQ",
-    "faq.dressCode": "Sim! :)",
-    "parking.church": "Parque Largo de Jesus Telpark — mesmo ao lado da Igreja das Mercês. Aberto 24 horas/dia. Primeira hora 2 €",
-    "parking.estufaIntro": "Pode estacionar na rua, na Alameda Edgar Cardoso, ou no ",
-    "parking.saba": "parque Saba Alto do Parque",
-    "parking.uber": ". Se vier de Uber, pode ir até à porta da Estufa Fria.",
-    "faq.venueDirections": "Siga o percurso assinalado a verde na planta, desde a entrada da Estufa Fria até à Nave, onde será o Almoço",
-    "faq.mapHint": "Selecione a planta para ampliar.",
-    "faq.question.hotels": "Não vivo em Lisboa, têm alguma recomendação de estadia?",
-    "faq.answer.hotels": "Em Lisboa é tudo perto, mas duas opções ao pé do sítio da festa são",
-    "faq.hotel.sanaRex": "SANA Rex Hotel",
-    "faq.hotel.smyLisboa": "Smy Lisboa",
-    "contact.title": "Contacto",
-    "contact.email": "kikaemiguel2027@gmail.com",
-    "footer.monogram": "Kika e Miguel",
-    "closing.videoCaption": "We can't wait to see you there!!!",
-    "closing.videoFallback": "Ver vídeo",
-    "closing.videoPlay": "Reproduzir vídeo",
-    "closing.videoPause": "Pausar vídeo",
-    "faq.question.1": "É de Fraque?",
-    "faq.question.2": "Onde posso estacionar perto da Igreja das Mercês?",
-    "faq.question.3": "Onde posso estacionar perto da Estufa Fria?",
-    "faq.question.4": "Na Estufa Fria, como chego ao sítio do Almoço?",
-    "couple.name": "Kika e Miguel",
-    "event.ceremony": "Missa",
-    "event.reception": "Almoço e Festa"
+    "language.switch": {
+      "pt-PT": "Mudar para inglês",
+      "en-GB": "Switch to Portuguese"
+    },
+    "meta.description": {
+      "pt-PT": "Casamento de Kika e Miguel, {date}, Lisboa.",
+      "en-GB": "Kika and Miguel’s wedding, {date}, Lisbon."
+    },
+    "couple.name": {
+      "pt-PT": "Kika e Miguel",
+      "en-GB": "Kika and Miguel"
+    },
+    "nav.monogram": {
+      "pt-PT": "Kika e Miguel",
+      "en-GB": "Kika and Miguel"
+    },
+    "nav.story": {
+      "pt-PT": "A nossa história",
+      "en-GB": "Our story"
+    },
+    "nav.gifts": {
+      "pt-PT": "Presentes",
+      "en-GB": "Gifts"
+    },
+    "nav.details": {
+      "pt-PT": "Onde",
+      "en-GB": "Where"
+    },
+    "nav.faq": {
+      "shared": "FAQ"
+    },
+    "nav.brandLabel": {
+      "pt-PT": "Kika e Miguel e data do casamento",
+      "en-GB": "Kika and Miguel and the wedding date"
+    },
+    "nav.home": {
+      "pt-PT": "Voltar ao início",
+      "en-GB": "Back to the home page"
+    },
+    "nav.menu": {
+      "shared": "Menu"
+    },
+    "nav.storyMenu": {
+      "pt-PT": "A Nossa História",
+      "en-GB": "Our Story"
+    },
+    "nav.contact": {
+      "pt-PT": "Contacto",
+      "en-GB": "Contact"
+    },
+    "countdown.days": {
+      "pt-PT": "dias",
+      "en-GB": "days"
+    },
+    "countdown.hours": {
+      "pt-PT": "horas",
+      "en-GB": "hours"
+    },
+    "countdown.minutes": {
+      "pt-PT": "min.",
+      "en-GB": "min."
+    },
+    "countdown.seconds": {
+      "pt-PT": "seg.",
+      "en-GB": "sec."
+    },
+    "countdown.label": {
+      "pt-PT": "Contagem decrescente para o casamento",
+      "en-GB": "Countdown to the wedding"
+    },
+    "hero.venue": {
+      "pt-PT": "Igreja de Nossa Senhora das Mercês, Lisboa",
+      "en-GB": "Igreja de Nossa Senhora das Mercês, Lisbon"
+    },
+    "hero.linksLabel": {
+      "pt-PT": "Explore o nosso casamento",
+      "en-GB": "Explore our wedding"
+    },
+    "details.title": {
+      "pt-PT": "Onde",
+      "en-GB": "Where"
+    },
+    "details.dressCodeLabel": {
+      "pt-PT": "Traje:",
+      "en-GB": "Dress code:"
+    },
+    "details.dressCode": {
+      "pt-PT": "Fraque",
+      "en-GB": "Morning dress"
+    },
+    "details.intro": {
+      "pt-PT": "Conhecemo-nos em Lisboa, vamos viver em Lisboa e casamos também em Lisboa!",
+      "en-GB": "We met in Lisbon, we’ll be living in Lisbon, and we’re getting married in Lisbon too!"
+    },
+    "event.ceremony": {
+      "pt-PT": "Missa",
+      "en-GB": "Wedding Mass"
+    },
+    "event.reception": {
+      "pt-PT": "Almoço e Festa",
+      "en-GB": "Lunch and Party"
+    },
+    "event.ceremonyVenue": {
+      "shared": "Igreja de Nossa Senhora das Mercês"
+    },
+    "event.receptionVenue": {
+      "shared": "Estufa Fria de Lisboa"
+    },
+    "event.ceremonyAddress": {
+      "shared": "Largo de Jesus, 1200-317 Lisboa"
+    },
+    "event.receptionAddress": {
+      "shared": "Parque Eduardo VII, 1070-051 Lisboa"
+    },
+    "event.mapLink": {
+      "pt-PT": "Ver no mapa →",
+      "en-GB": "View on map →"
+    },
+    "event.afterMass": {
+      "pt-PT": "a seguir à Missa",
+      "en-GB": "after Mass"
+    },
+    "event.city": {
+      "pt-PT": "Lisboa",
+      "en-GB": "Lisbon"
+    },
+    "story.title": {
+      "pt-PT": "A Nossa História",
+      "en-GB": "Our Story"
+    },
+    "story.workNumber": {
+      "shared": "01"
+    },
+    "story.work": {
+      "pt-PT": "Conhecemo-nos na McKinsey",
+      "en-GB": "We met at McKinsey"
+    },
+    "story.caption.work": {
+      "pt-PT": "McKinsey, às 01:24",
+      "en-GB": "McKinsey, at 01:24"
+    },
+    "story.photo.work": {
+      "pt-PT": "Kika e Miguel na McKinsey (fotografia tirada às 01:24!)",
+      "en-GB": "Kika and Miguel at McKinsey (photo taken at 01:24!)"
+    },
+    "story.caption.firstDate": {
+      "pt-PT": "O nosso primeiro \"date\" a ver o pôr-do-sol no guincho",
+      "en-GB": "Our first date, watching the sunset at Guincho"
+    },
+    "story.photo.firstDate": {
+      "pt-PT": "O nosso primeiro \"date\" a ver o pôr-do-sol no guincho",
+      "en-GB": "Our first date, watching the sunset at Guincho"
+    },
+    "story.funNumber": {
+      "shared": "02"
+    },
+    "story.fun": {
+      "pt-PT": "Em programas",
+      "en-GB": "Adventures together"
+    },
+    "story.caption.douro": {
+      "pt-PT": "Pelo Douro",
+      "en-GB": "In the Douro Valley"
+    },
+    "story.photo.douro": {
+      "pt-PT": "Kika e Miguel no Douro",
+      "en-GB": "Kika and Miguel in the Douro Valley"
+    },
+    "story.caption.karts": {
+      "pt-PT": "Nós nos karts",
+      "en-GB": "Go-karting together"
+    },
+    "story.photo.karts": {
+      "pt-PT": "Nós nos karts",
+      "en-GB": "The two of us go-karting"
+    },
+    "story.caption.bankers": {
+      "pt-PT": "A representar os bancários",
+      "en-GB": "Representing the bankers"
+    },
+    "story.photo.bankers": {
+      "pt-PT": "A representar a classe dos Bancários!",
+      "en-GB": "Representing the bankers!"
+    },
+    "story.caption.hike": {
+      "pt-PT": "Pela Serra da Estrela",
+      "en-GB": "In Serra da Estrela"
+    },
+    "story.photo.hike": {
+      "pt-PT": "Caminhada na Serra da Estrela",
+      "en-GB": "Hiking in Serra da Estrela"
+    },
+    "story.proposalNumber": {
+      "shared": "03"
+    },
+    "story.proposal": {
+      "pt-PT": "O pedido em Paris",
+      "en-GB": "The proposal in Paris"
+    },
+    "story.caption.proposal": {
+      "pt-PT": "O nosso primeiro jantar em Paris",
+      "en-GB": "Our first dinner in Paris"
+    },
+    "story.photo.proposal": {
+      "pt-PT": "O pedido foi feito no nosso primeiro jantar em Paris!",
+      "en-GB": "The proposal happened during our first dinner in Paris!"
+    },
+    "story.caption.proposalMemories": {
+      "shared": "Closerie des Lilas"
+    },
+    "story.photo.proposalMemories": {
+      "pt-PT": "O Jantar foi na 'closerie de lilas' - a 'casa' do Hemingway e Cole Porter, entre outros!",
+      "en-GB": "We had dinner at La Closerie des Lilas, a favourite haunt of Hemingway and Cole Porter, among others!"
+    },
+    "story.caption.disneyland": {
+      "pt-PT": "O dia seguinte, na Disneyland",
+      "en-GB": "The next day at Disneyland"
+    },
+    "story.photo.disneyland": {
+      "pt-PT": "O dia seguinte foi passado na Disneyland!",
+      "en-GB": "We spent the next day at Disneyland!"
+    },
+    "story.caption.paris": {
+      "pt-PT": "A passear por Paris",
+      "en-GB": "Exploring Paris"
+    },
+    "story.photo.paris": {
+      "pt-PT": "E o último dia foi passado a passear por Paris.",
+      "en-GB": "We spent our last day walking around Paris."
+    },
+    "gifts.title": {
+      "pt-PT": "Presentes",
+      "en-GB": "Gifts"
+    },
+    "gifts.intro": {
+      "pt-PT": "A vossa presença é o mais importante, mas se nos quiserem ajudar a começar esta nossa nova fase, deixamos algumas ideias de presentes.",
+      "en-GB": "Having you with us is what matters most, but if you’d like to help us start this next chapter, here are a few gift ideas."
+    },
+    "house.title": {
+      "pt-PT": "A Nossa Nova Casa",
+      "en-GB": "Our New Home"
+    },
+    "house.intro": {
+      "pt-PT": "Quem casa quer casa! Queremos montar uma casa acolhedora para a nossa família e sempre pronta para vos receber a todos!",
+      "en-GB": "A wedding means a new home! We want to make it a welcoming place for our family, always ready to have you all over!"
+    },
+    "house.caption.bimby": {
+      "shared": "Bimby TM7"
+    },
+    "house.caption.bed": {
+      "pt-PT": "Cama",
+      "en-GB": "Bed"
+    },
+    "house.caption.sofa": {
+      "pt-PT": "Sofá",
+      "en-GB": "Sofa"
+    },
+    "house.caption.fridge": {
+      "pt-PT": "Frigorífico",
+      "en-GB": "Fridge"
+    },
+    "house.photo.bimby": {
+      "pt-PT": "Bimby TM7 para a nossa nova casa",
+      "en-GB": "Bimby TM7 for our new home"
+    },
+    "house.photo.bed": {
+      "pt-PT": "Cama para a nossa nova casa",
+      "en-GB": "Bed for our new home"
+    },
+    "house.photo.sofa": {
+      "pt-PT": "Sofá bege de três lugares para a nossa nova casa",
+      "en-GB": "Beige three-seater sofa for our new home"
+    },
+    "house.photo.fridge": {
+      "pt-PT": "Frigorífico para a nossa nova casa",
+      "en-GB": "Fridge for our new home"
+    },
+    "honeymoon.title": {
+      "pt-PT": "Lua de Mel na Patagónia",
+      "en-GB": "Our Honeymoon in Patagonia"
+    },
+    "honeymoon.intro": {
+      "pt-PT": "Queremos começar esta grande aventura juntos num dos lugares mais bonitos do planeta - na Patagónia Argentina e Chilena.",
+      "en-GB": "We want to begin this great adventure together in one of the most beautiful places on Earth: Patagonia, in Argentina and Chile."
+    },
+    "honeymoon.chalten": {
+      "shared": "El Chaltén · Fitz Roy"
+    },
+    "honeymoon.paine": {
+      "shared": "Torres del Paine"
+    },
+    "honeymoon.photo.chalten": {
+      "pt-PT": "Fitz Roy e lago em El Chaltén",
+      "en-GB": "Fitz Roy and a lake in El Chaltén"
+    },
+    "honeymoon.photo.paine": {
+      "pt-PT": "Torres del Paine e lago na Patagónia chilena",
+      "en-GB": "Torres del Paine and a lake in Chilean Patagonia"
+    },
+    "bank.iban": {
+      "shared": "PT50 0018 000370175294020 34"
+    },
+    "bank.bic": {
+      "shared": "TOTAPTPL"
+    },
+    "bank.mbWayMiguel": {
+      "shared": "916202487"
+    },
+    "bank.mbWayKika": {
+      "shared": "931847410"
+    },
+    "bank.copy": {
+      "pt-PT": "Copiar IBAN",
+      "en-GB": "Copy IBAN"
+    },
+    "bank.copied": {
+      "pt-PT": "IBAN copiado",
+      "en-GB": "IBAN copied"
+    },
+    "bank.copySuccess": {
+      "pt-PT": "IBAN copiado.",
+      "en-GB": "IBAN copied."
+    },
+    "bank.copyError": {
+      "pt-PT": "Não foi possível copiar automaticamente. O IBAN está selecionado para copiar manualmente.",
+      "en-GB": "We couldn’t copy the IBAN automatically. It’s selected so you can copy it manually."
+    },
+    "giftForm.title": {
+      "pt-PT": "Presente",
+      "en-GB": "Gift notification"
+    },
+    "giftForm.intro": {
+      "pt-PT": "Agradecemos muito a ajuda que nos quiserem dar para ajudar a montar a nossa casa ou para a nossa lua de mel. Se possível, pedimos que preencham este formulário, para podermos agradecer a cada um.",
+      "en-GB": "Thank you so much for helping us set up our home or contribute to our honeymoon. If you can, please fill in this form so we can thank you personally."
+    },
+    "giftForm.open": {
+      "pt-PT": "Abrir o formulário numa nova janela",
+      "en-GB": "Open the form in a new window"
+    },
+    "giftForm.name": {
+      "pt-PT": "Nome",
+      "en-GB": "Name"
+    },
+    "giftForm.gift": {
+      "pt-PT": "Presente",
+      "en-GB": "Gift"
+    },
+    "giftForm.message": {
+      "pt-PT": "Mensagem para os noivos (opcional)",
+      "en-GB": "Message for the couple (optional)"
+    },
+    "giftForm.submit": {
+      "pt-PT": "Enviar",
+      "en-GB": "Send"
+    },
+    "giftForm.website": {
+      "shared": "Website"
+    },
+    "giftForm.frameTitle": {
+      "pt-PT": "Formulário de presentes para Kika e Miguel",
+      "en-GB": "Gift form for Kika and Miguel"
+    },
+    "giftForm.fallbackLanguage": {
+      "pt-PT": "O formulário abaixo está em português.",
+      "en-GB": "The form below is in Portuguese."
+    },
+    "giftForm.required": {
+      "pt-PT": "Preencha o nome e o presente.",
+      "en-GB": "Please enter your name and gift."
+    },
+    "giftForm.pending": {
+      "pt-PT": "A enviar…",
+      "en-GB": "Sending…"
+    },
+    "giftForm.rejected": {
+      "pt-PT": "Não foi possível guardar. Verifique os campos e tente novamente.",
+      "en-GB": "We couldn’t save your response. Please check the fields and try again."
+    },
+    "giftForm.success": {
+      "pt-PT": "Muito obrigado! A vossa resposta ficou registada.",
+      "en-GB": "Thank you very much! We’ve received your response."
+    },
+    "giftForm.unconfirmed": {
+      "pt-PT": "Não foi possível confirmar o envio. Os dados continuam aqui. A resposta pode ter sido guardada; confirme com os noivos antes de voltar a enviar.",
+      "en-GB": "We couldn’t confirm the submission. Your details are still here. Your response may have been saved. Please check with us before sending it again."
+    },
+    "contact.title": {
+      "pt-PT": "Contacto",
+      "en-GB": "Contact"
+    },
+    "contact.email": {
+      "shared": "kikaemiguel2027@gmail.com"
+    },
+    "faq.title": {
+      "shared": "FAQ"
+    },
+    "faq.dressCode": {
+      "pt-PT": "Sim! :)",
+      "en-GB": "Yes! :)"
+    },
+    "faq.venueDirections": {
+      "pt-PT": "Siga o percurso assinalado a verde na planta, desde a entrada da Estufa Fria até à Nave, onde será o Almoço",
+      "en-GB": "Follow the green route on the map from the Estufa Fria entrance to the Nave, where lunch will be served"
+    },
+    "faq.mapHint": {
+      "pt-PT": "Selecione a planta para ampliar.",
+      "en-GB": "Select the map to enlarge it."
+    },
+    "faq.question.hotels": {
+      "pt-PT": "Não vivo em Lisboa, têm alguma recomendação de estadia?",
+      "en-GB": "I don’t live in Lisbon. Do you have any recommendations on where to stay?"
+    },
+    "faq.answer.hotels": {
+      "pt-PT": "Em Lisboa é tudo perto, mas duas opções ao pé do sítio da festa são",
+      "en-GB": "Everything in Lisbon is fairly close, but here are two options near the reception venue"
+    },
+    "faq.hotel.sanaRex": {
+      "shared": "SANA Rex Hotel"
+    },
+    "faq.hotel.smyLisboa": {
+      "shared": "Smy Lisboa"
+    },
+    "faq.question.1": {
+      "pt-PT": "É de Fraque?",
+      "en-GB": "Is the dress code morning dress?"
+    },
+    "faq.question.2": {
+      "pt-PT": "Onde posso estacionar perto da Igreja das Mercês?",
+      "en-GB": "Where can I park near Igreja das Mercês?"
+    },
+    "faq.question.3": {
+      "pt-PT": "Onde posso estacionar perto da Estufa Fria?",
+      "en-GB": "Where can I park near Estufa Fria?"
+    },
+    "faq.question.4": {
+      "pt-PT": "Na Estufa Fria, como chego ao sítio do Almoço?",
+      "en-GB": "How do I get to the lunch venue inside Estufa Fria?"
+    },
+    "faq.mapAlt": {
+      "pt-PT": "Percurso assinalado a verde da entrada da Estufa Fria até à Nave",
+      "en-GB": "Route marked in green from the Estufa Fria entrance to the Nave"
+    },
+    "parking.church": {
+      "pt-PT": "Parque Largo de Jesus Telpark — mesmo ao lado da Igreja das Mercês. Aberto 24 horas/dia. Primeira hora 2 €",
+      "en-GB": "Parque Largo de Jesus Telpark — right next to Igreja das Mercês. Open 24 hours a day. First hour €2"
+    },
+    "parking.estufaIntro": {
+      "pt-PT": "Pode estacionar na rua, na Alameda Edgar Cardoso, ou no ",
+      "en-GB": "You can park on Alameda Edgar Cardoso or at the "
+    },
+    "parking.saba": {
+      "pt-PT": "parque Saba Alto do Parque",
+      "en-GB": "Saba Alto do Parque car park"
+    },
+    "parking.uber": {
+      "pt-PT": ". Se vier de Uber, pode ir até à porta da Estufa Fria.",
+      "en-GB": ". If you’re taking an Uber, it can drop you at the entrance to Estufa Fria."
+    },
+    "parking.churchLink": {
+      "pt-PT": "Consultar o Parque Largo de Jesus no operador →",
+      "en-GB": "View Largo de Jesus on the car park operator’s website →"
+    },
+    "parking.sabaLink": {
+      "pt-PT": "Consultar o parque Saba Alto do Parque →",
+      "en-GB": "View Saba Alto do Parque on the car park operator’s website →"
+    },
+    "closing.videoCaption": {
+      "shared": "We can't wait to see you there!!!"
+    },
+    "closing.videoFallback": {
+      "pt-PT": "Ver vídeo",
+      "en-GB": "Watch video"
+    },
+    "closing.videoPlay": {
+      "pt-PT": "Reproduzir vídeo",
+      "en-GB": "Play video"
+    },
+    "closing.videoPause": {
+      "pt-PT": "Pausar vídeo",
+      "en-GB": "Pause video"
+    },
+    "lightbox.label": {
+      "pt-PT": "Imagem ampliada",
+      "en-GB": "Enlarged image"
+    },
+    "lightbox.close": {
+      "pt-PT": "Fechar imagem",
+      "en-GB": "Close image"
+    },
+    "lightbox.previous": {
+      "pt-PT": "Imagem anterior",
+      "en-GB": "Previous image"
+    },
+    "lightbox.next": {
+      "pt-PT": "Imagem seguinte",
+      "en-GB": "Next image"
+    },
+    "footer.monogram": {
+      "pt-PT": "Kika e Miguel",
+      "en-GB": "Kika and Miguel"
+    }
   }
 }

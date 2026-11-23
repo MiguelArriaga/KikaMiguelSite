@@ -10,7 +10,8 @@ The couple's latest instructions take precedence over this guide.
 
 ## Project and confirmed scope
 
-- Public wedding website for Kika and Miguel, in European Portuguese (PT-PT).
+- Public wedding website for Kika and Miguel, in European Portuguese (PT-PT)
+  and British English (EN-GB).
 - Wedding: **23 January 2027, Lisbon**. Mass at **12:30**, Igreja de Nossa
   Senhora das Mercês; reception afterwards at Estufa Fria de Lisboa.
 - Ceremony configuration: `2027-01-23T12:30:00+00:00`. Keep an explicit time-zone
@@ -29,6 +30,10 @@ The couple's latest instructions take precedence over this guide.
 
 ### Home and navigation
 
+- The sticky header's top-right flag and language code switch between Portuguese
+  and English in place. The choice is stored in the browser when available.
+  Existing URLs and anchors work in either language, with Portuguese as the
+  default and the version available without JavaScript.
 - Show the names, wedding date, supplied full-screen couple photograph and compact
   grouped section links on the first screen, including a 320 × 568 phone viewport.
 - Hero image: `pictures/our_story/Main-picture.jpeg`.
@@ -196,6 +201,9 @@ The couple's latest instructions take precedence over this guide.
   It is a public submission URL, not a credential. Never publish the private sheet ID.
 - Keep the existing Google Forms embed as the no-JavaScript fallback. Existing
   giftForm.url build configuration still controls the fallback and section visibility.
+- The custom gift form's labels and feedback follow the active site language.
+  When the custom form cannot initialize, English guests see a note explaining
+  that the Google Forms fallback is in Portuguese.
 - Success requires a readable JSON response with ok:true. An opaque response,
   timeout or network error must not count as success. Preserve inputs on failure;
   warn that an unconfirmed request may already have saved, and never retry automatically.
@@ -271,6 +279,7 @@ The couple's latest instructions take precedence over this guide.
 | `css/styles.css` | Responsive styling, component styles and animations |
 | `js/main.js` | Theme/section application, countdown, FAQ, video and gallery |
 | `js/navigation.js` | Home/topic routing, hash history, focus and active navigation |
+| `js/localization.js` | Language switch, stored preference and translated page copy |
 | `js/config.js` | Generated `window.SITE_CONFIG`; never edit directly |
 | `pictures/our_story/` | Hero, story and retained personal media |
 | `pictures/patagonia/` | Supplied honeymoon photographs |
@@ -287,9 +296,16 @@ The couple's latest instructions take precedence over this guide.
 
 `content/site.json` is the source of truth for configurable fields. Its top-level
 keys are `weddingDateTime`, `giftForm`, `theme`, `sections`, and `content`. `giftForm`
-contains a `url` string; an empty value disables the form. Content values are
-strings (up to 5,000 characters); section values are booleans. Theme colors use
+contains a `url` string; an empty value disables the form. Section values are booleans. Theme colors use
 six-digit hex values for `ink`, `paper`, `paperAlt`, `accent`, `accent2`.
+
+Review and edit the two versions together under `content`. Each translatable
+entry contains both languages, for example
+`"contact.title": {"pt-PT": "Contacto", "en-GB": "Contact"}`.
+Use `{"shared": "..."}` for identical values such as payment numbers, official
+venue names and the English closing caption. Each string can have up to 5,000
+characters. Keep the `{date}` placeholder in both page descriptions. The build
+generates date labels for both languages from the same Lisbon wedding time.
 
 Current theme: Playfair Display Bold (700) / Work Sans; ink `#3D3026`, paper `#F4EBDD`,
 alternate paper `#E9DBC7`, accent `#78563B`, second accent `#91683E`.
@@ -305,7 +321,9 @@ overlays follow the configurable warm ivory, sand and brown palette.
 
 To add configurable copy, add a descriptive key under `content` and the matching
 `data-content="your.key"` on an element containing only text. The build escapes
-text and bakes it into HTML. Avoid putting nested markup in those elements.
+text and bakes the Portuguese version into HTML. Avoid putting nested markup in
+those elements. Use `data-content-alt`, `data-content-aria-label`,
+`data-content-title` and `data-content-meta` for the matching HTML attributes.
 `data-date` handles generated date labels; `data-section` handles visibility;
 `data-lightbox` identifies gallery links. Keep content keys and HTML bindings in sync.
 
@@ -354,7 +372,9 @@ For content, build or application changes, run the relevant checks:
 & "C:\Users\migue\anaconda3\python.exe" tools/test_site.py
 node --check js/main.js
 node --check js/navigation.js
+node --check js/localization.js
 node --test tools/test_navigation.cjs
+node --test tools/test_gift_form.cjs
 git diff --check
 ```
 

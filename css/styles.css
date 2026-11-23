@@ -217,6 +217,39 @@ Nav
   font-size: 0.85rem;
   cursor: pointer;
 }
+.nav-actions {
+  order: 2;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  flex-shrink: 0;
+}
+.language-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  min-width: 3.65rem;
+  min-height: 2.25rem;
+  padding: 0.25rem 0.4rem;
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  background: transparent;
+  color: var(--color-ink);
+  font: 600 0.75rem var(--font-body);
+  cursor: pointer;
+}
+.language-toggle img {
+  flex: none;
+  object-fit: contain;
+}
+.language-toggle:hover {
+  border-color: var(--color-accent);
+}
+.language-toggle:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
 .nav-links.open {
   display: flex;
   flex-direction: column;

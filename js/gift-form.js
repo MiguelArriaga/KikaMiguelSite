@@ -1,8 +1,19 @@
 (() => {
   'use strict';
   const form = document.getElementById('customGiftForm');
-  if (!form || !window.fetch || !window.AbortController) return;
   const frame = document.getElementById('giftFormFrame');
+  const note = document.getElementById('giftFallbackLanguage');
+  const translate = window.siteLocale?.text;
+  if (!form || !window.fetch || !window.AbortController || !translate?.('giftForm.pending')) {
+    if (note) {
+      const updateFallbackLanguage = () => {
+        note.hidden = document.documentElement.lang !== 'en-GB';
+      };
+      updateFallbackLanguage();
+      document.addEventListener('site-languagechange', updateFallbackLanguage);
+    }
+    return;
+  }
   const fallback = document.querySelector('.gift-form-link');
   if (frame) frame.hidden = true;
   if (fallback) fallback.hidden = true;
@@ -10,18 +21,27 @@
   const button = form.querySelector('button[type="submit"]');
   const status = document.getElementById('giftStatus');
   let pending = false;
+  let statusKey;
+  function updateStatus() {
+    if (statusKey) status.textContent = translate(statusKey);
+  }
+  function setStatus(key) {
+    statusKey = key;
+    updateStatus();
+  }
+  document.addEventListener('site-languagechange', updateStatus);
   form.addEventListener('submit', async event => {
     event.preventDefault();
     if (pending || !form.reportValidity()) return;
     const body = new URLSearchParams(new FormData(form));
     if (!body.get('name').trim() || !body.get('gift').trim()) {
-      status.textContent = 'Preencha o nome e o presente.';
+      setStatus('giftForm.required');
       return;
     }
     pending = true;
     button.disabled = true;
     form.setAttribute('aria-busy', 'true');
-    status.textContent = 'A enviar…';
+    setStatus('giftForm.pending');
     const controller = new AbortController();
     const timeout = setTimeout(() => controller.abort(), 45000);
     try {
@@ -31,13 +51,13 @@
       if (!response.ok) throw new Error('Unconfirmed response');
       const result = await response.json();
       if (result.ok !== true) {
-        status.textContent = 'Não foi possível guardar. Verifique os campos e tente novamente.';
+        setStatus('giftForm.rejected');
         return;
       }
       form.reset();
-      status.textContent = 'Muito obrigado! A vossa resposta ficou registada.';
+      setStatus('giftForm.success');
     } catch {
-      status.textContent = 'Não foi possível confirmar o envio. Os dados continuam aqui. A resposta pode ter sido guardada; confirme com os noivos antes de voltar a enviar.';
+      setStatus('giftForm.unconfirmed');
     } finally {
       clearTimeout(timeout);
       pending = false;

@@ -26,6 +26,8 @@ try {
   closeBrowser=()=>send('Browser.close');
   const evaluate=async expression=>{const result=await send('Runtime.evaluate',{expression,awaitPromise:true,returnByValue:true});if(result.exceptionDetails) throw new Error(JSON.stringify(result.exceptionDetails));return result.result.value};
   await send('Runtime.enable');await send('Page.enable');
+  await send('Network.enable');
+  await send('Network.setBlockedURLs',{urls:['*docs.google.com/forms/*']});
   await send('Page.navigate',{url:'http://127.0.0.1:8000/'});
   for(let n=0;n<100;n++){if(await evaluate('!!document.getElementById("lightbox") && document.readyState === "complete"'))break;await pause(100)}
   assert.equal(await evaluate('document.querySelectorAll("[data-lightbox]").length'),17);
@@ -36,7 +38,37 @@ try {
   assert.match(await evaluate('document.getElementById("cd-days").textContent'),/^\d+$/);
   assert.equal(await evaluate('document.getElementById("closingVideo").paused'),true,'closing video stays idle off-screen');
   assert.equal(await evaluate('document.getElementById("closingVideo").readyState'),0,'closing video is not fetched before reaching it');
+  const languageToggle='document.getElementById("languageToggle")';
+  const language=()=>evaluate('document.documentElement.lang');
+  const switchLanguage=()=>evaluate(languageToggle+'.click()');
+  assert.equal(await language(),'pt-PT','Portuguese is the first-visit default');
   await evaluate('document.querySelector(".nav-links a[href$=presentes]").click()');
+  await evaluate(`document.getElementById("giftName").value = "Test guest"; ${languageToggle}.focus()`);
+  assert.equal(await evaluate('document.activeElement.id'),'languageToggle','language button can take focus');
+  const giftsHistoryLength=await evaluate('history.length');
+  await send('Input.dispatchKeyEvent',{type:'keyDown',key:'Enter',code:'Enter',text:'\r',unmodifiedText:'\r',windowsVirtualKeyCode:13,nativeVirtualKeyCode:13});
+  await send('Input.dispatchKeyEvent',{type:'keyUp',key:'Enter',code:'Enter',windowsVirtualKeyCode:13,nativeVirtualKeyCode:13});
+  assert.equal(await language(),'en-GB');
+  assert.equal(await evaluate('document.activeElement.id'),'languageToggle');
+  assert.equal(await evaluate('getComputedStyle(document.activeElement).outlineStyle'),'solid','visible keyboard focus');
+  assert.equal(await evaluate(languageToggle+'.getAttribute("aria-label")'),'Switch to Portuguese');
+  assert.equal(await evaluate('location.hash'),'#presentes');
+  assert.equal(await evaluate('history.length'),giftsHistoryLength);
+  assert.equal(await evaluate('document.title'),'Gifts — Kika and Miguel');
+  assert.match(await evaluate('document.querySelector("meta[name=description]").content'),/23 January 2027, Lisbon/);
+  assert.equal(await evaluate('document.getElementById("giftName").value'),'Test guest');
+  assert.match(await evaluate('document.querySelector("label[for=giftName]").textContent'),/^Name/);
+  assert.equal(await evaluate('document.getElementById("copyIban").title'),'Copy IBAN');
+  await evaluate('document.querySelector(".house-gallery [data-lightbox]").click()');
+  assert.equal(await evaluate('document.getElementById("lightboxTitle").textContent'),'Our New Home');
+  assert.equal(await evaluate('document.getElementById("lightboxClose").getAttribute("aria-label")'),'Close image');
+  await evaluate(`new Promise(resolve => {
+    document.getElementById("lightbox").addEventListener("close", () => resolve(), {once:true});
+    document.getElementById("lightboxClose").click();
+  })`);
+  await switchLanguage();
+  assert.equal(await language(),'pt-PT');
+  assert.equal(await evaluate('document.getElementById("giftName").value'),'Test guest');
   // Exercise copying without changing the computer's clipboard.
   await evaluate(`(() => {
     window.testClipboardDescriptor = Object.getOwnPropertyDescriptor(navigator, 'clipboard');
@@ -94,6 +126,13 @@ try {
   assert.notEqual(await evaluate('getComputedStyle(document.documentElement).overflow'),'hidden');
   await evaluate('document.querySelector(".nav-links a[href$=faq]").click(); document.querySelectorAll(".faq-question")[3].click()');
   assert.equal(await evaluate('document.querySelectorAll(".faq-question")[3].getAttribute("aria-expanded")'),'true');
+  await evaluate('document.querySelector(".faq-item.open").scrollIntoView({behavior:"instant",block:"center"})');
+  const faqScrollBefore=await evaluate('scrollY');
+  await switchLanguage();
+  assert.equal(await evaluate('location.hash'),'#faq');
+  assert.equal(await evaluate('document.querySelector(".faq-item.open .faq-question").getAttribute("aria-expanded")'),'true');
+  assert.ok(Math.abs(await evaluate('scrollY')-faqScrollBefore)<2,'switch retains page scroll');
+  await switchLanguage();
   for (const width of [320,375,640,768,1280]) {
     const height=width===320?568:width===375?667:800;
     await send('Emulation.setDeviceMetricsOverride',{width,height,deviceScaleFactor:1,mobile:width<640});
@@ -111,6 +150,18 @@ try {
     await pause(250);
     await evaluate('document.fonts.ready.then(()=>window.scrollTo({top:0,behavior:"instant"}))');
     assert.equal(await evaluate('document.querySelector(".hero-links").getBoundingClientRect().bottom <= innerHeight'),true,'navigation below first screen at '+width);
+    for (const expectedLanguage of ['en-GB','pt-PT']) {
+      await switchLanguage();
+      assert.equal(await language(),expectedLanguage);
+      assert.equal(await evaluate('document.documentElement.scrollWidth <= innerWidth'),true,'language header overflows at '+width);
+      assert.equal(await evaluate(`(() => {
+        const control = ${languageToggle}, bounds = control.getBoundingClientRect();
+        return !control.hidden && bounds.width > 0 && bounds.left >= 0 && bounds.right <= innerWidth &&
+          bounds.bottom <= document.querySelector(".nav").getBoundingClientRect().bottom;
+      })()`),true,'language switch fits in header at '+width);
+      assert.equal(await evaluate('Array.from(document.querySelectorAll(".hero-link")).every(link=>{const r=link.getBoundingClientRect();return r.width>0&&r.left>=0&&r.right<=innerWidth&&r.bottom<=innerHeight})'),true,'all links fit first screen in '+expectedLanguage+' at '+width);
+      assert.equal(await evaluate(`${languageToggle}.querySelector("span").textContent`),expectedLanguage==='en-GB'?'PT':'EN');
+    }
     await evaluate('document.querySelector(".nav-links a[href$=historia]").click()');
     await evaluate('Promise.all(Array.from(document.querySelectorAll(".story-photo img")).map(img=>{img.loading="eager";return img.decode()}))');
     assert.equal(await evaluate('Array.from(document.querySelectorAll(".story-photo img")).every(img=>{const r=img.getBoundingClientRect();return r.width>0&&r.height>0&&Math.abs(r.width/r.height-img.naturalWidth/img.naturalHeight)<.01})'),true,'story photos keep original proportions at '+width);
@@ -121,7 +172,7 @@ try {
     assert.equal(await evaluate('(()=>{const d=document.getElementById("lightbox"),r=d.getBoundingClientRect();return r.left>=0&&r.right<=innerWidth&&r.top>=0&&r.bottom<=innerHeight&&d.scrollHeight<=d.clientHeight})()'),true,'viewer fits viewport at '+width);
     await evaluate('document.getElementById("lightboxNext").click()');
     assert.equal(await evaluate('document.getElementById("lightboxCounter").textContent'),'2 / 10');
-    assert.equal(await evaluate('document.getElementById("lightboxTitle").textContent'),'A Nossa História - O Início');
+    assert.equal(await evaluate('document.getElementById("lightboxTitle").textContent'),await evaluate('window.SITE_CONFIG.content["story.title"] + " - " + window.SITE_CONFIG.content["story.work"]'));
     assert.equal(await evaluate('document.getElementById("lightboxCaption").textContent'),await evaluate('window.SITE_CONFIG.content["story.photo.firstDate"]'));
     await evaluate('document.getElementById("lightboxClose").click()');
     const screenshot=await send('Page.captureScreenshot',{format:'png',captureBeyondViewport:false});
@@ -181,21 +232,53 @@ try {
   await send('Emulation.setEmulatedMedia',{features:[{name:'prefers-reduced-motion',value:'reduce'}]});
   await pause(150);
   assert.equal(await evaluate(video+'.paused'),true,'respect a changed reduced-motion preference');
+  await switchLanguage();
   await evaluate('window.browserCheckReloadPending = true');
   await send('Page.reload');
   // A reload can initially report the old document as complete.
   for(let n=0;n<100;n++){if(await evaluate('!window.browserCheckReloadPending && document.readyState === "complete"'))break;await pause(100)}
   assert.equal(await evaluate('!window.browserCheckReloadPending && document.readyState === "complete"'),true,'reloaded page is ready');
+  assert.equal(await language(),'en-GB','language survives reload');
+  assert.equal(await evaluate('document.title'),'Kika and Miguel — 23 January 2027');
+  assert.equal(await evaluate('document.querySelector(".event-time").textContent'),'23 January 2027 · 12:30');
   await scrollVideo();
   await pause(150);
   assert.equal(await evaluate(video+'.paused && '+video+'.currentTime === 0 && '+video+'.readyState === 0'),true,'reduced-motion guests see the poster without autoplay or video download');
   assert.equal(await evaluate(video+'.poster.endsWith("HavingFun-poster.webp")'),true);
+  assert.equal(await evaluate(video+'.getAttribute("aria-label")'),'Play video');
   await evaluate(video+'.click()');
   await waitForPlayback();
+  assert.equal(await evaluate(video+'.getAttribute("aria-label")'),'Pause video');
   await evaluate(video+'.click()');
   await send('Emulation.setEmulatedMedia',{features:[]});
+
+  // Force the same fallback guests use when the custom form cannot initialize.
+  const {identifier}=await send('Page.addScriptToEvaluateOnNewDocument',{source:'window.fetch = undefined'});
+  await send('Page.navigate',{url:'http://127.0.0.1:8000/?check=gift-fallback#presentes'});
+  for(let n=0;n<100;n++){
+    if(await evaluate('location.search === "?check=gift-fallback" && document.readyState === "complete"')) break;
+    await pause(100);
+  }
+  assert.equal(await language(),'en-GB');
+  assert.equal(await evaluate('document.getElementById("giftFormFrame").hidden'),false);
+  assert.equal(await evaluate('document.getElementById("customGiftForm").hidden'),true);
+  assert.equal(await evaluate('document.getElementById("giftFallbackLanguage").hidden'),false);
+  assert.equal(await evaluate('document.getElementById("giftFallbackLanguage").textContent'),'The form below is in Portuguese.');
+  await switchLanguage();
+  assert.equal(await evaluate('document.getElementById("giftFallbackLanguage").hidden'),true);
+  // Leave English stored, then confirm the baked Portuguese page works when scripts are disabled.
+  await switchLanguage();
+  await send('Page.removeScriptToEvaluateOnNewDocument',{identifier});
+  await send('Emulation.setScriptExecutionDisabled',{value:true});
+  await send('Page.navigate',{url:'http://127.0.0.1:8000/?check=no-js#presentes'});
+  const {root: staticPage}=await send('DOM.getDocument');
+  const hasStaticElement=async selector=>Boolean((await send('DOM.querySelector',{nodeId:staticPage.nodeId,selector})).nodeId);
+  assert.match(staticPage.documentURL,/check=no-js/);
+  assert.equal(await hasStaticElement('html[lang="pt-PT"]:not(.topic-views)'),true);
+  assert.equal(await hasStaticElement('#languageToggle[hidden]'),true);
+  assert.equal(await hasStaticElement('#presentes:not([hidden]) #giftFormFrame[src]'),true);
   assert.deepEqual(exceptions,[]);
-  console.log('PASS: browser layout at 5 widths; closing video autoplay/tap/keyboard/off-screen/reduced-motion; IBAN copy/keyboard/reset/failure fallback, countdown, photos, lightbox keyboard/Escape, FAQ, mobile menu; no runtime exceptions.');
+  console.log('PASS: both languages at 5 widths, localized controls and dates, in-place switching, persisted preference, and existing browser checks.');
 } finally {
   if(closeBrowser) await closeBrowser().catch(()=>{});
   if(ws)ws.close();
