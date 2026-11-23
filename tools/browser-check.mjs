@@ -3,6 +3,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import assert from 'node:assert/strict';
 const previewRoot=path.resolve('.preview');
+const widths=[320,375,639,640,768,1280];
 const profile=path.join(previewRoot,'chrome-'+Date.now());
 if(path.dirname(profile)!==previewRoot) throw new Error('Unexpected browser profile path');
 fs.mkdirSync(profile,{recursive:true});
@@ -135,7 +136,7 @@ try {
   assert.equal(await evaluate('document.querySelector(".faq-item.open .faq-question").getAttribute("aria-expanded")'),'true');
   assert.ok(Math.abs(await evaluate('scrollY')-faqScrollBefore)<2,'switch retains page scroll');
   await switchLanguage();
-  for (const width of [320,375,640,768,1280]) {
+  for (const width of widths) {
     const height=width===320?568:width===375?667:800;
     await send('Emulation.setDeviceMetricsOverride',{width,height,deviceScaleFactor:1,mobile:width<640});
     await pause(150);
@@ -162,7 +163,22 @@ try {
           bounds.bottom <= document.querySelector(".nav").getBoundingClientRect().bottom;
       })()`),true,'language switch fits in header at '+width);
       assert.equal(await evaluate('Array.from(document.querySelectorAll(".hero-link")).every(link=>{const r=link.getBoundingClientRect();return r.width>0&&r.left>=0&&r.right<=innerWidth&&r.bottom<=innerHeight})'),true,'all links fit first screen in '+expectedLanguage+' at '+width);
-      assert.equal(await evaluate(`${languageToggle}.querySelector("span").textContent`),expectedLanguage==='en-GB'?'PT':'EN');
+      const flagFile=expectedLanguage==='en-GB'?'portugal.png':'uk.png';
+      assert.equal(await evaluate(`(async () => {
+        const control = ${languageToggle}, flag = control.querySelector("img");
+        await flag.decode();
+        return flag.src.endsWith("/" + ${JSON.stringify(flagFile)});
+      })()`),true,'language switch shows the destination flag');
+      assert.equal(await evaluate(`(() => {
+        const control = ${languageToggle}, flag = control.querySelector("img");
+        const menu = document.getElementById("navToggle");
+        const adjacent = (menu.getClientRects().length ? menu : document.getElementById("countdown")).getBoundingClientRect();
+        const buttonBounds = control.getBoundingClientRect(), imageBounds = flag.getBoundingClientRect();
+        return control.textContent.trim() === "" && getComputedStyle(control).borderLeftWidth === "0px" &&
+          getComputedStyle(flag).borderRadius === "50%" && imageBounds.width === imageBounds.height &&
+          buttonBounds.right <= adjacent.left &&
+          Math.abs(buttonBounds.top + buttonBounds.height / 2 - adjacent.top - adjacent.height / 2) <= 1;
+      })()`),true,'borderless circle sits directly left of the menu or countdown at '+width);
       assert.equal(await evaluate(`(() => {
         const range = document.createRange();
         const lines = Array.from(document.querySelectorAll(".details-dress-code span"), element => {
@@ -287,7 +303,7 @@ try {
   assert.equal(await hasStaticElement('#languageToggle[hidden]'),true);
   assert.equal(await hasStaticElement('#presentes:not([hidden]) #giftFormFrame[src]'),true);
   assert.deepEqual(exceptions,[]);
-  console.log('PASS: both languages at 5 widths, localized controls and dates, in-place switching, persisted preference, and existing browser checks.');
+  console.log('PASS: both languages at 6 widths, circular flag placement, localized controls and dates, in-place switching, persisted preference, and existing browser checks.');
 } finally {
   if(closeBrowser) await closeBrowser().catch(()=>{});
   if(ws)ws.close();
@@ -295,6 +311,6 @@ try {
   await pause(500);
   try {
     fs.rmSync(profile,{recursive:true,force:true,maxRetries:20,retryDelay:200});
-    for(const width of [320,375,640,768,1280]) fs.rmSync(path.join(previewRoot,'site-'+width+'.png'),{force:true});
+    for(const width of widths) fs.rmSync(path.join(previewRoot,'site-'+width+'.png'),{force:true});
   } finally {clearInterval(keepAlive);}
 }

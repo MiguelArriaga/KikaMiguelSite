@@ -30,8 +30,9 @@ The couple's latest instructions take precedence over this guide.
 
 ### Home and navigation
 
-- The sticky header's top-right flag and language code switch between Portuguese
-  and English in place. The choice is stored in the browser when available.
+- The circular flag in the sticky header switches between Portuguese and English
+  in place. It sits to the left of the countdown on desktop and the menu on mobile.
+  The choice is stored in the browser when available.
   Existing URLs and anchors work in either language, with Portuguese as the
   default and the version available without JavaScript.
 - Show the names, wedding date, supplied full-screen couple photograph and compact
@@ -391,8 +392,9 @@ node tools/browser-check.mjs
 This optional script requires Chrome at
 `C:/Program Files/Google/Chrome/Application/chrome.exe` and Node with built-in
 `fetch` and `WebSocket`. It launches hidden/headless Chrome, checks widths 320,
-375, 640, 768 and 1280, first-screen navigation, horizontal overflow, section
-scroll offsets, countdown, gallery arrows/Escape, FAQ and mobile menu, and catches
+375, 639, 640, 768 and 1280, first-screen navigation, horizontal overflow, section
+scroll offsets, countdown, language switch placement, gallery arrows/Escape,
+FAQ and mobile menu, and catches
 runtime exceptions. It removes its temporary profiles and screenshots on completion.
 It also checks the closing video's full frame, silent playback, automatic off-screen
 pause, tap/keyboard controls and reduced-motion still-image behavior.

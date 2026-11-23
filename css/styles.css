@@ -152,10 +152,6 @@ Nav
   opacity: 0.8;
   white-space: nowrap;
 }
-.nav-meta {
-  margin-left: auto;
-  margin-right: 0.5rem;
-}
 .nav-countdown {
   display: flex;
   align-items: center;
@@ -218,33 +214,31 @@ Nav
   cursor: pointer;
 }
 .nav-actions {
-  order: 2;
   display: flex;
   align-items: center;
   gap: 0.4rem;
   flex-shrink: 0;
+  margin-left: auto;
 }
 .language-toggle {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.35rem;
-  min-width: 3.65rem;
-  min-height: 2.25rem;
-  padding: 0.25rem 0.4rem;
-  border: 1px solid var(--line);
-  border-radius: 3px;
+  display: inline-grid;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
   background: transparent;
-  color: var(--color-ink);
-  font: 600 0.75rem var(--font-body);
   cursor: pointer;
 }
 .language-toggle img {
-  flex: none;
-  object-fit: contain;
+  width: 1.75rem;
+  height: 1.75rem;
+  border-radius: 50%;
+  object-fit: cover;
 }
-.language-toggle:hover {
-  border-color: var(--color-accent);
+[lang="en-GB"] .language-toggle img {
+  object-position: 25% center;
 }
 .language-toggle:focus-visible {
   outline: 2px solid var(--color-accent);
@@ -275,6 +269,33 @@ Nav
     background: transparent;
     border: 0;
     padding: 0;
+  }
+}
+@media (width < 640px) {
+  .nav-inner {
+    padding: 0.8rem 1rem;
+    flex-wrap: wrap;
+  }
+  .nav-brand {
+    align-items: center;
+  }
+  .nav-date {
+    letter-spacing: 0.06em;
+    white-space: normal;
+    text-align: center;
+    font-size: 0.62rem;
+  }
+  .nav-meta {
+    width: 100%;
+    margin-top: 0.2rem;
+  }
+  .nav-countdown {
+    justify-content: center;
+    padding: 0.3rem 0.45rem;
+  }
+  .nav-links.open {
+    left: 1rem;
+    right: 1rem;
   }
 }
 /* ==========================================================================
@@ -503,36 +524,6 @@ Hero
   }
   .section {
     padding: 4rem 0;
-  }
-  .nav-inner {
-    padding: 0.8rem 1rem;
-    flex-wrap: wrap;
-    justify-content: space-between;
-  }
-  .nav-brand {
-    order: 1;
-    width: auto;
-    align-items: center;
-  }
-  .nav-date {
-    letter-spacing: 0.06em;
-    white-space: normal;
-    text-align: center;
-    font-size: 0.62rem;
-  }
-  .nav-meta {
-    order: 3;
-    width: 100%;
-    margin: 0.2rem 0 0;
-  }
-  .nav-countdown {
-    width: 100%;
-    justify-content: center;
-    padding: 0.3rem 0.45rem;
-  }
-  .nav-links.open {
-    left: 1rem;
-    right: 1rem;
   }
   .countdown {
     display: none;

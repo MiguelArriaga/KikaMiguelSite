@@ -40,7 +40,6 @@
     });
     const isEnglish = locale === englishLocale;
     toggle.querySelector("img").src = isEnglish ? "pictures/flags/portugal.png" : "pictures/flags/uk.png";
-    toggle.querySelector("span").textContent = isEnglish ? "PT" : "EN";
   }
 
   window.siteLocale = {text, date};
