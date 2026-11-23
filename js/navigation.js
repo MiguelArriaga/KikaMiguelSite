@@ -5,6 +5,7 @@
     var win = env.window;
     var doc = env.document;
     var config = env.config || {};
+    var localization = env.localization;
     var views = Array.from(doc.querySelectorAll('[data-section]'));
     var anchors = Array.from(doc.querySelectorAll('a[href^="#"]'));
     var video = doc.querySelector('.closing-video');
@@ -20,6 +21,11 @@
     }
     function measure() {
       doc.documentElement.style.setProperty('--nav-offset', nav.getBoundingClientRect().height + 24 + 'px');
+    }
+    function updateTitle(heading) {
+      var couple = localization?.text('couple.name') || nav.querySelector('.nav-mark').textContent;
+      doc.title = heading ? heading.textContent + ' — ' + couple :
+        localization?.date('pageTitle') || baseTitle;
     }
     function show(focus) {
       var active = resolve();
@@ -37,7 +43,7 @@
         else link.removeAttribute('aria-current');
       });
       var heading = active.querySelector('h2');
-      doc.title = heading ? heading.textContent + ' — Kika e Miguel' : baseTitle;
+      updateTitle(heading);
       doc.getElementById('navLinks').classList.remove('open');
       doc.getElementById('navToggle').setAttribute('aria-expanded', 'false');
       measure();
@@ -62,6 +68,10 @@
     win.addEventListener('popstate', function () { show(true); });
     win.addEventListener('hashchange', function () { show(true); });
     win.addEventListener('resize', measure);
+    doc.addEventListener('site-languagechange', function () {
+      updateTitle(resolve().querySelector('h2'));
+      measure();
+    });
     if ('ResizeObserver' in win) new win.ResizeObserver(measure).observe(nav);
     doc.documentElement.classList.add('topic-views');
     show(false);

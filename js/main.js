@@ -192,25 +192,6 @@
     items.forEach(function (el) { observer.observe(el); });
   }
 
-  function applyContent() {
-    document.querySelectorAll("[data-content]").forEach(function (el) {
-      var value = (cfg.content || {})[el.dataset.content];
-      if (typeof value === "string") el.textContent = value;
-    });
-    document.querySelectorAll("img[data-content-alt]").forEach(function (img) {
-      var value = (cfg.content || {})[img.dataset.contentAlt];
-      if (typeof value === "string") img.alt = value;
-    });
-    var date = new Date(cfg.weddingDateTime);
-    if (!isNaN(date.getTime())) {
-      var label = date.toLocaleDateString('pt-PT', {timeZone:'Europe/Lisbon', day:'numeric', month:'long', year:'numeric'});
-      var time = date.toLocaleTimeString('pt-PT', {timeZone:'Europe/Lisbon', hour:'2-digit', minute:'2-digit'});
-      var dates = {date:label, clock:time, time:label + ' · ' + time, place:label + ' · Lisboa', reception:label + ' · a seguir à Missa'};
-      document.querySelectorAll('[data-date]').forEach(function (el) { el.textContent = dates[el.dataset.date]; });
-      document.title = cfg.content['couple.name'] + ' — ' + label;
-    }
-  }
-
   function initLightbox() {
     var dialog = document.getElementById("lightbox");
     var img = document.getElementById("lightboxImage");
@@ -225,20 +206,23 @@
     var active = 0;
     var opener;
     var touchStart;
-    function show(index) {
-      active = (index + group.length) % group.length;
-      var link = group[active];
+    function describe(link) {
       var section = link.closest("[data-section]");
       var moment = link.closest(".story-moment");
       var momentTitle = moment && moment.querySelector("h3 span:last-child");
       var giftPanel = link.closest(".gift-panel");
       var heading = giftPanel ? giftPanel.querySelector("h3 [data-content]") : section.querySelector("h2");
       title.textContent = heading.textContent + (momentTitle ? " - " + momentTitle.textContent : "");
-      img.src = link.href;
       img.alt = link.querySelector("img").alt;
       var figure = link.closest("figure");
       var label = figure && figure.querySelector("figcaption");
       caption.textContent = section.dataset.section === 'story' ? img.alt : label ? label.textContent : img.alt;
+    }
+    function show(index) {
+      active = (index + group.length) % group.length;
+      var link = group[active];
+      img.src = link.href;
+      describe(link);
       counter.textContent = (active + 1) + " / " + group.length;
       // Cache the adjacent originals so the next photo opens promptly.
       if (group.length > 1) {
@@ -292,6 +276,9 @@
       document.documentElement.classList.remove("gallery-open");
       if (!opener.closest('[data-section]').hidden) opener.focus({preventScroll: true});
     });
+    document.addEventListener("site-languagechange", function () {
+      if (dialog.open) describe(group[active]);
+    });
   }
 
   function initClosingVideo() {
@@ -305,7 +292,8 @@
 
     function updateLabel() {
       var key = video.paused ? "closing.videoPlay" : "closing.videoPause";
-      video.setAttribute("aria-label", (cfg.content && cfg.content[key]) || (video.paused ? "Reproduzir vídeo" : "Pausar vídeo"));
+      var label = video.parentElement.querySelector('[data-content="' + key + '"]');
+      video.setAttribute("aria-label", label.textContent);
     }
     function syncPlayback() {
       if (inView && !video.closest(".closing-video").hidden && !document.hidden && allowMotion && !userPaused) {
@@ -333,6 +321,7 @@
     });
     document.addEventListener("visibilitychange", syncPlayback);
     document.addEventListener("topicchange", syncPlayback);
+    document.addEventListener("site-languagechange", updateLabel);
     motion.addEventListener("change", function () {
       allowMotion = !motion.matches;
       syncPlayback();
@@ -350,13 +339,12 @@
   }
 
   document.addEventListener("DOMContentLoaded", function () {
-    applyContent();
     initCopyIban();
     initLightbox();
     applyTheme();
     applySectionToggles();
     initNav();
-    window.initTopicNavigation({window: window, document: document, config: cfg});
+    window.initTopicNavigation({window: window, document: document, config: cfg, localization: window.siteLocale});
     initCountdown();
     initFAQ();
     initReveal();

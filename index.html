@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Kika e Miguel — 23 de janeiro de 2027</title>
-<meta name="description" content="Casamento de Kika e Miguel, 23 de janeiro de 2027, Lisboa.">
+<title data-date="pageTitle">Kika e Miguel — 23 de janeiro de 2027</title>
+<meta name="description" data-content-meta="meta.description" content="Casamento de Kika e Miguel, 23 de janeiro de 2027, Lisboa.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link id="themeFonts" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
@@ -14,13 +14,20 @@
 
 <nav class="nav">
   <div class="nav-inner">
-    <div class="nav-brand" aria-label="Kika e Miguel e data do casamento">
-      <a class="nav-mark" href="#topo" title="Voltar ao início" data-content="nav.monogram">Kika e Miguel</a>
+    <div class="nav-brand" data-content-aria-label="nav.brandLabel" aria-label="Kika e Miguel e data do casamento">
+      <a class="nav-mark" href="#topo" data-content-title="nav.home" title="Voltar ao início" data-content="nav.monogram">Kika e Miguel</a>
       <span class="nav-date" data-date="time">23 de janeiro de 2027 · 12:30</span>
     </div>
 
+    <div class="nav-actions">
+      <button class="language-toggle" id="languageToggle" type="button" data-content-aria-label="language.switch" aria-label="Mudar para inglês" hidden>
+        <img src="pictures/flags/uk.png" width="20" height="20" alt="">
+      </button>
+      <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="navLinks" data-content="nav.menu">Menu</button>
+    </div>
+
     <div class="nav-meta">
-      <div class="nav-countdown" id="countdown" aria-label="Contagem decrescente para o casamento">
+      <div class="nav-countdown" id="countdown" data-content-aria-label="countdown.label" aria-label="Contagem decrescente para o casamento">
         <div class="unit"><span class="num" id="cd-days">–</span><span class="label" data-content="countdown.days">dias</span></div>
         <div class="unit"><span class="num" id="cd-hours">–</span><span class="label" data-content="countdown.hours">horas</span></div>
         <div class="unit"><span class="num" id="cd-mins">–</span><span class="label" data-content="countdown.minutes">min.</span></div>
@@ -28,20 +35,19 @@
       </div>
     </div>
 
-    <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="navLinks">Menu</button>
     <ul class="nav-links" id="navLinks">
       <li><a href="#detalhes" data-content="nav.details">Onde</a></li>
-      <li><a href="#historia">A Nossa História</a></li>
-      <li><a href="#presentes">Presentes</a></li>
-      <li><a href="#contacto">Contacto</a></li>
-      <li><a href="#faq">FAQ</a></li>
+      <li><a href="#historia" data-content="nav.storyMenu">A Nossa História</a></li>
+      <li><a href="#presentes" data-content="nav.gifts">Presentes</a></li>
+      <li><a href="#contacto" data-content="nav.contact">Contacto</a></li>
+      <li><a href="#faq" data-content="nav.faq">FAQ</a></li>
     </ul>
   </div>
 </nav>
 
 <!-- ========================= HERO ========================= -->
 <header class="hero" data-section="hero" id="topo">
-  <img class="hero-photo" src="pictures/our_story/Main-picture.jpeg" alt="Kika e Miguel" fetchpriority="high" width="1752" height="1168">
+  <img class="hero-photo" src="pictures/our_story/Main-picture.jpeg" data-content-alt="couple.name" alt="Kika e Miguel" fetchpriority="high" width="1752" height="1168">
   <div class="hero-inner">
     <div class="hero-intro">
       <h1 class="signature" data-content="couple.name">Kika e Miguel</h1>
@@ -49,7 +55,7 @@
       <p class="hero-venue" data-content="hero.venue">Igreja de Nossa Senhora das Mercês, Lisboa</p>
       <p class="hero-time" data-date="clock">12:30</p>
     </div>
-    <nav class="hero-links" aria-label="Explore o nosso casamento">
+    <nav class="hero-links" data-content-aria-label="hero.linksLabel" aria-label="Explore o nosso casamento">
       <a class="hero-link" href="#detalhes"><span class="hero-link-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M7 18h11V7"/></svg></span><span class="hero-link-label" data-content="nav.details">Onde</span></a>
       <a class="hero-link" href="#historia"><span class="hero-link-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M7 18h11V7"/></svg></span><span class="hero-link-label" data-content="nav.story">A nossa história</span></a>
       <a class="hero-link" href="#presentes"><span class="hero-link-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M7 18h11V7"/></svg></span><span class="hero-link-label" data-content="nav.gifts">Presentes</span></a>
@@ -66,25 +72,25 @@
 
     <div class="event-grid">
       <div class="event-card reveal">
-        <img class="event-photo" src="pictures/locations/igreja_merces_2.jpg" alt="Igreja de Nossa Senhora das Mercês" loading="lazy" decoding="async">
+        <img class="event-photo" src="pictures/locations/igreja_merces_2.jpg" data-content-alt="event.ceremonyVenue" alt="Igreja de Nossa Senhora das Mercês" loading="lazy" decoding="async">
         <h3><span data-content="event.ceremony">Missa</span></h3>
         <p class="event-time" data-date="time">23 de janeiro de 2027 · 12:30</p>
         <address>
-          Igreja de Nossa Senhora das Mercês<br>
-          Largo de Jesus, 1200-317 Lisboa
+          <span data-content="event.ceremonyVenue">Igreja de Nossa Senhora das Mercês</span><br>
+          <span data-content="event.ceremonyAddress">Largo de Jesus, 1200-317 Lisboa</span>
         </address>
-        <a class="map-link" target="_blank" rel="noopener"
+        <a class="map-link" target="_blank" rel="noopener" data-content="event.mapLink"
            href="https://www.google.com/maps/search/?api=1&query=Igreja+de+Nossa+Senhora+das+Merc%C3%AAs+Largo+de+Jesus+Lisboa">Ver no mapa →</a>
       </div>
       <div class="event-card reveal">
-        <img class="event-photo" src="pictures/locations/estufafria_visitar.jpg" alt="Estufa Fria de Lisboa" loading="lazy" decoding="async">
+        <img class="event-photo" src="pictures/locations/estufafria_visitar.jpg" data-content-alt="event.receptionVenue" alt="Estufa Fria de Lisboa" loading="lazy" decoding="async">
         <h3><span data-content="event.reception">Almoço e Festa</span></h3>
         <p class="event-time" data-date="reception">23 de janeiro de 2027 · a seguir à Missa</p>
         <address>
-          Estufa Fria de Lisboa<br>
-          Parque Eduardo VII, 1070-051 Lisboa
+          <span data-content="event.receptionVenue">Estufa Fria de Lisboa</span><br>
+          <span data-content="event.receptionAddress">Parque Eduardo VII, 1070-051 Lisboa</span>
         </address>
-        <a class="map-link" target="_blank" rel="noopener"
+        <a class="map-link" target="_blank" rel="noopener" data-content="event.mapLink"
            href="https://www.google.com/maps/search/?api=1&query=Estufa+Fria+de+Lisboa+Parque+Eduardo+VII">Ver no mapa →</a>
       </div>
     </div>
@@ -207,11 +213,11 @@
         <p data-content="honeymoon.intro">Queremos começar esta grande aventura juntos num dos lugares mais bonitos do planeta - na Patagónia Argentina e Chilena.</p>
         <div class="gift-gallery honeymoon-gallery">
           <figure>
-            <a class="gallery-photo" href="pictures/patagonia/ElChalten.jpg" data-lightbox><img src="pictures/patagonia/ElChalten.jpg" alt="Fitz Roy e lago em El Chaltén" loading="lazy" decoding="async" width="2400" height="1793"></a>
+            <a class="gallery-photo" href="pictures/patagonia/ElChalten.jpg" data-lightbox><img src="pictures/patagonia/ElChalten.jpg" data-content-alt="honeymoon.photo.chalten" alt="Fitz Roy e lago em El Chaltén" loading="lazy" decoding="async" width="2400" height="1793"></a>
             <figcaption><span data-content="honeymoon.chalten">El Chaltén · Fitz Roy</span></figcaption>
           </figure>
           <figure>
-            <a class="gallery-photo" href="pictures/patagonia/torres_del_paine.jpg" data-lightbox><img src="pictures/patagonia/torres_del_paine.jpg" alt="Torres del Paine e lago na Patagónia chilena" loading="lazy" decoding="async" width="864" height="1080"></a>
+            <a class="gallery-photo" href="pictures/patagonia/torres_del_paine.jpg" data-lightbox><img src="pictures/patagonia/torres_del_paine.jpg" data-content-alt="honeymoon.photo.paine" alt="Torres del Paine e lago na Patagónia chilena" loading="lazy" decoding="async" width="864" height="1080"></a>
             <figcaption><span data-content="honeymoon.paine">Torres del Paine</span></figcaption>
           </figure>
         </div>
@@ -219,7 +225,7 @@
     </div>
 
     <div class="bank-block">
-      <p class="bank-iban-row"><strong>IBAN:</strong> <span id="bankIban" data-content="bank.iban">PT50 0018 000370175294020 34</span>&nbsp;<button class="copy-iban" id="copyIban" type="button" title="Copiar IBAN" hidden><svg class="copy-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="13" height="13" rx="2"></rect><path d="M16 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h3"></path></svg><svg class="copy-check" viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12 4 4L19 6"></path></svg><span class="copy-label" data-content="bank.copy">Copiar IBAN</span><span class="copy-label" data-content="bank.copied" hidden>IBAN copiado</span></button></p>
+      <p class="bank-iban-row"><strong>IBAN:</strong> <span id="bankIban" data-content="bank.iban">PT50 0018 000370175294020 34</span>&nbsp;<button class="copy-iban" id="copyIban" type="button" data-content-title="bank.copy" title="Copiar IBAN" hidden><svg class="copy-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="13" height="13" rx="2"></rect><path d="M16 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h3"></path></svg><svg class="copy-check" viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12 4 4L19 6"></path></svg><span class="copy-label" data-content="bank.copy">Copiar IBAN</span><span class="copy-label" data-content="bank.copied" hidden>IBAN copiado</span></button></p>
       <p><strong>BIC/SWIFT:</strong> <span data-content="bank.bic">TOTAPTPL</span></p>
       <p class="copy-status" id="copyIbanStatus" role="status" aria-live="polite" aria-atomic="true"><span data-content="bank.copySuccess" hidden>IBAN copiado.</span><span data-content="bank.copyError" hidden>Não foi possível copiar automaticamente. O IBAN está selecionado para copiar manualmente.</span></p>
       <hr class="payment-divider">
@@ -231,21 +237,24 @@
       <span id="giftFormHeading" data-content="giftForm.title" hidden>Presente</span>
       <p data-content="giftForm.intro">Agradecemos muito a ajuda que nos quiserem dar para ajudar a montar a nossa casa ou para a nossa lua de mel. Se possível, pedimos que preencham este formulário, para podermos agradecer a cada um.</p>
       <form id="customGiftForm" hidden data-endpoint="https://script.google.com/macros/s/AKfycbx-ztRzOXw5YSx06odJkNbCUoe7E1ov6yfULaT5gcZmlSHtW9ROfE-mI3DYeg9OhtJrsA/exec">
-        <label for="giftName">Nome <span aria-hidden="true">*</span></label>
+        <label for="giftName"><span data-content="giftForm.name">Nome</span> <span aria-hidden="true">*</span></label>
         <input id="giftName" name="name" autocomplete="name" required maxlength="200">
-        <label for="giftPresent">Presente <span aria-hidden="true">*</span></label>
+        <label for="giftPresent"><span data-content="giftForm.gift">Presente</span> <span aria-hidden="true">*</span></label>
         <input id="giftPresent" name="gift" required maxlength="500">
-        <label for="giftMessage">Mensagem para os noivos (opcional)</label>
+        <label for="giftMessage" data-content="giftForm.message">Mensagem para os noivos (opcional)</label>
         <textarea id="giftMessage" name="message" rows="4" maxlength="3000"></textarea>
         <div class="gift-trap" aria-hidden="true">
-          <label for="giftWebsite">Website</label>
+          <label for="giftWebsite" data-content="giftForm.website">Website</label>
           <input id="giftWebsite" name="website" tabindex="-1" autocomplete="off">
         </div>
-        <button type="submit">Enviar</button>
+        <button type="submit" data-content="giftForm.submit">Enviar</button>
         <p id="giftStatus" role="status" aria-live="polite"></p>
       </form>
-      <iframe id="giftFormFrame" title="Formulário de presentes para Kika e Miguel" aria-labelledby="giftFormHeading" loading="lazy" referrerpolicy="no-referrer" src="https://docs.google.com/forms/d/e/1FAIpQLSdnnUQxGZ78u5RQVlN-WBxMYcdQK6cORLPvaqNQm06u_W8C7A/viewform?embedded=true"></iframe>
-      <p class="gift-form-link"><a id="giftFormLink" href="https://docs.google.com/forms/d/e/1FAIpQLSdnnUQxGZ78u5RQVlN-WBxMYcdQK6cORLPvaqNQm06u_W8C7A/viewform" target="_blank" rel="noopener noreferrer" data-content="giftForm.open">Abrir o formulário numa nova janela</a></p>
+      <div id="giftFormFallback">
+        <p id="giftFallbackLanguage" data-content="giftForm.fallbackLanguage">O formulário abaixo está em português.</p>
+        <iframe id="giftFormFrame" data-content-title="giftForm.frameTitle" title="Formulário de presentes para Kika e Miguel" aria-labelledby="giftFormHeading" loading="lazy" referrerpolicy="no-referrer" src="https://docs.google.com/forms/d/e/1FAIpQLSdnnUQxGZ78u5RQVlN-WBxMYcdQK6cORLPvaqNQm06u_W8C7A/viewform?embedded=true"></iframe>
+        <p class="gift-form-link"><a id="giftFormLink" href="https://docs.google.com/forms/d/e/1FAIpQLSdnnUQxGZ78u5RQVlN-WBxMYcdQK6cORLPvaqNQm06u_W8C7A/viewform" target="_blank" rel="noopener noreferrer" data-content="giftForm.open">Abrir o formulário numa nova janela</a></p>
+      </div>
     </div>
 
   </div>
@@ -287,7 +296,7 @@
         <div class="faq-answer">
           <div class="faq-answer-inner">
             <p data-content="parking.church">Parque Largo de Jesus Telpark — mesmo ao lado da Igreja das Mercês. Aberto 24 horas/dia. Primeira hora 2 €</p>
-            <a class="map-link" href="https://www.telpark.com/pt/cidades/lisboa/parque-largo-de-jesus/" target="_blank" rel="noopener">Consultar o Parque Largo de Jesus no operador →</a>
+            <a class="map-link" href="https://www.telpark.com/pt/cidades/lisboa/parque-largo-de-jesus/" target="_blank" rel="noopener" data-content="parking.churchLink">Consultar o Parque Largo de Jesus no operador →</a>
           </div>
         </div>
       </div>
@@ -300,7 +309,7 @@
         <div class="faq-answer">
           <div class="faq-answer-inner">
             <p><span data-content="parking.estufaIntro">Pode estacionar na rua, na Alameda Edgar Cardoso, ou no </span><a data-content="parking.saba" href="https://www.google.com/maps/search/?api=1&amp;query=Saba+Alto+do+Parque+Lisboa" target="_blank" rel="noopener">parque Saba Alto do Parque</a><span data-content="parking.uber">. Se vier de Uber, pode ir até à porta da Estufa Fria.</span></p>
-            <a class="map-link" href="https://www.saba.pt/pt/estacionamento-lisboa/parque-de-estacionamento-saba-alto-do-parque" target="_blank" rel="noopener">Consultar o parque Saba Alto do Parque →</a>
+            <a class="map-link" href="https://www.saba.pt/pt/estacionamento-lisboa/parque-de-estacionamento-saba-alto-do-parque" target="_blank" rel="noopener" data-content="parking.sabaLink">Consultar o parque Saba Alto do Parque →</a>
           </div>
         </div>
       </div>
@@ -313,7 +322,7 @@
         <div class="faq-answer">
           <div class="faq-answer-inner">
             <p data-content="faq.venueDirections">Siga o percurso assinalado a verde na planta, desde a entrada da Estufa Fria até à Nave, onde será o Almoço</p>
-            <a class="venue-map" href="pictures/locations/MapaEF/EstufaFria_mapa_route.png" data-lightbox><img src="pictures/locations/MapaEF/EstufaFria_mapa_route.png" alt="Percurso assinalado a verde da entrada da Estufa Fria até à Nave" loading="lazy"></a>
+            <a class="venue-map" href="pictures/locations/MapaEF/EstufaFria_mapa_route.png" data-lightbox><img src="pictures/locations/MapaEF/EstufaFria_mapa_route.png" data-content-alt="faq.mapAlt" alt="Percurso assinalado a verde da entrada da Estufa Fria até à Nave" loading="lazy"></a>
             <p class="map-note" data-content="faq.mapHint">Selecione a planta para ampliar.</p>
           </div>
         </div>
@@ -338,7 +347,7 @@
 </section>
 
 <figure class="closing-video">
-  <video id="closingVideo" muted loop playsinline preload="none" poster="pictures/our_story/HavingFun-poster.webp" width="1920" height="1080" tabindex="0" role="button" aria-label="Reproduzir vídeo" aria-describedby="closingVideoCaption">
+  <video id="closingVideo" muted loop playsinline preload="none" poster="pictures/our_story/HavingFun-poster.webp" width="1920" height="1080" tabindex="0" role="button" data-content-aria-label="closing.videoPlay" aria-label="Reproduzir vídeo" aria-describedby="closingVideoCaption">
     <source src="pictures/our_story/HavingFun-boomerang.mp4" type="video/mp4">
     <a href="pictures/our_story/HavingFun-boomerang.mp4" data-content="closing.videoFallback">Ver vídeo</a>
   </video>
@@ -352,22 +361,23 @@
   <span data-date="place">23 de janeiro de 2027 · Lisboa</span>
 </footer>
 
-<dialog id="lightbox" class="lightbox" aria-label="Imagem ampliada" aria-describedby="lightboxCaption">
+<dialog id="lightbox" class="lightbox" data-content-aria-label="lightbox.label" aria-label="Imagem ampliada" aria-describedby="lightboxCaption">
   <div class="lightbox-header">
     <span id="lightboxTitle" class="lightbox-title"></span>
-    <button type="button" id="lightboxClose" class="lightbox-close" aria-label="Fechar imagem" autofocus><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg></button>
+    <button type="button" id="lightboxClose" class="lightbox-close" data-content-aria-label="lightbox.close" aria-label="Fechar imagem" autofocus><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg></button>
   </div>
   <div class="lightbox-stage"><img id="lightboxImage" alt=""></div>
   <div class="lightbox-controls">
-    <button type="button" id="lightboxPrev" aria-label="Imagem anterior"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m14 5-7 7 7 7"/></svg></button>
+    <button type="button" id="lightboxPrev" data-content-aria-label="lightbox.previous" aria-label="Imagem anterior"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m14 5-7 7 7 7"/></svg></button>
     <div class="lightbox-description" aria-live="polite" aria-atomic="true">
       <p id="lightboxCaption"></p>
       <span id="lightboxCounter" class="lightbox-counter"></span>
     </div>
-    <button type="button" id="lightboxNext" aria-label="Imagem seguinte"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m10 5 7 7-7 7"/></svg></button>
+    <button type="button" id="lightboxNext" data-content-aria-label="lightbox.next" aria-label="Imagem seguinte"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m10 5 7 7-7 7"/></svg></button>
   </div>
 </dialog>
 <script src="js/config.js"></script>
+<script src="js/localization.js"></script>
 <script src="js/navigation.js"></script>
 <script src="js/main.js"></script>
 <script src="js/gift-form.js"></script>

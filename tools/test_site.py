@@ -7,7 +7,7 @@ from html.parser import HTMLParser
 from http.client import HTTPConnection
 from urllib.parse import unquote, urlsplit
 from http.server import ThreadingHTTPServer
-from build import ROOT, CONFIG, build, render, validate
+from build import ROOT, CONFIG, CONTENT_ATTRIBUTES, browser_config, build, render, validate
 from dev import Handler
 
 
@@ -26,10 +26,9 @@ class Page(HTMLParser):
         if "id" in attrs:
             self.ids.append(attrs["id"])
             self.elements[attrs["id"]] = attrs
-        if "data-content" in attrs:
-            self.content_keys.append(attrs["data-content"])
-        if "data-content-alt" in attrs:
-            self.content_keys.append(attrs["data-content-alt"])
+        for binding in ("data-content", *CONTENT_ATTRIBUTES):
+            if binding in attrs:
+                self.content_keys.append(attrs[binding])
         if tag == "img":
             self.images.append(attrs)
         for key in ("src", "href"):
@@ -76,18 +75,40 @@ class SiteTests(unittest.TestCase):
 
     def test_text_escaping_and_date_baking(self):
         config = copy.deepcopy(self.config)
-        config["content"]["couple.name"] = '<script>alert("x")</script>'
+        config["content"]["couple.name"]["pt-PT"] = '<script>alert("x")</script>'
         photo_text = 'Douro & Kika — " onerror="alert(1) <exemplo>'
-        config["content"]["story.photo.douro"] = photo_text
-        config["weddingDateTime"] = "2027-01-24T13:45:00+00:00"
+        config["content"]["story.photo.douro"]["pt-PT"] = photo_text
+        config["content"]["language.switch"]["pt-PT"] = photo_text
+        config["weddingDateTime"] = "2027-07-24T23:45:00+00:00"
         rendered = render(config)
         self.assertNotIn('<script>alert("x")</script>', rendered)
         self.assertIn("&lt;script&gt;", rendered)
-        self.assertIn("24 de janeiro de 2027 · 13:45", rendered)
-        photos = Page(rendered).images
-        douro = next(img for img in photos if img.get("data-content-alt") == "story.photo.douro")
+        self.assertIn("25 de julho de 2027 · 00:45", rendered)
+        page = Page(rendered)
+        douro = next(img for img in page.images if img.get("data-content-alt") == "story.photo.douro")
         self.assertEqual(douro["alt"], photo_text)
         self.assertNotIn("onerror", douro)
+        self.assertEqual(page.elements["languageToggle"]["aria-label"], photo_text)
+        self.assertIn("25 de julho de 2027, Lisboa.", rendered)
+        generated = browser_config(config)
+        self.assertEqual(generated["dateLabels"]["en-GB"]["time"], "25 July 2027 · 00:45")
+        self.assertIn("25 July 2027, Lisbon.", generated["translations"]["en-GB"]["meta.description"])
+
+    def test_localized_content_validation(self):
+        for entry in ["Text", {"pt-PT": "Texto"}, {"en-GB": "Text"},
+                      {"pt-PT": "Texto", "en-GB": " "},
+                      {"shared": "Text", "en-GB": "Text"}, {"shared": None}]:
+            with self.subTest(entry=entry):
+                config = copy.deepcopy(self.config)
+                config["content"]["details.title"] = entry
+                with self.assertRaisesRegex(ValueError, r"details\.title"):
+                    validate(config)
+        generated = browser_config(self.config)
+        english = generated["translations"]["en-GB"]
+        self.assertEqual(set(english), {
+            key for key, entry in self.config["content"].items() if "en-GB" in entry
+        })
+        self.assertEqual(generated["content"]["bank.iban"], self.config["content"]["bank.iban"]["shared"])
 
     def test_artifact_and_asset_references(self):
         build()
@@ -95,7 +116,11 @@ class SiteTests(unittest.TestCase):
         self.assertEqual(set(p.name for p in output.iterdir()) - {"CNAME"}, {"index.html", "css", "js", "pictures", ".nojekyll"})
         page = Page((output / "index.html").read_text(encoding="utf-8"))
         self.assertEqual(len(page.ids), len(set(page.ids)))
-        self.assertEqual(set(page.content_keys), set(self.config["content"]))
+        runtime_keys = {"event.city", "event.afterMass", "giftForm.required", "giftForm.pending",
+                        "giftForm.rejected", "giftForm.success", "giftForm.unconfirmed"}
+        self.assertEqual(set(page.content_keys) | runtime_keys, set(self.config["content"]))
+        self.assertTrue((output / "pictures/flags/portugal.png").is_file())
+        self.assertIn("hidden", page.elements["languageToggle"])
         for reference in page.references:
             url = urlsplit(reference)
             if url.scheme or url.netloc:

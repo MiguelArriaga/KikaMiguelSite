@@ -4,6 +4,8 @@ const init = require('../js/navigation.js');
 
 function fixture(hash = '', sections = {}) {
   const events = {};
+  const documentEvents = {};
+  const locale = {name: 'Kika e Miguel', home: 'Home'};
   const make = (id, section) => ({
     id, dataset: {section}, hidden: false, attributes: {},
     classList: {add() {}, remove() {}},
@@ -30,20 +32,22 @@ function fixture(hash = '', sections = {}) {
     querySelectorAll(selector) { return selector === '[data-section]' ? views : links; },
     querySelector(selector) { return selector === '.closing-video' ? video : {getBoundingClientRect: () => ({height: 80})}; },
     getElementById(id) { return id === 'lightbox' ? dialog : id === 'navLinks' ? navLinks : navToggle; },
+    addEventListener(name, handler) { documentEvents[name] = handler; },
     dispatchEvent(event) { this.lastEvent = event.type; }
   };
   const win = {
     location: {hash}, history: {pushState(_state, _title, url) { win.location.hash = url; win.pushes++; }},
-    pushes: 0, scrollTo() {}, Event: class { constructor(type) { this.type = type; } },
+    pushes: 0, scrolls: 0, scrollTo() { this.scrolls++; }, Event: class { constructor(type) { this.type = type; } },
     addEventListener(name, handler) { events[name] = handler; }
   };
-  init({window: win, document: doc, config: {sections}});
+  const localization = {text: () => locale.name, date: () => locale.home};
+  init({window: win, document: doc, config: {sections}, localization});
   function click(id, extra = {}) {
     let prevented = false;
     links.find(link => link.hash === '#' + id).click({button: 0, preventDefault() { prevented = true; }, ...extra});
     return prevented;
   }
-  return {views, links, video, doc, win, events, click, dialog};
+  return {views, links, video, doc, win, events, click, dialog, locale, documentEvents};
 }
 
 test('home shows hero, Onde, Contacto and video; topic click shows only that topic', () => {
@@ -117,4 +121,21 @@ test('every topic is exclusive and revisiting a view preserves its existing elem
   assert.equal(f.win.pushes, pushes, 'reselecting a topic must not add duplicate history');
   assert.equal(f.click('faq', {button: 1}), false);
   assert.equal(f.click('faq', {defaultPrevented: true}), false);
+});
+
+test('a language change refreshes the title without navigating or scrolling', () => {
+  const f = fixture('#presentes');
+  const gifts = f.views.find(view => view.id === 'presentes');
+  const scrolls = f.win.scrolls;
+  gifts.heading.textContent = 'Gifts';
+  f.locale.name = 'Kika and Miguel';
+  f.locale.home = 'Kika and Miguel — 23 January 2027';
+  f.documentEvents['site-languagechange']();
+  assert.equal(f.doc.title, 'Gifts — Kika and Miguel');
+  assert.equal(f.win.location.hash, '#presentes');
+  assert.equal(f.win.scrolls, scrolls);
+  assert.equal(f.win.pushes, 0);
+  assert.equal(gifts.hidden, false);
+  f.click('topo');
+  assert.equal(f.doc.title, f.locale.home);
 });
