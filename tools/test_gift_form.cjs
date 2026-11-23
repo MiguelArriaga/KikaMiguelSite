@@ -7,9 +7,7 @@ const code = fs.readFileSync('js/gift-form.js', 'utf8');
 function setup(fetch, {name = 'Test', gift = 'Test'} = {}) {
   const button = {disabled:false};
   const status = {textContent:''};
-  const frame = {hidden:false};
   const fallback = {hidden:false};
-  const note = {hidden:true};
   const language = {lang:'pt-PT'};
   const listeners = {};
   const form = {hidden:true, dataset:{endpoint:'https://example.test/exec'},
@@ -22,19 +20,18 @@ function setup(fetch, {name = 'Test', gift = 'Test'} = {}) {
     FormData: class { constructor() { return [['name', name], ['gift', gift], ['message', ''], ['website', '']]; } },
     document: {
       documentElement: language,
-      getElementById: id => ({customGiftForm: form, giftStatus: status, giftFormFrame: frame, giftFallbackLanguage: note}[id]),
-      querySelector: () => fallback,
+      getElementById: id => ({customGiftForm: form, giftStatus: status, giftFormFallback: fallback}[id]),
       addEventListener: (event, handler) => { listeners[event] = handler; }
     }
   };
   vm.runInNewContext(code,context);
   const setLanguage = lang => { language.lang = lang; listeners['site-languagechange'](); };
-  return {form,button,status,frame,fallback,note,setLanguage};
+  return {form,button,status,fallback,setLanguage};
 }
 const event = {preventDefault(){}};
 test('confirmed save resets inputs and announces success',async()=>{
   const ui=setup(async()=>({ok:true,json:async()=>({ok:true})}));
-  assert.equal(ui.frame.hidden,true); assert.equal(ui.fallback.hidden,true);
+  assert.equal(ui.form.hidden,false); assert.equal(ui.fallback.hidden,true);
   await ui.form.submit(event);
   assert.equal(ui.form.resetCalled,true); assert.match(ui.status.textContent,/registada/);
   assert.equal(ui.button.disabled,false);
@@ -96,14 +93,8 @@ test('English validation, rejection, and uncertain submission explain what happe
   assert.equal(uncertain.form.resetCalled, undefined);
 });
 
-test('Google Forms fallback shows its language note only in English', () => {
+test('Google Forms fallback stays visible when the custom form cannot initialize', () => {
   const ui = setup(undefined);
   assert.equal(ui.form.hidden, true);
-  assert.equal(ui.frame.hidden, false);
   assert.equal(ui.fallback.hidden, false);
-  assert.equal(ui.note.hidden, true);
-  ui.setLanguage('en-GB');
-  assert.equal(ui.note.hidden, false);
-  ui.setLanguage('pt-PT');
-  assert.equal(ui.note.hidden, true);
 });

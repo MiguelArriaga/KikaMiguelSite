@@ -250,9 +250,11 @@
         <button type="submit" data-content="giftForm.submit">Enviar</button>
         <p id="giftStatus" role="status" aria-live="polite"></p>
       </form>
-      <p id="giftFallbackLanguage" data-content="giftForm.fallbackLanguage" hidden>O formulário abaixo está em português.</p>
-      <iframe id="giftFormFrame" data-content-title="giftForm.frameTitle" title="Formulário de presentes para Kika e Miguel" aria-labelledby="giftFormHeading" loading="lazy" referrerpolicy="no-referrer" src="https://docs.google.com/forms/d/e/1FAIpQLSdnnUQxGZ78u5RQVlN-WBxMYcdQK6cORLPvaqNQm06u_W8C7A/viewform?embedded=true"></iframe>
-      <p class="gift-form-link"><a id="giftFormLink" href="https://docs.google.com/forms/d/e/1FAIpQLSdnnUQxGZ78u5RQVlN-WBxMYcdQK6cORLPvaqNQm06u_W8C7A/viewform" target="_blank" rel="noopener noreferrer" data-content="giftForm.open">Abrir o formulário numa nova janela</a></p>
+      <div id="giftFormFallback">
+        <p id="giftFallbackLanguage" data-content="giftForm.fallbackLanguage">O formulário abaixo está em português.</p>
+        <iframe id="giftFormFrame" data-content-title="giftForm.frameTitle" title="Formulário de presentes para Kika e Miguel" aria-labelledby="giftFormHeading" loading="lazy" referrerpolicy="no-referrer" src="https://docs.google.com/forms/d/e/1FAIpQLSdnnUQxGZ78u5RQVlN-WBxMYcdQK6cORLPvaqNQm06u_W8C7A/viewform?embedded=true"></iframe>
+        <p class="gift-form-link"><a id="giftFormLink" href="https://docs.google.com/forms/d/e/1FAIpQLSdnnUQxGZ78u5RQVlN-WBxMYcdQK6cORLPvaqNQm06u_W8C7A/viewform" target="_blank" rel="noopener noreferrer" data-content="giftForm.open">Abrir o formulário numa nova janela</a></p>
+      </div>
     </div>
 
   </div>

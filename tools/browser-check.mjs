@@ -58,6 +58,8 @@ try {
   assert.match(await evaluate('document.querySelector("meta[name=description]").content'),/23 January 2027, Lisbon/);
   assert.equal(await evaluate('document.getElementById("giftName").value'),'Test guest');
   assert.match(await evaluate('document.querySelector("label[for=giftName]").textContent'),/^Name/);
+  assert.equal(await evaluate('document.getElementById("giftFormFallback").hidden'),true);
+  assert.equal(await evaluate('document.getElementById("giftFallbackLanguage").getClientRects().length'),0);
   assert.equal(await evaluate('document.getElementById("copyIban").title'),'Copy IBAN');
   await evaluate('document.querySelector(".house-gallery [data-lightbox]").click()');
   assert.equal(await evaluate('document.getElementById("lightboxTitle").textContent'),'Our New Home');
@@ -161,6 +163,14 @@ try {
       })()`),true,'language switch fits in header at '+width);
       assert.equal(await evaluate('Array.from(document.querySelectorAll(".hero-link")).every(link=>{const r=link.getBoundingClientRect();return r.width>0&&r.left>=0&&r.right<=innerWidth&&r.bottom<=innerHeight})'),true,'all links fit first screen in '+expectedLanguage+' at '+width);
       assert.equal(await evaluate(`${languageToggle}.querySelector("span").textContent`),expectedLanguage==='en-GB'?'PT':'EN');
+      assert.equal(await evaluate(`(() => {
+        const range = document.createRange();
+        const lines = Array.from(document.querySelectorAll(".details-dress-code span"), element => {
+          range.selectNodeContents(element);
+          return Array.from(range.getClientRects(), rect => rect.top);
+        });
+        return lines.every(line => line.length === 1) && Math.abs(lines[0][0] - lines[1][0]) < 1;
+      })()`),true,'dress code fits on one line in '+expectedLanguage+' at '+width);
     }
     await evaluate('document.querySelector(".nav-links a[href$=historia]").click()');
     await evaluate('Promise.all(Array.from(document.querySelectorAll(".story-photo img")).map(img=>{img.loading="eager";return img.decode()}))');
@@ -252,23 +262,22 @@ try {
   await evaluate(video+'.click()');
   await send('Emulation.setEmulatedMedia',{features:[]});
 
-  // Force the same fallback guests use when the custom form cannot initialize.
-  const {identifier}=await send('Page.addScriptToEvaluateOnNewDocument',{source:'window.fetch = undefined'});
+  // The English fallback notice must work even if the custom form script never loads.
+  await send('Network.setBlockedURLs',{urls:['*docs.google.com/forms/*','*/js/gift-form.js']});
   await send('Page.navigate',{url:'http://127.0.0.1:8000/?check=gift-fallback#presentes'});
   for(let n=0;n<100;n++){
     if(await evaluate('location.search === "?check=gift-fallback" && document.readyState === "complete"')) break;
     await pause(100);
   }
   assert.equal(await language(),'en-GB');
-  assert.equal(await evaluate('document.getElementById("giftFormFrame").hidden'),false);
+  assert.equal(await evaluate('document.getElementById("giftFormFallback").hidden'),false);
   assert.equal(await evaluate('document.getElementById("customGiftForm").hidden'),true);
-  assert.equal(await evaluate('document.getElementById("giftFallbackLanguage").hidden'),false);
+  assert.equal(await evaluate('document.getElementById("giftFallbackLanguage").getClientRects().length'),1);
   assert.equal(await evaluate('document.getElementById("giftFallbackLanguage").textContent'),'The form below is in Portuguese.');
   await switchLanguage();
-  assert.equal(await evaluate('document.getElementById("giftFallbackLanguage").hidden'),true);
+  assert.equal(await evaluate('document.getElementById("giftFallbackLanguage").getClientRects().length'),0);
   // Leave English stored, then confirm the baked Portuguese page works when scripts are disabled.
   await switchLanguage();
-  await send('Page.removeScriptToEvaluateOnNewDocument',{identifier});
   await send('Emulation.setScriptExecutionDisabled',{value:true});
   await send('Page.navigate',{url:'http://127.0.0.1:8000/?check=no-js#presentes'});
   const {root: staticPage}=await send('DOM.getDocument');

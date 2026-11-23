@@ -1,21 +1,9 @@
 (() => {
   'use strict';
   const form = document.getElementById('customGiftForm');
-  const frame = document.getElementById('giftFormFrame');
-  const note = document.getElementById('giftFallbackLanguage');
   const translate = window.siteLocale?.text;
-  if (!form || !window.fetch || !window.AbortController || !translate?.('giftForm.pending')) {
-    if (note) {
-      const updateFallbackLanguage = () => {
-        note.hidden = document.documentElement.lang !== 'en-GB';
-      };
-      updateFallbackLanguage();
-      document.addEventListener('site-languagechange', updateFallbackLanguage);
-    }
-    return;
-  }
-  const fallback = document.querySelector('.gift-form-link');
-  if (frame) frame.hidden = true;
+  if (!form || !window.fetch || !window.AbortController || !translate?.('giftForm.pending')) return;
+  const fallback = document.getElementById('giftFormFallback');
   if (fallback) fallback.hidden = true;
   form.hidden = false;
   const button = form.querySelector('button[type="submit"]');

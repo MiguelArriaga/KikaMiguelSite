@@ -598,7 +598,8 @@ Event details
   margin-bottom: 0.3rem;
 }
 .details-dress-code {
-  width: 16rem;
+  width: fit-content;
+  min-width: min(16rem, 100%);
   max-width: 100%;
   margin: 2rem auto 0;
   padding: 0.75rem 0.5rem;
@@ -895,6 +896,9 @@ Gift form — Google hosts and confirms submissions
   margin-top: .5rem;
   border: 0;
   border-radius: 12px;
+}
+html:not([lang="en-GB"]) #giftFallbackLanguage {
+  display: none;
 }
 .gift-form-link {
   margin-top: .75rem;
